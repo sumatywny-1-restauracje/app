@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <footer className="bg-orange-100">
       <div className="flex flex-col items-center self-center font-sans">
-        <div className="flex w-full max-w-4xl justify-around py-6 md:w-5/6 md:flex-row">
+        <div className="flex w-full  max-w-screen-lg justify-around py-6 md:w-5/6 md:flex-row">
           <div className="hidden gap-8 md:flex md:flex-col">
             <div>
               <h2 className="mb-4 text-3xl font-bold text-rose-400">Foodsi</h2>
