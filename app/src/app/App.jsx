@@ -1,8 +1,9 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import MainTemplate from "../common/MainTemplate";
 import routes from "../data/routes";
+import MainTemplate from "../common/MainTemplate";
+import HomePage from "../pages/HomePage";
 
 const App = () => {
   return (
@@ -10,7 +11,7 @@ const App = () => {
       <BrowserRouter>
         <MainTemplate>
           <Routes>
-            <Route path={routes.home} element={<div />} />
+            <Route path={routes.home} element={<HomePage />} />
             <Route path="*" element={<Navigate to={routes.home} />} />
           </Routes>
         </MainTemplate>

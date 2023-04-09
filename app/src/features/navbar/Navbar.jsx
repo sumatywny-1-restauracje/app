@@ -25,7 +25,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-orange-100">
-      <div className="mx-auto flex max-w-screen-lg flex-wrap items-center justify-around py-6 font-sans">
+      <div className="mx-auto flex w-full max-w-screen-lg flex-wrap items-center justify-around py-6 font-sans md:w-4/6 md:justify-between">
         <a href="/" className="flex items-center">
           <span className="self-center whitespace-nowrap text-2xl font-bold text-gray-700">
             Foodsi
