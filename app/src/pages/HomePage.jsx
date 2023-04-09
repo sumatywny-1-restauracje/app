@@ -5,9 +5,9 @@ import SpecialOffers from "../features/homePageElements/SpecialOffers";
 
 const HomePage = () => {
   return (
-    <div className="flex w-full flex-col items-center gap-24 pb-16">
+    <div className="flex w-full flex-col items-center gap-16 pb-16 sm:gap-20 lg:gap-24">
       <Teaser />
-      <div className="flex w-full max-w-screen-2xl flex-col items-center gap-24">
+      <div className="flex w-full max-w-screen-2xl flex-col items-center gap-16 sm:gap-20 lg:gap-24">
         <FoodCategories />
         <RegularMenu />
         <SpecialOffers />

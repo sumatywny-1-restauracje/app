@@ -1,12 +1,8 @@
 import { Rating } from "flowbite-react";
-import { GiHamburger } from "react-icons/gi";
 
 const FoodElement = () => {
   return (
-    <div
-      className="md: relative mx-auto flex h-68 w-52 items-end justify-start sm:h-72 sm:w-52 md:h-80 md:w-60 lg:h-84 lg:w-60 xl:h-92 xl:w-64"
-      // style={{ width: "13rem", height: "17rem" }}
-    >
+    <div className="md: relative mx-auto flex h-[17rem] w-52 items-end justify-start sm:h-72 sm:w-52 md:h-80 md:w-60 lg:h-[22rem] lg:w-60 xl:h-[23rem] xl:w-64">
       <div
         style={{ fontSize: "15rem", borderWidth: "12px" }}
         className="absolute right-0 top-0 overflow-hidden rounded-full border-rose-400"
