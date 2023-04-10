@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Avatar, Dropdown } from "flowbite-react";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 const Navbar = () => {
+  const location = useLocation();
+  const locationPath = location.pathname;
   const [user, setUser] = useState(undefined); // test
   const [menuDropdown, setMenuDropdown] = useState(false);
 
@@ -85,7 +87,12 @@ const Navbar = () => {
             <li>
               <Link
                 to="/"
-                className="block rounded py-2 pl-3 pr-4 text-black underline md:bg-transparent md:p-0 "
+                className={
+                  " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
+                  (locationPath === "/"
+                    ? "text-black underline"
+                    : "hover:text-black hover:underline")
+                }
               >
                 Home
               </Link>
@@ -109,7 +116,12 @@ const Navbar = () => {
             <li>
               <Link
                 to="/menu"
-                className="block rounded py-2 pl-3 pr-4 hover:text-black hover:underline md:p-0"
+                className={
+                  " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
+                  (locationPath === "/menu"
+                    ? "text-black underline"
+                    : "hover:text-black hover:underline")
+                }
               >
                 Menu
               </Link>
