@@ -7,7 +7,7 @@ import PizzaPath from "../../assets/pizza.png";
 
 const Teaser = () => {
   return (
-    <div className="mb-16 flex w-full justify-center rounded-b-3xl bg-orange-100 pt-10">
+    <div className="flex w-full justify-center rounded-b-3xl bg-orange-100 pt-10">
       <div className="flex w-full max-w-screen-2xl flex-col items-center">
         <div className="flex w-4/6 flex-col items-center justify-between gap-6 text-gray-700 max-sm:text-center sm:flex-row">
           <div className="flex w-full flex-col gap-8 max-sm:items-center sm:w-[55%] xl:w-2/3">
