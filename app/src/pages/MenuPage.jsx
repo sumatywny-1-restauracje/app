@@ -1,12 +1,27 @@
 import { useState } from "react";
 import FoodList from "../features/menuPageElements/FoodList";
 import Header from "../features/menuPageElements/Header";
+import HamburgerPath from "../assets/hamburger.png";
+import ChickenPizzaPath from "../assets/pizza-slice.png";
+import FrenchFriesPath from "../assets/french-fries.png";
 
+const CATEGORIES = [
+  { id: 1, name: "all", image: HamburgerPath },
+  { id: 2, name: "burger", image: HamburgerPath },
+  { id: 3, name: "pizza", image: ChickenPizzaPath },
+  { id: 4, name: "dessert", image: FrenchFriesPath },
+  { id: 5, name: "drinks", image: FrenchFriesPath },
+  { id: 6, name: "chicken", image: ChickenPizzaPath },
+  { id: 7, name: "sandwich", image: HamburgerPath },
+  { id: 8, name: "taco", image: ChickenPizzaPath },
+  { id: 9, name: "noddle", image: FrenchFriesPath },
+  { id: 10, name: "ramen", image: FrenchFriesPath },
+];
 const PRODUCTS = [
   {
     id: 1,
     name: "Chicken Burger",
-    category: "burgers",
+    category: "burger",
     price: "3.50",
     rating: "5",
     numberOfRatings: 160,
@@ -17,7 +32,7 @@ const PRODUCTS = [
   {
     id: 2,
     name: "Chicken Pizza",
-    category: "pizzas",
+    category: "pizza",
     price: "4.20",
     rating: "5",
     numberOfRatings: 142,
@@ -28,7 +43,7 @@ const PRODUCTS = [
   {
     id: 3,
     name: "Chicken Fry",
-    category: "chickens",
+    category: "chicken",
     price: "5.00",
     rating: "5",
     numberOfRatings: 123,
@@ -39,7 +54,7 @@ const PRODUCTS = [
   {
     id: 4,
     name: "Grill Sandwich",
-    category: "sandwiches",
+    category: "sandwich",
     price: "4.80",
     rating: "5",
     numberOfRatings: 112,
@@ -50,7 +65,7 @@ const PRODUCTS = [
   {
     id: 5,
     name: "Taco Traifi",
-    category: "tacos",
+    category: "taco",
     price: "3.63",
     rating: "5",
     numberOfRatings: 152,
@@ -61,7 +76,7 @@ const PRODUCTS = [
   {
     id: 6,
     name: "Noddle's Ramen",
-    category: "noddles",
+    category: "noddle",
     price: "6.50",
     rating: "5",
     numberOfRatings: 163,
@@ -72,7 +87,7 @@ const PRODUCTS = [
   {
     id: 7,
     name: "Chicken Burger",
-    category: "burgers",
+    category: "burger",
     price: "3.50",
     rating: "5",
     numberOfRatings: 160,
@@ -83,7 +98,7 @@ const PRODUCTS = [
   {
     id: 8,
     name: "Chicken Pizza",
-    category: "pizzas",
+    category: "pizza",
     price: "4.20",
     rating: "5",
     numberOfRatings: 142,
@@ -94,7 +109,7 @@ const PRODUCTS = [
   {
     id: 9,
     name: "Chicken Fry",
-    category: "chickens",
+    category: "chicken",
     price: "5.00",
     rating: "5",
     numberOfRatings: 123,
@@ -105,7 +120,7 @@ const PRODUCTS = [
   {
     id: 10,
     name: "Grill Sandwich",
-    category: "sandwiches",
+    category: "sandwiche",
     price: "4.80",
     rating: "5",
     numberOfRatings: 112,
@@ -116,7 +131,7 @@ const PRODUCTS = [
   {
     id: 11,
     name: "Taco Traifi",
-    category: "tacos",
+    category: "taco",
     price: "3.63",
     rating: "5",
     numberOfRatings: 152,
@@ -127,7 +142,7 @@ const PRODUCTS = [
   {
     id: 12,
     name: "Noddle's Ramen",
-    category: "noddles",
+    category: "noddle",
     price: "6.50",
     rating: "5",
     numberOfRatings: 163,
@@ -138,7 +153,7 @@ const PRODUCTS = [
   {
     id: 13,
     name: "Chicken Burger",
-    category: "burgers",
+    category: "burger",
     price: "3.50",
     rating: "5",
     numberOfRatings: 160,
@@ -149,7 +164,7 @@ const PRODUCTS = [
   {
     id: 14,
     name: "Chicken Pizza",
-    category: "pizzas",
+    category: "pizza",
     price: "4.20",
     rating: "5",
     numberOfRatings: 142,
@@ -160,7 +175,7 @@ const PRODUCTS = [
   {
     id: 15,
     name: "Chicken Fry",
-    category: "chickens",
+    category: "chicken",
     price: "5.00",
     rating: "5",
     numberOfRatings: 123,
@@ -171,7 +186,7 @@ const PRODUCTS = [
   {
     id: 16,
     name: "Grill Sandwich",
-    category: "sandwiches",
+    category: "sandwiche",
     price: "4.80",
     rating: "5",
     numberOfRatings: 112,
@@ -182,7 +197,7 @@ const PRODUCTS = [
   {
     id: 17,
     name: "Taco Traifi",
-    category: "tacos",
+    category: "taco",
     price: "3.63",
     rating: "5",
     numberOfRatings: 152,
@@ -193,7 +208,7 @@ const PRODUCTS = [
   {
     id: 18,
     name: "Noddle's Ramen",
-    category: "noddles",
+    category: "noddle",
     price: "6.50",
     rating: "5",
     numberOfRatings: 163,
@@ -243,6 +258,7 @@ const MenuPage = () => {
   return (
     <div className="flex w-full flex-col items-center gap-12 pb-16">
       <Header
+        categories={CATEGORIES}
         sortBy={sortBy}
         setSortBy={setSortBy}
         selectedCategory={selectedCategory}

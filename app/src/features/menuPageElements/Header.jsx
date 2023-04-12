@@ -2,6 +2,7 @@ import { Avatar } from "flowbite-react";
 import CategoriesBar from "./CategoriesBar";
 
 const Header = ({
+  categories,
   sortBy,
   setSortBy,
   selectedCategory,
@@ -54,6 +55,7 @@ const Header = ({
             </div>
           </div>
           <CategoriesBar
+            categories={categories}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
