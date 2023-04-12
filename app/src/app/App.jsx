@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import routes from "../data/routes";
 import MainTemplate from "../common/MainTemplate";
 import HomePage from "../pages/HomePage";
+import MenuPage from "../pages/MenuPage";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <MainTemplate>
           <Routes>
             <Route path={routes.home} element={<HomePage />} />
+            <Route path={routes.menu} element={<MenuPage />} />
             <Route path="*" element={<Navigate to={routes.home} />} />
           </Routes>
         </MainTemplate>

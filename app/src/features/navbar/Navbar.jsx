@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link, useLocation } from "react-router-dom";
 import { Avatar, Dropdown } from "flowbite-react";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 const Navbar = () => {
+  const location = useLocation();
+  const locationPath = location.pathname;
   const [user, setUser] = useState(undefined); // test
   const [menuDropdown, setMenuDropdown] = useState(false);
 
@@ -26,11 +29,11 @@ const Navbar = () => {
   return (
     <nav className="bg-orange-100">
       <div className="mx-auto flex w-full max-w-screen-lg flex-wrap items-center justify-around py-6 font-sans md:w-4/6 md:justify-between">
-        <a href="/" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <span className="self-center whitespace-nowrap text-2xl font-bold text-gray-700">
             Foodsi
           </span>
-        </a>
+        </Link>
         <div className="flex md:order-2">
           {!user ? (
             <a
@@ -82,45 +85,54 @@ const Navbar = () => {
         >
           <ul className="mt-4 flex flex-col items-center rounded-lg bg-orange-200 p-4 font-semibold text-gray-500 underline-offset-4 md:mt-0  md:flex-row md:space-x-8  md:bg-inherit md:p-0">
             <li>
-              <a
-                href="/"
-                className="block rounded py-2 pl-3 pr-4 text-black underline md:bg-transparent md:p-0 "
-                aria-current="page"
+              <Link
+                to="/"
+                className={
+                  " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
+                  (locationPath === "/"
+                    ? "text-black underline"
+                    : "hover:text-black hover:underline")
+                }
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="block rounded py-2 pl-3 pr-4 hover:text-black hover:underline md:p-0"
               >
                 Offer
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="block rounded py-2 pl-3 pr-4 hover:text-black hover:underline md:p-0"
               >
                 Service
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/"
-                className="block rounded py-2 pl-3 pr-4 hover:text-black hover:underline md:p-0"
+              <Link
+                to="/menu"
+                className={
+                  " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
+                  (locationPath === "/menu"
+                    ? "text-black underline"
+                    : "hover:text-black hover:underline")
+                }
               >
                 Menu
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="block rounded py-2 pl-3 pr-4 hover:text-black hover:underline md:p-0"
               >
                 About Us
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
