@@ -1,16 +1,15 @@
 import type { LoaderFunction } from "@remix-run/node";
 import type { Image, Product, SpecialOffer } from "types";
 import { json } from "@remix-run/node";
+import { useLoaderData, useRouteError } from "@remix-run/react";
 import { getUserAvatar } from "~/models/user.server";
 import { getProducts, getSpecialOffers } from "~/models/products.server";
-import { useLoaderData } from "@remix-run/react";
+import { getCategories } from "~/models/categories.server";
+import { homeHeaderImage } from "~/images";
 import Teaser from "~/components/home/Teaser";
 import FoodCategories from "~/components/home/FoodCategories";
 import RegularMenu from "~/components/home/RegularMenu";
 import SpecialOffers from "~/components/home/SpecialOffers";
-import { useRouteError } from "@remix-run/react";
-import { getCategories } from "~/models/categories.server";
-import { homeHeaderImage } from "~/images";
 
 type LoaderData = {
   homeHeaderAvatar: Image;

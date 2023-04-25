@@ -9,8 +9,8 @@ import {
 } from "@remix-run/react";
 
 import stylesheet from "./styles/tailwind.css";
-import Footer from "~/components/footer/Footer";
-import Navbar from "~/components/navbar/Navbar";
+import Footer from "~/components/Footer";
+import Navbar from "~/components/Navbar";
 
 export const meta: V2_MetaFunction = () => [{ title: "App" }];
 

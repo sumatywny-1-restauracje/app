@@ -1,5 +1,5 @@
-import { Rating } from "flowbite-react";
 import type { Product } from "types";
+import { Rating } from "flowbite-react";
 
 type FoodElementProps = {
   product: Product;

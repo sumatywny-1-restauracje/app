@@ -4,16 +4,15 @@ import type {
   ActionArgs,
   LoaderArgs,
 } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
 import type { Category, Image, Product, SortBy } from "types";
-import invariant from "tiny-invariant";
-import { json } from "@remix-run/node";
+import { redirect, json } from "@remix-run/node";
 import { Link, useLoaderData, useRouteError } from "@remix-run/react";
+import invariant from "tiny-invariant";
 import { getProductsByCategory } from "~/models/products.server";
 import { getCategories, getSortByOptions } from "~/models/categories.server";
-import Header from "~/components/menu/Header";
-import FoodElement from "~/components/foodElement/FoodElement";
 import { getUserAvatar } from "~/models/user.server";
+import Header from "~/components/menu/Header";
+import FoodElement from "~/components/FoodElement";
 
 const handleSortProducts = async (products: Array<Product>, sortBy: string) => {
   const sortedProducts = products.sort((a: any, b: any) => {

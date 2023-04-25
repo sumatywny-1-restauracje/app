@@ -1,5 +1,5 @@
-import { useState } from "react";
 import type { Category } from "types";
+import { useState } from "react";
 import useInterval from "~/hooks/useInterval";
 import CategoryButton from "./CategoryButton";
 

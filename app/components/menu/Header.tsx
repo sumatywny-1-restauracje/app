@@ -1,7 +1,7 @@
 import type { Category, SortBy, Image } from "types";
+import { Form, useSubmit } from "@remix-run/react";
 import { Avatar } from "flowbite-react";
 import CategoriesBar from "./CategoriesBar";
-import { Form, useSubmit } from "@remix-run/react";
 
 type HeaderProps = {
   menuHeaderAvatar: Image;

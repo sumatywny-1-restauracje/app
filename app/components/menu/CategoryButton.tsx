@@ -1,5 +1,5 @@
-import { Link } from "@remix-run/react";
 import type { Image } from "types";
+import { Link } from "@remix-run/react";
 
 type CategoryButtonProps = {
   id: number;

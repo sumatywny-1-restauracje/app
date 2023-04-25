@@ -1,5 +1,5 @@
 import type { Product } from "types";
-import FoodElement from "../foodElement/FoodElement";
+import FoodElement from "../FoodElement";
 
 type RegularMenuProps = {
   homeProducts: Array<Product>;
