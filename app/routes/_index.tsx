@@ -1,10 +1,8 @@
-import type { V2_MetaFunction } from "@remix-run/node";
 import Teaser from "~/components/home/Teaser";
 import FoodCategories from "~/components/home/FoodCategories";
 import RegularMenu from "~/components/home/RegularMenu";
 import SpecialOffers from "~/components/home/SpecialOffers";
-
-export const meta: V2_MetaFunction = () => [{ title: "App" }];
+import { useRouteError } from "@remix-run/react";
 
 export default function IndexRoute() {
   return (
@@ -19,7 +17,19 @@ export default function IndexRoute() {
   );
 }
 
-export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
-  // return <h1>{error}</h1>;
+export function ErrorBoundary() {
+  let error = useRouteError();
+
+  if (error instanceof Error) {
+    return (
+      <div className="flex flex-auto items-center justify-center">
+        <h1>Error</h1>
+        <p>{error.message}</p>
+        <p>The stack trace is:</p>
+        <pre>{error.stack}</pre>
+      </div>
+    );
+  } else {
+    return <h1>Unknown Error</h1>;
+  }
 }

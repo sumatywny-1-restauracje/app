@@ -1,8 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "@remix-run/react";
 
 const NavbarRoutesList = () => {
   const location = useLocation();
-  const locationPath = location.pathname;
 
   return (
     <ul className="mt-4 flex w-full flex-col items-center justify-center rounded-lg bg-orange-200 p-4 font-semibold text-gray-500 underline-offset-4 md:mt-0  md:flex-row md:space-x-8  md:bg-inherit md:p-0">
@@ -11,7 +10,7 @@ const NavbarRoutesList = () => {
           to="/"
           className={
             " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
-            (locationPath === "/"
+            (location.pathname === "/"
               ? "text-black underline"
               : "hover:text-black hover:underline")
           }
@@ -32,7 +31,7 @@ const NavbarRoutesList = () => {
           to="/menu"
           className={
             " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
-            (locationPath === "/menu"
+            (location.pathname.includes("/menu")
               ? "text-black underline"
               : "hover:text-black hover:underline")
           }
