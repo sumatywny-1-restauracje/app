@@ -1,6 +1,7 @@
 import { Rating } from "flowbite-react";
+import type { Product } from "types";
 
-const FoodElement = ({ product }) => {
+const FoodElement = ({ product }: Product | any) => {
   return (
     <div className="relative mx-auto flex h-[18.5rem] w-44 items-end justify-start sm:h-[18.5rem] sm:w-52 md:h-80 md:w-60 lg:h-[20rem] lg:w-60 xl:h-[23rem] xl:w-64">
       <div className="absolute right-0 top-0 overflow-hidden rounded-full border-[12px] border-rose-400 text-[15rem] max-sm:w-full">
@@ -17,11 +18,11 @@ const FoodElement = ({ product }) => {
               {product?.name}
             </h4>
             <Rating className="mt-1">
-              <Rating.Star filled={product?.rating > 0 && true} />
-              <Rating.Star filled={product?.rating > 1 && true} />
-              <Rating.Star filled={product?.rating > 2 && true} />
-              <Rating.Star filled={product?.rating > 3 && true} />
-              <Rating.Star filled={product?.rating > 4 && true} />
+              <Rating.Star filled={product.rating > 0 && true} />
+              <Rating.Star filled={product.rating > 1 && true} />
+              <Rating.Star filled={product.rating > 2 && true} />
+              <Rating.Star filled={product.rating > 3 && true} />
+              <Rating.Star filled={product.rating > 4 && true} />
               <p className="ml-2 text-xs font-medium text-gray-500 lg:text-sm">
                 ({product?.numberOfRatings})
               </p>

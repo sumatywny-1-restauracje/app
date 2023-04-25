@@ -26,9 +26,9 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full">
-        <div className="flex h-full min-h-screen flex-col bg-orange-100">
+        <div className="flex min-h-screen flex-col bg-orange-100">
           <Navbar />
-          <div className="flex flex-auto justify-center bg-zinc-100">
+          <div className="flex h-full flex-1 justify-center bg-zinc-100">
             <Outlet />
           </div>
           <Footer />

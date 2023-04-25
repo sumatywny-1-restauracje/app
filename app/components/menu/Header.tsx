@@ -1,13 +1,25 @@
+import type { Category, SortBy, Image } from "types";
 import { Avatar } from "flowbite-react";
 import CategoriesBar from "./CategoriesBar";
+import { Form, useSubmit } from "@remix-run/react";
+
+type HeaderProps = {
+  menuHeaderAvatar: Image;
+  categories: Array<Category>;
+  sortBy: string | null;
+  sortByOptions: Array<SortBy>;
+  selectedCategory: string | null;
+};
 
 const Header = ({
+  menuHeaderAvatar,
   categories,
   sortBy,
-  setSortBy,
+  sortByOptions,
   selectedCategory,
-  setSelectedCategory,
-}) => {
+}: HeaderProps) => {
+  const submit = useSubmit();
+
   return (
     <div className="flex w-full justify-center rounded-b-3xl bg-orange-100 py-10">
       <div className="flex w-full max-w-screen-2xl flex-col items-center">
@@ -19,8 +31,8 @@ const Header = ({
               </h1>
               <div className="flex items-center gap-4">
                 <Avatar
-                  alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  alt={menuHeaderAvatar.alt}
+                  img={menuHeaderAvatar.src}
                   rounded={true}
                   className="min-w-max max-sm:my-3"
                 />
@@ -30,34 +42,28 @@ const Header = ({
                 </span>
               </div>
             </div>
-            <div>
+            <Form method="post" onChange={(e) => submit(e.currentTarget)}>
               <select
                 className="w-full rounded-lg border-4 border-rose-400 bg-orange-100 bg-transparent p-2 font-bold focus:border-rose-500 focus:ring-0"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+                defaultValue={sortBy || "Sort By"}
+                name="sortBy"
               >
-                <option className="bg-rose-300" value="recentlyAdded">
-                  Recently Added
-                </option>
-                <option className="bg-rose-300" value="mostPopular">
-                  Most Popular
-                </option>
-                <option className="bg-rose-300" value="topRated">
-                  Top Rated
-                </option>
-                <option className="bg-rose-300" value="priceAscending">
-                  Price - Ascending
-                </option>
-                <option className="bg-rose-300" value="priceDescending">
-                  Price - Descending
-                </option>
+                {sortByOptions.map((option) => (
+                  <option
+                    className="bg-rose-300"
+                    key={option.value}
+                    value={option.value}
+                  >
+                    {option.label}
+                  </option>
+                ))}
               </select>
-            </div>
+            </Form>
           </div>
           <CategoriesBar
             categories={categories}
             selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
+            sortBy={sortBy}
           />
         </div>
       </div>

@@ -1,8 +1,8 @@
 import type { V2_MetaFunction } from "@remix-run/node";
-import Teaser from "~/components/homePageElements/Teaser";
-import FoodCategories from "~/components/homePageElements/FoodCategories";
-import RegularMenu from "~/components/homePageElements/RegularMenu";
-import SpecialOffers from "~/components/homePageElements/SpecialOffers";
+import Teaser from "~/components/home/Teaser";
+import FoodCategories from "~/components/home/FoodCategories";
+import RegularMenu from "~/components/home/RegularMenu";
+import SpecialOffers from "~/components/home/SpecialOffers";
 
 export const meta: V2_MetaFunction = () => [{ title: "App" }];
 

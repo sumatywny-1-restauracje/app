@@ -52,10 +52,8 @@ const Navbar = () => {
   return (
     <nav
       className={
-        " delay-400 sticky top-0 z-20 h-min transform bg-orange-100 py-6 transition-all duration-500 ease-in-out " +
-        (visible
-          ? "flex h-screen -translate-y-0 flex-col"
-          : "-translate-y-full")
+        " delay-400 sticky top-0 z-20 h-max transform bg-orange-100 py-6 transition-all duration-500 ease-in-out " +
+        (visible ? "flex -translate-y-0 flex-col" : "-translate-y-full")
       }
     >
       <div className="mx-auto flex w-4/6 max-w-screen-lg flex-wrap items-center justify-between font-sans">
