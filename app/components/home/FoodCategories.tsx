@@ -1,8 +1,10 @@
-import HamburgerPath from "../../assets/hamburger.png";
-import ChickenPizzaPath from "../../assets/pizza-slice.png";
-import FrenchFriesPath from "../../assets/french-fries.png";
+import type { Image } from "types";
 
-const FoodCategories = () => {
+type FoodCategoriesProps = {
+  foodCategories: Array<{ name: string; image: Image }>;
+};
+
+const FoodCategories = ({ foodCategories }: FoodCategoriesProps) => {
   return (
     <div className="flex w-4/6 flex-col gap-10 px-1 font-sans text-gray-700 md:gap-12">
       <div className="flex flex-col flex-wrap items-center justify-around max-md:gap-6 sm:flex-row md:justify-between">
@@ -17,12 +19,12 @@ const FoodCategories = () => {
       <div className="flex flex-wrap justify-around gap-8 xl:gap-16">
         <div className="flex flex-col items-center">
           <img
-            src={HamburgerPath}
-            alt="hamburger"
+            src={foodCategories[0].image.src}
+            alt={foodCategories[0].image.alt}
             className="w-20 sm:w-24 md:w-28 lg:w-44 xl:w-52"
           />
           <span className="mb-1 mt-3 text-base font-bold md:text-xl">
-            Chicken Burger
+            {foodCategories[0].name.toUpperCase()}
           </span>
           <button className="text-sm font-semibold text-rose-400 hover:text-rose-500 md:text-lg">
             Order Now &gt;
@@ -30,12 +32,12 @@ const FoodCategories = () => {
         </div>
         <div className="flex flex-col items-center">
           <img
-            src={ChickenPizzaPath}
-            alt="hamburger"
+            src={foodCategories[1].image.src}
+            alt={foodCategories[1].image.alt}
             className="w-20 sm:w-24 md:w-28 lg:w-44 xl:w-52"
           />
           <span className="mb-1 mt-3 text-base font-bold md:text-xl">
-            Chicken Pizza
+            {foodCategories[1].name.toUpperCase()}
           </span>
           <button className="text-sm font-semibold text-rose-400 hover:text-rose-500 md:text-lg">
             Order Now &gt;
@@ -43,12 +45,12 @@ const FoodCategories = () => {
         </div>
         <div className="flex flex-col items-center">
           <img
-            src={FrenchFriesPath}
-            alt="french fries"
+            src={foodCategories[2].image.src}
+            alt={foodCategories[2].image.alt}
             className="w-20 sm:w-24 md:w-28 lg:w-44 xl:w-52"
           />
           <span className="mb-1 mt-3 text-base font-bold md:text-xl">
-            French Fries
+            {foodCategories[2].name.toUpperCase()}
           </span>
           <button className="text-sm font-semibold text-rose-400 hover:text-rose-500 md:text-lg">
             Order Now &gt;

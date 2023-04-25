@@ -25,8 +25,14 @@ type Image = {
   alt: string;
 };
 
-type FoodImages = {
+type ImagesObject = {
   [key: string]: Image;
 };
 
-export { Product, Category, SortBy, Image, FoodImages };
+type SpecialOffer = {
+  id: number;
+  image: Image;
+  value: string;
+};
+
+export { Product, Category, SortBy, Image, ImagesObject, SpecialOffer };

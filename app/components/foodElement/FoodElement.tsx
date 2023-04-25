@@ -1,7 +1,11 @@
 import { Rating } from "flowbite-react";
 import type { Product } from "types";
 
-const FoodElement = ({ product }: Product | any) => {
+type FoodElementProps = {
+  product: Product;
+};
+
+const FoodElement = ({ product }: FoodElementProps) => {
   return (
     <div className="relative mx-auto flex h-[18.5rem] w-44 items-end justify-start sm:h-[18.5rem] sm:w-52 md:h-80 md:w-60 lg:h-[20rem] lg:w-60 xl:h-[23rem] xl:w-64">
       <div className="absolute right-0 top-0 overflow-hidden rounded-full border-[12px] border-rose-400 text-[15rem] max-sm:w-full">

@@ -1,12 +1,12 @@
-import type { Image, FoodImages } from "types";
+import type { Image, ImagesObject } from "types";
 
-const foodImages: FoodImages = {
+const foodImages: ImagesObject = {
   hamburger: {
     src: require("~/assets/hamburger.png"),
     alt: "hamburger",
   },
   chickenPizza: {
-    src: require("~/assets/pizza-slice.png"),
+    src: require("~/assets/pizza.png"),
     alt: "chicken pizza",
   },
   frenchFries: {
@@ -32,4 +32,24 @@ const avatarImage: Image = {
   alt: "User avatar",
 };
 
-export { foodImages, avatarImage };
+const specialOfferImages: ImagesObject = {
+  first: {
+    src: "https://images.pexels.com/photos/580612/pexels-photo-580612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    alt: "Hamburger Offer",
+  },
+  second: {
+    src: "https://images.pexels.com/photos/2586924/pexels-photo-2586924.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    alt: "Ice Cream Offer",
+  },
+  third: {
+    src: "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    alt: "Salad Offer",
+  },
+};
+
+const homeHeaderImage: Image = {
+  src: require("~/assets/pizza.png"),
+  alt: "Menu Header",
+};
+
+export { foodImages, avatarImage, specialOfferImages, homeHeaderImage };

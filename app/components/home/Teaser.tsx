@@ -1,11 +1,16 @@
+import type { Image } from "types";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FiRefreshCcw, FiShoppingCart } from "react-icons/fi";
 import { TbCashOff } from "react-icons/tb";
 import { FaPlay } from "react-icons/fa";
 import { Avatar } from "flowbite-react";
-import PizzaPath from "../../assets/pizza.png";
 
-const Teaser = () => {
+type TeaserProps = {
+  homeHeaderAvatar: Image;
+  homeHeaderImg: Image;
+};
+
+const Teaser = ({ homeHeaderAvatar, homeHeaderImg }: TeaserProps) => {
   return (
     <div className="flex w-full justify-center rounded-b-3xl bg-orange-100 pt-10">
       <div className="flex w-full max-w-screen-2xl flex-col items-center">
@@ -20,8 +25,8 @@ const Teaser = () => {
             <div className="flex w-3/4 flex-col gap-6 lg:gap-8 xl:gap-11">
               <div className="flex items-center gap-4">
                 <Avatar
-                  alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  alt={homeHeaderAvatar.alt}
+                  img={homeHeaderAvatar.src}
                   rounded={true}
                   className="min-w-max max-sm:my-3"
                 />
@@ -50,7 +55,11 @@ const Teaser = () => {
             </div>
           </div>
           <div className="w-1/2 max-sm:mt-2 sm:h-0 sm:w-[45%] sm:pb-[45%] xl:w-[33.3%] xl:pb-[33.3%]">
-            <img src={PizzaPath} alt="pizza" className=" w-full rotate-90" />
+            <img
+              src={homeHeaderImg.src}
+              alt={homeHeaderImg.alt}
+              className=" w-full rotate-90"
+            />
           </div>
         </div>
         <div className="w-4/6 translate-y-12 rounded-xl bg-zinc-50 p-4 shadow-xl lg:p-5 xl:p-6">

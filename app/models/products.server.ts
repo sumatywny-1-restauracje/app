@@ -1,4 +1,5 @@
-import type { Product } from "~/types";
+import type { Product, SpecialOffer } from "~/types";
+import { specialOfferImages } from "~/images";
 
 const PRODUCTS: Array<Product> = [
   {
@@ -201,6 +202,24 @@ const PRODUCTS: Array<Product> = [
   },
 ];
 
+const SPECIAL_OFFERS: Array<SpecialOffer> = [
+  {
+    id: 1,
+    image: specialOfferImages.first,
+    value: "50%",
+  },
+  {
+    id: 2,
+    image: specialOfferImages.second,
+    value: "25%",
+  },
+  {
+    id: 3,
+    image: specialOfferImages.third,
+    value: "25%",
+  },
+];
+
 export function getProducts() {
   return PRODUCTS;
 }
@@ -214,4 +233,8 @@ export function getProductsByCategory(category: string) {
 
 export function getProductById(id: number) {
   return PRODUCTS.find((product) => product.id === id);
+}
+
+export function getSpecialOffers() {
+  return SPECIAL_OFFERS;
 }

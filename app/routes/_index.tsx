@@ -1,17 +1,55 @@
+import type { LoaderFunction } from "@remix-run/node";
+import type { Image, Product, SpecialOffer } from "types";
+import { json } from "@remix-run/node";
+import { getUserAvatar } from "~/models/user.server";
+import { getProducts, getSpecialOffers } from "~/models/products.server";
+import { useLoaderData } from "@remix-run/react";
 import Teaser from "~/components/home/Teaser";
 import FoodCategories from "~/components/home/FoodCategories";
 import RegularMenu from "~/components/home/RegularMenu";
 import SpecialOffers from "~/components/home/SpecialOffers";
 import { useRouteError } from "@remix-run/react";
+import { getCategories } from "~/models/categories.server";
+import { homeHeaderImage } from "~/images";
+
+type LoaderData = {
+  homeHeaderAvatar: Image;
+  homeHeaderImg: Image;
+  specialOffers: Array<SpecialOffer>;
+  foodCategories: Array<{ name: string; image: Image }>;
+  homeProducts: Array<Product>;
+};
+
+export const loader: LoaderFunction = async () => {
+  const menuHeaderAvatar = await getUserAvatar();
+  const homeHeaderImg = homeHeaderImage;
+  const specialOffers = await getSpecialOffers();
+  const foodCategories = await getCategories();
+  const products = await getProducts();
+
+  const homeProducts = products.sort((a, b) => (a.rating > b.rating ? 1 : -1));
+
+  return json<LoaderData>({
+    homeHeaderAvatar: menuHeaderAvatar,
+    specialOffers: specialOffers,
+    homeHeaderImg: homeHeaderImg,
+    foodCategories: foodCategories.slice(1, 4),
+    homeProducts: homeProducts.slice(0, 6),
+  });
+};
 
 export default function IndexRoute() {
+  const data = useLoaderData<LoaderData>();
   return (
     <div className="flex w-full flex-col items-center gap-16 pb-16 sm:gap-20 lg:gap-24">
-      <Teaser />
+      <Teaser
+        homeHeaderAvatar={data.homeHeaderAvatar}
+        homeHeaderImg={data.homeHeaderImg}
+      />
       <div className="flex w-full max-w-screen-2xl flex-col items-center gap-16 sm:gap-20 lg:gap-24">
-        <FoodCategories />
-        <RegularMenu />
-        <SpecialOffers />
+        <FoodCategories foodCategories={data.foodCategories} />
+        <RegularMenu homeProducts={data.homeProducts} />
+        <SpecialOffers specialOffers={data.specialOffers} />
       </div>
     </div>
   );
