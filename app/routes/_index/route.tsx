@@ -18,3 +18,8 @@ export default function IndexRoute() {
     </div>
   );
 }
+
+export function ErrorBoundary({ error }: { error: Error }) {
+  console.error(error);
+  // return <h1>{error}</h1>;
+}
