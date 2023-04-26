@@ -1,4 +1,4 @@
-import type { LinksFunction, V2_MetaFunction } from "@remix-run/node";
+import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -11,8 +11,6 @@ import {
 import stylesheet from "./styles/tailwind.css";
 import Footer from "~/components/Footer";
 import Navbar from "~/components/Navbar";
-
-export const meta: V2_MetaFunction = () => [{ title: "App" }];
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
