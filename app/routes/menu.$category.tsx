@@ -6,13 +6,15 @@ import type {
 } from "@remix-run/node";
 import type { Category, Image, Product, SortBy } from "types";
 import { redirect, json } from "@remix-run/node";
-import { Link, useLoaderData, useRouteError } from "@remix-run/react";
+import { useLoaderData, useRouteError } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { getProductsByCategory } from "~/models/products.server";
 import { getCategories, getSortByOptions } from "~/models/categories.server";
 import { getUserAvatar } from "~/models/user.server";
+import { confusedTravolta } from "~/images";
 import Header from "~/components/menu/Header";
 import FoodElement from "~/components/FoodElement";
+import ErrorPage from "~/components/ErrorPage";
 
 const handleSortProducts = async (products: Array<Product>, sortBy: string) => {
   const sortedProducts = products.sort((a: any, b: any) => {
@@ -41,7 +43,7 @@ type LoaderData = {
   sortBy: string | null;
   sortByOptions: Array<SortBy>;
   products: Array<Product> | null;
-  errorMessage?: string;
+  confusedTravolta?: Image;
 };
 
 export const loader: LoaderFunction = async ({
@@ -50,7 +52,7 @@ export const loader: LoaderFunction = async ({
 }: LoaderArgs) => {
   let { category } = params;
   const url = new URL(request.url);
-  const sortBy = url.searchParams.get("sortBy") || "recentlyAdded";
+  let sortBy = url.searchParams.get("sortBy") || "recentlyAdded";
 
   invariant(typeof category === "string", "category param must be string");
   invariant(typeof sortBy === "string", "sort by param must be string");
@@ -67,7 +69,7 @@ export const loader: LoaderFunction = async ({
       sortBy: sortBy,
       sortByOptions: sortByOptions,
       products: null,
-      errorMessage: `Oh no. Category with name: "${category}" was not found`,
+      confusedTravolta: confusedTravolta,
     });
   }
 
@@ -75,11 +77,11 @@ export const loader: LoaderFunction = async ({
     return json<LoaderData>({
       menuHeaderAvatar: menuHeaderAvatar,
       categories: categories,
-      category: null,
+      category: category,
       sortBy: null,
       sortByOptions: sortByOptions,
       products: null,
-      errorMessage: `Oh no. Sort by: "${sortBy}" is not allowed`,
+      confusedTravolta: confusedTravolta,
     });
   }
 
@@ -121,17 +123,12 @@ export default function MenuCategoryRoute() {
         sortByOptions={data.sortByOptions}
         selectedCategory={data.category}
       />
-      <div className="flex w-full max-w-screen-2xl flex-col gap-8">
+      <div className="flex w-full max-w-screen-2xl flex-col items-center gap-8">
         {data.products === null ? (
-          <div className="flex h-full flex-col items-center justify-center gap-8">
-            <p className="text-4xl text-orange-300">{data.errorMessage}</p>
-            <Link
-              to="/menu/"
-              className="text-4xl text-red-500 underline hover:text-red-700"
-            >
-              Go Back to Menu Page!
-            </Link>
-          </div>
+          <ErrorPage
+            image={data.confusedTravolta}
+            action={{ to: "/menu/", text: "Bact to Menu" }}
+          />
         ) : (
           <div className="mx-auto flex w-4/6 flex-wrap content-center gap-12 sm:grid sm:grid-cols-2 lg:grid-cols-3">
             {data.products.map((product) => (

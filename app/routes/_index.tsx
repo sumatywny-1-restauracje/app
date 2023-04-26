@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "@remix-run/node";
+import type { V2_MetaFunction } from "@remix-run/react";
 import type { Image, Product, SpecialOffer } from "types";
 import { json } from "@remix-run/node";
 import { useLoaderData, useRouteError } from "@remix-run/react";
@@ -10,6 +11,8 @@ import Teaser from "~/components/home/Teaser";
 import FoodCategories from "~/components/home/FoodCategories";
 import RegularMenu from "~/components/home/RegularMenu";
 import SpecialOffers from "~/components/home/SpecialOffers";
+
+export const meta: V2_MetaFunction = () => [{ title: "Home" }];
 
 type LoaderData = {
   homeHeaderAvatar: Image;
