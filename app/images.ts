@@ -52,4 +52,15 @@ const homeHeaderImage: Image = {
   alt: "Menu Header",
 };
 
-export { foodImages, avatarImage, specialOfferImages, homeHeaderImage };
+const confusedTravolta: Image = {
+  src: require("~/assets/confused-travolta.gif"),
+  alt: "Confused Travolta",
+};
+
+export {
+  foodImages,
+  avatarImage,
+  specialOfferImages,
+  homeHeaderImage,
+  confusedTravolta,
+};

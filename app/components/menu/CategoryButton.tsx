@@ -16,6 +16,9 @@ export default function CategoryButton({
   selectedCategory,
   sortBy,
 }: CategoryButtonProps) {
+  if (sortBy === null) {
+    sortBy = "recentlyAdded";
+  }
   return (
     <Link
       key={id}
