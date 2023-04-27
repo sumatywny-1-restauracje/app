@@ -1,4 +1,6 @@
-const JOB_OFFERS = [
+import type { JobOffer, JobApplication } from "types";
+
+const JOB_OFFERS: Array<JobOffer> = [
   {
     id: 1,
     title: "Chef",
@@ -33,7 +35,7 @@ const JOB_OFFERS = [
   },
 ];
 
-let JOB_APPLICATIONS = [
+let JOB_APPLICATIONS: Array<JobApplication> = [
   {
     id: 1,
     firstName: "John",
@@ -58,6 +60,22 @@ export function getJobApplicants() {
   });
 }
 
-export function createJobApplication(application) {
-  JOB_APPLICATIONS.push(application);
+type createJobApplicationParams = {
+  firstName: string;
+  lastName: string;
+  age: string;
+  email: string;
+  aboutMe?: string;
+  resumee?: string;
+  jobTitle: string;
+  prefferedSalary: string;
+  dataProcessingConsent: string;
+};
+
+const isNumeric = (val: string): boolean => {
+  return !isNaN(Number(val));
+};
+
+export function createJobApplication(application: createJobApplicationParams) {
+  // JOB_APPLICATIONS.push(application);
 }
