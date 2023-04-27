@@ -57,10 +57,16 @@ const confusedTravolta: Image = {
   alt: "Confused Travolta",
 };
 
+const jobApplicationImage: Image = {
+  src: require("~/assets/pizza-chef.png"),
+  alt: "Pizza Chef",
+};
+
 export {
   foodImages,
   avatarImage,
   specialOfferImages,
   homeHeaderImage,
   confusedTravolta,
+  jobApplicationImage,
 };
