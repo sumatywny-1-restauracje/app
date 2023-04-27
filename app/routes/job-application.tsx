@@ -1,6 +1,10 @@
-import type { LoaderFunction } from "@remix-run/node";
+import type {
+  LoaderFunction,
+  ActionFunction,
+  ActionArgs,
+} from "@remix-run/node";
 import type { V2_MetaFunction } from "@remix-run/react";
-import { Form } from "@remix-run/react";
+import { Form, useSubmit } from "@remix-run/react";
 import { useState } from "react";
 import { jobApplicationImage } from "~/images";
 
@@ -10,7 +14,27 @@ export const loader: LoaderFunction = async ({ params }) => {
   return null;
 };
 
+export const action: ActionFunction = async ({ request }: ActionArgs) => {
+  // const formData = await request.formData();
+  const j = await request.json();
+  // console.log({
+  //   firstName: formData.get("firstName"),
+  //   lastName: formData.get("lastName"),
+  //   age: formData.get("age"),
+  //   email: formData.get("email"),
+  //   aboutMe: formData.get("aboutMe"),
+  //   resumee: formData.get("resumee"),
+  //   jobTitle: formData.get("jobTitle"),
+  //   prefferedSalary: formData.get("prefferedSalary"),
+  //   dataProcessingConsent: formData.get("dataProcessingConsent"),
+  // });
+  console.log(j);
+  return null;
+};
+
 export default function JobApplicationRoute() {
+  const submit = useSubmit();
+
   const [jobTitle, setJobTitle] = useState({
     title: "Chef",
     salary: {
@@ -22,9 +46,20 @@ export default function JobApplicationRoute() {
     (jobTitle.salary.min + jobTitle.salary.max) / 2
   );
 
+  const handleSubmit = (e: any) => {
+    submit(
+      { target: e?.currentTarget, arbitraryData: jobTitle.title },
+      { method: "post", action: "/job-title" }
+    );
+  };
+
   return (
     <div className="mb-12 mt-8 flex w-5/6 max-w-screen-lg flex-col items-center justify-center gap-5 rounded-xl border-rose-300 bg-orange-100 p-4 md:w-4/6 lg:flex-row">
-      <Form method="post" className="flex w-full flex-col gap-6 lg:w-1/2">
+      <Form
+        onSubmit={handleSubmit}
+        method="post"
+        className="flex w-full flex-col gap-6 lg:w-1/2"
+      >
         <div className="grid grid-cols-2 gap-2">
           <div className="col-span-2 mb-2 flex flex-col gap-2 rounded-xl border border-rose-400 p-2">
             <div className="flex flex-col gap-1">
@@ -44,7 +79,6 @@ export default function JobApplicationRoute() {
               <input
                 type="text"
                 name="lastName"
-                required={true}
                 className="rounded-xl border-rose-400 bg-orange-50 focus:border-rose-500 focus:ring-rose-500"
               />
             </div>
@@ -90,6 +124,8 @@ export default function JobApplicationRoute() {
             </div>
           </div>
           <button
+            name="jobTitle"
+            value={jobTitle.title}
             onClick={() => {
               setJobTitle({
                 title: "Chef",
@@ -203,7 +239,7 @@ export default function JobApplicationRoute() {
         </button>
       </Form>
       <div className="flex h-full w-full flex-row items-center gap-8 max-lg:order-first lg:w-1/2 lg:flex-col">
-        <h1 className="lg-w-full w-1/2 text-center text-3xl font-bold text-rose-400 sm:text-5xl lg:text-6xl">
+        <h1 className="lg-w-full w-1/2 text-center text-3xl font-bold text-rose-400 sm:text-5xl lg:w-full lg:text-6xl">
           Get Your Dream Job Today
         </h1>
         <img
