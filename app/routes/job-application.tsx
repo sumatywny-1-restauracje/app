@@ -3,7 +3,7 @@ import type {
   ActionFunction,
   ActionArgs,
 } from "@remix-run/node";
-import type { JobOffer } from "types";
+import type { Image, JobOffer } from "types";
 import { json } from "@remix-run/node";
 import type { V2_MetaFunction } from "@remix-run/react";
 import {
@@ -25,11 +25,13 @@ export const meta: V2_MetaFunction = () => [{ title: "Job Application" }];
 
 type LoaderData = {
   jobOffers: Array<JobOffer>;
+  jobApplicationImage: Image;
 };
 export const loader: LoaderFunction = async ({ params }) => {
   const jobOffers = await getJobOffers();
   return json<LoaderData>({
     jobOffers: jobOffers,
+    jobApplicationImage: jobApplicationImage,
   });
 };
 
@@ -314,8 +316,8 @@ export default function JobApplicationRoute() {
               Get Your Dream Job Today
             </h1>
             <img
-              src={jobApplicationImage.src}
-              alt={jobApplicationImage.alt}
+              src={data.jobApplicationImage.src}
+              alt={data.jobApplicationImage.alt}
               className="w-1/2 lg:w-5/6"
             />
           </div>
