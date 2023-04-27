@@ -35,4 +35,35 @@ type SpecialOffer = {
   value: string;
 };
 
-export { Product, Category, SortBy, Image, ImagesObject, SpecialOffer };
+type JobOffer = {
+  id: number;
+  title: string;
+  salary: {
+    min: number;
+    max: number;
+  };
+};
+
+type JobApplication = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  age: number;
+  email: string;
+  aboutMe: string | null;
+  resumee: string | null;
+  jobTitle: string;
+  prefferedSalary: number;
+  dataProcessingConsent: boolean;
+};
+
+export {
+  Product,
+  Category,
+  SortBy,
+  Image,
+  ImagesObject,
+  SpecialOffer,
+  JobOffer,
+  JobApplication,
+};
