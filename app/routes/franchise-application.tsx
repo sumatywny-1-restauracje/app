@@ -1,3 +1,4 @@
+import type { LinksFunction } from "@remix-run/node";
 import type { V2_MetaFunction } from "@remix-run/react";
 import {
   Form,
@@ -6,7 +7,17 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 
+import { useState } from "react";
+import MapComponent from "~/components/map/Map";
+
 export const meta: V2_MetaFunction = () => [{ title: "Job Application" }];
+
+export const links: LinksFunction = () => [
+  {
+    rel: "stylesheet",
+    href: "https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css",
+  },
+];
 
 export default function JobApplicationRoute() {
   const data = useLoaderData();
@@ -14,8 +25,16 @@ export default function JobApplicationRoute() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
+  const [selectedLocation, setSelectedLocation] = useState({
+    latitude: 51.9189046,
+    longitude: 19.1343786,
+  });
+
   return (
-    <div className="mb-12 mt-8 flex w-5/6 max-w-screen-lg flex-col items-center justify-center gap-5 rounded-xl border-rose-300 bg-orange-100 p-4 md:w-4/6 lg:flex-row">
+    <div className="mb-12 mt-8 grid w-5/6 max-w-screen-lg grid-cols-1 gap-5 rounded-xl border-rose-300 bg-orange-100 p-4 md:w-4/6 lg:grid-cols-2">
+      <h1 className="lg-w-full w-1/2 text-center text-2xl font-bold text-rose-400 sm:text-4xl lg:col-span-2 lg:w-full lg:text-5xl">
+        Become a Foodsi Franchisee!
+      </h1>
       {actionData?.success ? (
         <div className="flex flex-col gap-2 text-center text-rose-400">
           <h2 className="text-5xl font-bold">Success!</h2>
@@ -25,7 +44,7 @@ export default function JobApplicationRoute() {
         <>
           <Form
             method="post"
-            className="flex w-full flex-col items-center gap-6 lg:w-1/2"
+            className="flex w-full flex-col items-center gap-6"
           >
             <div className="col-span-2 mb-2 flex flex-col gap-2 rounded-xl border border-rose-400 p-2">
               <div className="flex flex-col gap-1">
@@ -86,7 +105,7 @@ export default function JobApplicationRoute() {
                 </label>
                 <textarea
                   name="aboutMe"
-                  className="resize-y rounded-xl border-rose-400 bg-orange-50 focus:border-rose-500 focus:ring-rose-500"
+                  className="resize-none rounded-xl border-rose-400 bg-orange-50 focus:border-rose-500 focus:ring-rose-500"
                 />
               </div>
               <div className="flex flex-col gap-1">
@@ -95,11 +114,11 @@ export default function JobApplicationRoute() {
                   htmlFor="reasonForOpening"
                 >
                   Why do you think opening a franchise in the location of your
-                  choice will be successful?:
+                  choice will be successful?
                 </label>
                 <textarea
                   name="reasonForOpening"
-                  className="resize-y rounded-xl border-rose-400 bg-orange-50 focus:border-rose-500 focus:ring-rose-500"
+                  className="resize-none rounded-xl border-rose-400 bg-orange-50 focus:border-rose-500 focus:ring-rose-500"
                 />
               </div>
             </div>
@@ -130,11 +149,53 @@ export default function JobApplicationRoute() {
               {isSubmitting ? "Sending..." : "Send!"}
             </button>
           </Form>
-          <div className="flex h-full w-full flex-row items-center justify-center gap-8 max-lg:order-first lg:w-1/2 lg:flex-col">
-            <h1 className="lg-w-full w-1/2 text-center text-3xl font-bold text-rose-400 sm:text-5xl lg:w-full lg:text-6xl">
-              Select the Location
-            </h1>
-            <img alt="Interactive Map" className="w-1/2 lg:w-5/6" />
+          <div className="flex h-full w-full flex-row  items-center gap-3 max-lg:order-first lg:flex-col">
+            <div className="h-full w-full overflow-hidden rounded-2xl border border-rose-400">
+              <MapComponent
+                data={data?.locations}
+                selectedLocation={selectedLocation}
+                setSelectedLocation={setSelectedLocation}
+              />
+            </div>
+            <p className="text-center text-base text-gray-700">
+              Drag the marker to the desired location or enter its coordinates!
+            </p>
+            <div className="grid w-full grid-cols-2 gap-3">
+              <div className="flex flex-col items-center">
+                <label className="hidden text-gray-500" htmlFor="longitude">
+                  Longitude:
+                </label>
+                <input
+                  type="number"
+                  name="longitude"
+                  className="w-full rounded-xl border-rose-400 bg-orange-50 text-center [appearance:textfield] focus:border-rose-500 focus:ring-rose-500 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                  value={selectedLocation.longitude}
+                  onChange={(e) => {
+                    setSelectedLocation({
+                      ...selectedLocation,
+                      longitude: Number(e.target.value),
+                    });
+                  }}
+                />
+              </div>
+              <div className="flex flex-col items-center">
+                <label className=" hidden text-gray-500" htmlFor="latitude">
+                  Latitude:
+                </label>
+                <input
+                  type="number"
+                  name="latitude"
+                  className="w-full rounded-xl border-rose-400 bg-orange-50 text-center [appearance:textfield] focus:border-rose-500 focus:ring-rose-500 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                  value={selectedLocation.latitude}
+                  onChange={(e) => {
+                    setSelectedLocation({
+                      ...selectedLocation,
+                      latitude: Number(e.target.value),
+                    });
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </>
       )}
