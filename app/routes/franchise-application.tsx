@@ -32,7 +32,7 @@ export default function JobApplicationRoute() {
 
   return (
     <div className="mb-12 mt-8 grid w-5/6 max-w-screen-lg grid-cols-1 gap-5 rounded-xl border-rose-300 bg-orange-100 p-4 md:w-4/6 lg:grid-cols-2">
-      <h1 className="lg-w-full w-1/2 text-center text-2xl font-bold text-rose-400 sm:text-4xl lg:col-span-2 lg:w-full lg:text-5xl">
+      <h1 className=" w-full text-center text-2xl font-bold text-rose-400 sm:text-4xl lg:col-span-2 lg:text-5xl">
         Become a Foodsi Franchisee!
       </h1>
       {actionData?.success ? (
@@ -44,7 +44,7 @@ export default function JobApplicationRoute() {
         <>
           <Form
             method="post"
-            className="flex w-full flex-col items-center gap-6"
+            className="flex w-full flex-col items-center gap-6 max-lg:order-last"
           >
             <div className="col-span-2 mb-2 flex flex-col gap-2 rounded-xl border border-rose-400 p-2">
               <div className="flex flex-col gap-1">
@@ -149,7 +149,7 @@ export default function JobApplicationRoute() {
               {isSubmitting ? "Sending..." : "Send!"}
             </button>
           </Form>
-          <div className="flex h-full w-full flex-row  items-center gap-3 max-lg:order-first lg:flex-col">
+          <div className="flex h-full w-full flex-col items-center gap-3">
             <div className="h-full w-full overflow-hidden rounded-2xl border border-rose-400">
               <MapComponent
                 data={data?.locations}

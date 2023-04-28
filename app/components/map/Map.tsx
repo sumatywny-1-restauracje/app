@@ -36,7 +36,6 @@ const MapComponent = ({
       });
     }
 
-    console.log("event.lngLat", event.lngLat);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -51,7 +50,7 @@ const MapComponent = ({
         latitude: 51.9189046,
         zoom: 5,
       }}
-      style={{ width: "100%", height: "100%" }}
+      style={{ width: "100%", height: "100%", minHeight: "350px" }}
       mapStyle="mapbox://styles/mapbox/streets-v9"
     >
       {selectedLocation && (
