@@ -45,7 +45,8 @@ const MapComponent = ({
   }, []);
   return (
     <Map
-      mapboxAccessToken="pk.eyJ1Ijoic3RlcG5pYWN6a3kiLCJhIjoiY2xoMGt1YmxpMHVuczNlcnpoNTlrZXZ2bCJ9.uYYqJlTNB3I5xdXrdnrWeQ"
+      // eslint-disable-next-line no-undef
+      mapboxAccessToken={ENV.mapboxAccessToken}
       initialViewState={{
         longitude: 19.1343786,
         latitude: 51.9189046,
