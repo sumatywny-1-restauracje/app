@@ -68,52 +68,50 @@ const MapComponent = ({
         ></Marker>
       )}
       {locations.map((location) => (
-        <>
-          <Marker
-            key={location.id}
-            longitude={location.longitude}
-            latitude={location.latitude}
-            color="#3FB1CE"
-            anchor="bottom"
-            onClick={(e) => {
-              e.originalEvent.stopPropagation();
-              setPopupInfo(location);
-            }}
+        <Marker
+          key={location.id}
+          longitude={location.longitude}
+          latitude={location.latitude}
+          color="#3FB1CE"
+          anchor="bottom"
+          onClick={(e) => {
+            e.originalEvent.stopPropagation();
+            setPopupInfo(location);
+          }}
+        >
+          <div
+            className={`${
+              withPopups && "cursor-pointer"
+            } text-4xl text-sky-400`}
           >
-            <div
-              className={`${
-                withPopups && "cursor-pointer"
-              } text-4xl text-sky-400`}
-            >
-              <FaMapMarkerAlt />
-            </div>
-          </Marker>
-          {popupInfo && withPopups && (
-            <Popup
-              anchor="top"
-              longitude={Number(popupInfo?.longitude)}
-              latitude={Number(popupInfo?.latitude)}
-              onClose={() => setPopupInfo(null)}
-              maxWidth="320px"
-            >
-              <div className="flex gap-2">
-                <img
-                  width="80px"
-                  src={popupInfo.image.src}
-                  alt={popupInfo.image.alt}
-                />
-                <div>
-                  <p>
-                    {popupInfo.address}, {popupInfo.city}
-                  </p>
-                  <p>{popupInfo.workingHours}</p>
-                  <p>{popupInfo.phone}</p>
-                </div>
-              </div>
-            </Popup>
-          )}
-        </>
+            <FaMapMarkerAlt />
+          </div>
+        </Marker>
       ))}
+      {popupInfo && withPopups && (
+        <Popup
+          anchor="top"
+          longitude={Number(popupInfo?.longitude)}
+          latitude={Number(popupInfo?.latitude)}
+          onClose={() => setPopupInfo(null)}
+          maxWidth="320px"
+        >
+          <div className="flex gap-2">
+            <img
+              width="80px"
+              src={popupInfo.image.src}
+              alt={popupInfo.image.alt}
+            />
+            <div>
+              <p>
+                {popupInfo.address}, {popupInfo.city}
+              </p>
+              <p>{popupInfo.workingHours}</p>
+              <p>{popupInfo.phone}</p>
+            </div>
+          </div>
+        </Popup>
+      )}
       <NavigationControl />
     </Map>
   );
