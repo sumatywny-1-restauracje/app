@@ -1,26 +1,27 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
+import type { Location, SelectedLocation } from "types";
 import type { MarkerDragEvent, LngLat } from "react-map-gl";
 import { useCallback, useState } from "react";
-import Map, { Marker, NavigationControl } from "react-map-gl";
-
-type MapLocation = {
-  id?: number;
-  longitude: number;
-  latitude: number;
-};
+import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 type MapComponentProps = {
-  data?: Array<MapLocation>;
-  selectedLocation?: MapLocation;
-  setSelectedLocation?: (location: MapLocation) => void;
+  locations: Array<Location>;
+  selectedLocation?: SelectedLocation;
+  setSelectedLocation?: (location: SelectedLocation) => void;
+  withPopups?: boolean;
 };
 
 const MapComponent = ({
-  data,
+  locations,
   selectedLocation,
   setSelectedLocation,
+  withPopups,
 }: MapComponentProps) => {
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   const [events, logEvents] = useState<Record<string, LngLat>>({});
+
+  const [popupInfo, setPopupInfo] = useState<Location | null>(null);
 
   const onMarkerDragStart = useCallback((event: MarkerDragEvent) => {
     logEvents((_events) => ({ ..._events, onDragStart: event.lngLat }));
@@ -65,13 +66,52 @@ const MapComponent = ({
           color="#FB7185"
         ></Marker>
       )}
-      {data?.map((location) => (
-        <Marker
-          key={location.id}
-          longitude={location.longitude}
-          latitude={location.latitude}
-          color="#3FB1CE"
-        />
+      {locations.map((location) => (
+        <>
+          <Marker
+            key={location.id}
+            longitude={location.longitude}
+            latitude={location.latitude}
+            color="#3FB1CE"
+            anchor="bottom"
+            onClick={(e) => {
+              e.originalEvent.stopPropagation();
+              setPopupInfo(location);
+            }}
+          >
+            <div
+              className={`${
+                withPopups && "cursor-pointer"
+              } text-4xl text-sky-400`}
+            >
+              <FaMapMarkerAlt />
+            </div>
+          </Marker>
+          {popupInfo && withPopups && (
+            <Popup
+              anchor="top"
+              longitude={Number(popupInfo?.longitude)}
+              latitude={Number(popupInfo?.latitude)}
+              onClose={() => setPopupInfo(null)}
+              maxWidth="320px"
+            >
+              <div className="flex gap-2">
+                <img
+                  width="80px"
+                  src={popupInfo.image.src}
+                  alt={popupInfo.image.alt}
+                />
+                <div>
+                  <p>
+                    {popupInfo.address}, {popupInfo.city}
+                  </p>
+                  <p>{popupInfo.workingHours}</p>
+                  <p>{popupInfo.phone}</p>
+                </div>
+              </div>
+            </Popup>
+          )}
+        </>
       ))}
       <NavigationControl />
     </Map>
