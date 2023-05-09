@@ -7,6 +7,9 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { getEnv } from "./env.server";
 
 import stylesheet from "./styles/tailwind.css";
 import Footer from "~/components/Footer";
@@ -16,7 +19,15 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
+type LoaderData = {
+  ENV: ReturnType<typeof getEnv>;
+};
+
+export const loader = async () => {
+  return json<LoaderData>({ ENV: getEnv() });
+};
 export default function App() {
+  const data = useLoaderData<LoaderData>();
   return (
     <html lang="en" className="h-full">
       <head>
@@ -35,6 +46,11 @@ export default function App() {
         </div>
         <ScrollRestoration />
         <Scripts />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+          }}
+        />
         <LiveReload />
       </body>
     </html>
