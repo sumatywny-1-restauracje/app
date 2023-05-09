@@ -1,5 +1,7 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { Location } from "types";
+import type { LinksFunction, LoaderFunction } from "@remix-run/node";
 import type { V2_MetaFunction } from "@remix-run/react";
+import { json } from "@remix-run/node";
 import {
   Form,
   useActionData,
@@ -8,9 +10,10 @@ import {
 } from "@remix-run/react";
 
 import { useState } from "react";
+import { getLocations } from "~/models/locations.server";
 import MapComponent from "~/components/map/Map";
 
-export const meta: V2_MetaFunction = () => [{ title: "Job Application" }];
+export const meta: V2_MetaFunction = () => [{ title: "Franchise Application" }];
 
 export const links: LinksFunction = () => [
   {
@@ -19,7 +22,17 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export default function JobApplicationRoute() {
+type LoaderData = {
+  locations: Array<Location>;
+};
+export const loader: LoaderFunction = async () => {
+  const locations = await getLocations();
+  return json<LoaderData>({
+    locations: locations,
+  });
+};
+
+export default function FranchiseApplicationRoute() {
   const data = useLoaderData();
   const actionData = useActionData();
   const navigation = useNavigation();
@@ -152,7 +165,7 @@ export default function JobApplicationRoute() {
           <div className="flex h-full w-full flex-col items-center gap-3">
             <div className="h-full w-full overflow-hidden rounded-2xl border border-rose-400">
               <MapComponent
-                data={data?.locations}
+                locations={data?.locations}
                 selectedLocation={selectedLocation}
                 setSelectedLocation={setSelectedLocation}
               />
