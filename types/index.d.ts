@@ -57,6 +57,22 @@ type JobApplication = {
   dataProcessingConsent: boolean;
 };
 
+type Location = {
+  id: number;
+  latitude: number;
+  longitude: number;
+  address: string;
+  city: string;
+  workingHours: string;
+  phone: string;
+  image: Image;
+};
+
+type SelectedLocation = {
+  latitude: number;
+  longitude: number;
+};
+
 export {
   Product,
   Category,
@@ -66,4 +82,6 @@ export {
   SpecialOffer,
   JobOffer,
   JobApplication,
+  Location,
+  SelectedLocation,
 };
