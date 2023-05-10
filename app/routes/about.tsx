@@ -66,13 +66,13 @@ export default function AboutRoute() {
         solutions that satisfy your cravings and drive your taste buds wild.
       </p>
       <div className="bg-orange-200">
-        <div className="mx-auto flex w-11/12 gap-6 py-4">
+        <div className="mx-auto flex w-11/12 flex-col gap-6 py-4 lg:flex-row">
           <img
-            className="max-h-[400px] w-1/2 rounded-xl border-2 border-rose-400"
+            className="max-h-[400px] w-full rounded-xl border-2 border-rose-400 lg:w-1/2"
             src={images?.aboutUs.src}
             alt={images?.aboutUs.alt}
           />
-          <div className="flex w-1/2 flex-col gap-6 text-justify text-sm">
+          <div className="flex w-full flex-col gap-6 text-justify text-sm lg:w-1/2">
             <p>
               We are a fast food restaurant that prides itself on serving
               high-quality meals at affordable prices. Our menu is packed with a
@@ -110,7 +110,7 @@ export default function AboutRoute() {
         solutions that not only satisfy your cravings but also excite your taste
         buds with unique and delicious flavors.
       </p>
-      <div className="mx-auto -mt-4 grid w-11/12 grid-cols-2 gap-6 py-4">
+      <div className="mx-auto -mt-4 flex w-11/12 flex-col gap-6 py-4 sm:grid sm:grid-cols-2">
         <div className="flex items-center gap-3 rounded-xl bg-orange-200 p-3">
           <div className="h-max w-max rounded-full bg-orange-100 p-2 text-4xl">
             <HiOutlineRefresh />
@@ -169,8 +169,8 @@ export default function AboutRoute() {
       </div>
 
       <div className="bg-orange-200">
-        <div className="mx-auto flex w-10/12 gap-6 py-4">
-          <div className="flex w-1/2 flex-col gap-4">
+        <div className="mx-auto flex w-10/12 flex-col gap-6 py-4 md:flex-row">
+          <div className="flex w-full flex-col gap-4 md:w-1/2">
             <h2 className="text-2xl font-bold text-rose-400 sm:text-4xl lg:text-5xl">
               Many Locals
             </h2>
@@ -191,7 +191,7 @@ export default function AboutRoute() {
               alt={images?.ourLocals.src}
             />
           </div>
-          <div className="flex w-1/2 flex-col gap-6 text-justify text-sm">
+          <div className="flex w-full flex-col gap-6 text-justify text-sm md:w-1/2">
             <div className="flex items-center gap-2">
               <img
                 className="h-12 w-12 rounded-lg border border-rose-400 object-fill"
