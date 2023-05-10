@@ -33,7 +33,7 @@ export default function LocalsRoute() {
       <h1 className=" w-full text-center text-2xl font-bold text-rose-400 sm:text-4xl lg:col-span-2 lg:text-5xl">
         Check Our Locals!
       </h1>
-      <div className="h-full w-full overflow-hidden rounded-2xl border border-rose-400">
+      <div className="h-full min-h-[600px] w-full overflow-hidden rounded-2xl border border-rose-400">
         <MapComponent locations={data?.locations} withPopups={true} />
       </div>
     </div>
