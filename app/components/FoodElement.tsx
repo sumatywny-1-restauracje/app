@@ -53,7 +53,7 @@ const FoodElement = ({ product }: FoodElementProps) => {
           <div className="flex items-center justify-between">
             <span className="text-xl font-bold">${product?.price}</span>
             <button
-              className="rounded-2xl bg-rose-400 px-2 py-1 text-xs font-semibold text-white hover:bg-rose-500 lg:px-3 xl:text-base"
+              className="rounded-2xl bg-rose-400 px-4 py-1 text-xs font-semibold text-white hover:bg-rose-500 lg:px-6 xl:text-base"
               onClick={() =>
                 updateBasket(
                   user?.accessToken,
@@ -64,7 +64,7 @@ const FoodElement = ({ product }: FoodElementProps) => {
                 )
               }
             >
-              Buy Now
+              Add
             </button>
           </div>
         </div>

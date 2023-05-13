@@ -24,6 +24,14 @@ const Basket = ({ visible }: { visible: boolean }) => {
           label={
             <div className="flex items-center justify-center rounded-full border-2 border-rose-400 bg-orange-100 p-2 text-[24px] hover:border-rose-500 hover:text-rose-500">
               <FaShoppingBasket />
+              {basketData.basket.length > 0 && (
+                <span className="fixed block min-w-[32px] -translate-y-4 translate-x-5 rounded-full border-2 border-rose-400 bg-rose-300 p-1 text-center text-sm font-bold text-gray-700">
+                  {basketData.basket.reduce(
+                    (acc, item) => acc + item.quantity,
+                    0
+                  )}
+                </span>
+              )}
             </div>
           }
         >
@@ -101,6 +109,11 @@ const Basket = ({ visible }: { visible: boolean }) => {
       ) : (
         <div className="flex items-center justify-center rounded-full border-2 border-rose-400 bg-orange-100 p-2 text-[24px] hover:border-rose-500 hover:text-rose-500">
           <FaShoppingBasket />
+          {basketData.basket.length > 0 && (
+            <span className="fixed block min-w-[32px] -translate-y-4 translate-x-5 rounded-full border-2 border-rose-400 bg-rose-300 p-1 text-center text-sm font-bold text-gray-700">
+              {basketData.basket.reduce((acc, item) => acc + item.quantity, 0)}
+            </span>
+          )}
         </div>
       )}
     </div>
