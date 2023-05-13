@@ -4,6 +4,7 @@ import { FiRefreshCcw, FiShoppingCart } from "react-icons/fi";
 import { TbCashOff } from "react-icons/tb";
 import { FaPlay } from "react-icons/fa";
 import { Avatar } from "flowbite-react";
+import { Link } from "@remix-run/react";
 
 type TeaserProps = {
   homeHeaderAvatar: Image;
@@ -39,9 +40,13 @@ const Teaser = ({ homeHeaderAvatar, homeHeaderImg }: TeaserProps) => {
                   <div className="rounded-full bg-amber-400 p-2">
                     <FiShoppingCart />
                   </div>
-                  <span className="pr-2 text-xs font-bold text-white  xl:text-base">
+                  <Link
+                    to="/menu"
+                    prefetch="intent"
+                    className="pr-2 text-xs font-bold text-white  xl:text-base"
+                  >
                     Buy Now
-                  </span>
+                  </Link>
                 </button>
                 <button className="flex items-center gap-3 rounded-3xl border-4 border-rose-400 p-2 hover:border-rose-500 max-sm:w-5/6">
                   <div className="rounded-full bg-amber-400 p-2">

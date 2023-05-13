@@ -1,4 +1,5 @@
 import type { Image } from "types";
+import { Link } from "@remix-run/react";
 
 type FoodCategoriesProps = {
   foodCategories: Array<{ name: string; image: Image }>;
@@ -26,9 +27,13 @@ const FoodCategories = ({ foodCategories }: FoodCategoriesProps) => {
           <span className="mb-1 mt-3 text-base font-bold md:text-xl">
             {foodCategories[0].name.toUpperCase()}
           </span>
-          <button className="text-sm font-semibold text-rose-400 hover:text-rose-500 md:text-lg">
+          <Link
+            to="/menu/burger?sortBy=recentlyAdded"
+            prefetch="intent"
+            className="text-sm font-semibold text-rose-400 hover:text-rose-500 md:text-lg"
+          >
             Order Now &gt;
-          </button>
+          </Link>
         </div>
         <div className="flex flex-col items-center">
           <img
@@ -39,9 +44,13 @@ const FoodCategories = ({ foodCategories }: FoodCategoriesProps) => {
           <span className="mb-1 mt-3 text-base font-bold md:text-xl">
             {foodCategories[1].name.toUpperCase()}
           </span>
-          <button className="text-sm font-semibold text-rose-400 hover:text-rose-500 md:text-lg">
+          <Link
+            to="/menu/pizza?sortBy=recentlyAdded"
+            prefetch="intent"
+            className="text-sm font-semibold text-rose-400 hover:text-rose-500 md:text-lg"
+          >
             Order Now &gt;
-          </button>
+          </Link>
         </div>
         <div className="flex flex-col items-center">
           <img
@@ -52,9 +61,13 @@ const FoodCategories = ({ foodCategories }: FoodCategoriesProps) => {
           <span className="mb-1 mt-3 text-base font-bold md:text-xl">
             {foodCategories[2].name.toUpperCase()}
           </span>
-          <button className="text-sm font-semibold text-rose-400 hover:text-rose-500 md:text-lg">
+          <Link
+            to="/menu/dessert?sortBy=recentlyAdded"
+            prefetch="intent"
+            className="text-sm font-semibold text-rose-400 hover:text-rose-500 md:text-lg"
+          >
             Order Now &gt;
-          </button>
+          </Link>
         </div>
       </div>
     </div>
