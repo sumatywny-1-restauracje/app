@@ -1,13 +1,18 @@
-import { useEffect, useState } from "react";
-// import axios from "axios";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
-// import { Avatar, Dropdown } from "flowbite-react";
-// import { FaRegUser, FaHistory } from "react-icons/fa";
+import { Avatar, Dropdown } from "flowbite-react";
+import { FaRegUser, FaHistory } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import NavbarRoutesList from "./NavbarRoutesList";
+import LoginForm from "./LoginForm";
+import { UserContext } from "~/root";
 
-const Navbar = () => {
-  // const [user, setUser] = useState(undefined); // test
+type NavbarProps = {
+  userPhoto: string;
+};
+
+const Navbar = ({ userPhoto }: NavbarProps) => {
+  const user = useContext(UserContext);
   const [menuDropdown, setMenuDropdown] = useState(false);
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -16,7 +21,6 @@ const Navbar = () => {
   // need to add debounce
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
-    // console.log(currentScrollPos, prevScrollPos);
 
     if (currentScrollPos > prevScrollPos) {
       setVisible(false);
@@ -27,21 +31,7 @@ const Navbar = () => {
     setPrevScrollPos(currentScrollPos);
   };
 
-  // useEffect(() => {
-  //   const fetchAuthMe = async () => {
-  //     const res = await axios.get("/.auth/me");
-  //     const userData = res.data.clientPrincipal;
-
-  //     if (!userData) {
-  //       setUser(undefined);
-  //       return;
-  //     }
-
-  //     setUser(userData.userDetails);
-  //   };
-
-  //   fetchAuthMe();
-  // }, []);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -50,81 +40,108 @@ const Navbar = () => {
   });
 
   return (
-    <nav
-      className={
-        " delay-400 sticky top-0 z-20 h-max transform bg-orange-100 py-6 transition-all duration-500 ease-in-out " +
-        (visible ? "flex -translate-y-0 flex-col" : "-translate-y-full")
-      }
-    >
-      <div className="mx-auto flex w-4/6 max-w-screen-lg flex-wrap items-center justify-between font-sans">
-        <Link to="/" className="flex items-center max-md:hidden">
-          <span className="self-center whitespace-nowrap text-2xl font-bold text-gray-700">
-            Foodsi
-          </span>
-        </Link>
-        <button
-          type="button"
-          className="ml-1 inline-flex items-center rounded-lg p-1 text-sm text-gray-500 focus:ring-2 active:outline-none active:ring-gray-200 md:hidden"
-          onClick={() => setMenuDropdown(!menuDropdown)}
-        >
-          <span className="sr-only">Open main menu</span>
-          <div className="text-lg">
-            <GiHamburgerMenu />
+    <>
+      <nav
+        className={
+          " delay-400 sticky top-0 z-20 h-max transform bg-orange-100 py-6 transition-all duration-500 ease-in-out " +
+          (visible ? "flex -translate-y-0 flex-col" : "-translate-y-full")
+        }
+      >
+        <div className="mx-auto flex w-4/6 max-w-screen-lg flex-wrap items-center justify-between font-sans">
+          <Link to="/" className="flex items-center max-md:hidden">
+            <span className="self-center whitespace-nowrap text-2xl font-bold text-gray-700">
+              Foodsi
+            </span>
+          </Link>
+          <button
+            type="button"
+            className="ml-1 inline-flex items-center rounded-lg p-1 text-sm text-gray-500 focus:ring-2 active:outline-none active:ring-gray-200 md:hidden"
+            onClick={() => setMenuDropdown(!menuDropdown)}
+          >
+            <span className="sr-only">Open main menu</span>
+            <div className="text-lg">
+              <GiHamburgerMenu />
+            </div>
+          </button>
+          <div className="flex justify-center gap-1 md:order-2">
+            {!user ? (
+              <button
+                type="button"
+                onClick={() => setShowModal(true)}
+                className="text-md rounded-xl border border-rose-400 p-1 px-4 text-center font-semibold text-rose-400 hover:border-rose-600 hover:text-rose-600 md:mr-0"
+              >
+                Login
+              </button>
+            ) : (
+              <>
+                {visible ? (
+                  <Dropdown
+                    arrowIcon={false}
+                    inline={true}
+                    dismissOnClick={true}
+                    className="rounded-xl bg-orange-200"
+                    label={
+                      <Avatar
+                        alt="User profile"
+                        className="rounded-full border-2 border-rose-400"
+                        img={
+                          userPhoto ||
+                          "https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                        }
+                        rounded={true}
+                      />
+                    }
+                  >
+                    {user?.name && (
+                      <Dropdown.Header>
+                        <span className="block text-sm">{user?.name}</span>
+                      </Dropdown.Header>
+                    )}
+                    <Dropdown.Item>
+                      <div className="flex items-center gap-1">
+                        <FaHistory />
+                        <span>Orders</span>
+                      </div>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <div className="flex items-center gap-1">
+                        <FaRegUser />
+                        <span>Profile</span>
+                      </div>
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item>
+                      <form action="/logout" method="post">
+                        <button>Log out</button>
+                      </form>
+                    </Dropdown.Item>
+                  </Dropdown>
+                ) : (
+                  <Avatar
+                    alt="User profile"
+                    className="rounded-full border-2 border-rose-400"
+                    img={
+                      userPhoto ||
+                      "https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                    }
+                    rounded={true}
+                  />
+                )}
+              </>
+            )}
           </div>
-        </button>
-        <div className="flex justify-center gap-1 md:order-2">
-          {/* {!user ? (
-            <a
-              href="/login"
-              target="_self"
-              type="button"
-              className="text-md mr-3 rounded-xl border border-rose-400 p-1 px-4 text-center font-semibold text-rose-400 hover:border-rose-600 hover:text-rose-600 md:mr-0"
-            >
-              Login
-            </a>
-          ) : (
-            <Dropdown
-              arrowIcon={false}
-              inline={true}
-              className="rounded-xl bg-orange-200"
-              label={
-                <Avatar
-                  alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                  rounded={true}
-                />
-              }
-            >
-              <Dropdown.Header>
-                <span className="block text-sm">Bonnie Green</span>
-              </Dropdown.Header>
-              <Dropdown.Item>
-                <div className="flex items-center gap-1">
-                  <FaHistory />
-                  <span>Orders</span>
-                </div>
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <div className="flex items-center gap-1">
-                  <FaRegUser />
-                  <span>Profile</span>
-                </div>
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item>Sign out</Dropdown.Item>
-            </Dropdown>
-          )} */}
+          <div className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto">
+            <NavbarRoutesList />
+          </div>
         </div>
-        <div className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto">
-          <NavbarRoutesList />
-        </div>
-      </div>
-      {menuDropdown && (
-        <div className="flex w-full flex-auto md:hidden">
-          <NavbarRoutesList />
-        </div>
-      )}
-    </nav>
+        {menuDropdown && (
+          <div className="flex w-full flex-auto md:hidden">
+            <NavbarRoutesList />
+          </div>
+        )}
+      </nav>
+      <LoginForm showModal={showModal} setShowModal={setShowModal} />
+    </>
   );
 };
 
