@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderArgs } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -11,9 +11,14 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getEnv } from "./env.server";
 
+import { createContext } from "react";
+import axios from "axios";
+
 import stylesheet from "./styles/tailwind.css";
 import Footer from "~/components/Footer";
 import Navbar from "~/components/Navbar";
+import { authenticator } from "./services/auth.server";
+import type { User } from "./types";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -21,13 +26,45 @@ export const links: LinksFunction = () => [
 
 type LoaderData = {
   ENV: ReturnType<typeof getEnv>;
+  user: User;
+  userPhoto: string;
 };
 
-export const loader = async () => {
-  return json<LoaderData>({ ENV: getEnv() });
+export const loader = async ({ request }: LoaderArgs) => {
+  const user = (await authenticator.isAuthenticated(request)) as User;
+  const graphEndpoint = "https://graph.microsoft.com/v1.0/me/photo/$value";
+
+  if (!user) {
+    return json<LoaderData>({
+      ENV: getEnv(),
+      user: null,
+      userPhoto: "",
+    });
+  }
+
+  const accessToken = user?.accessToken;
+
+  const response = await axios(graphEndpoint, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    responseType: "arraybuffer",
+  });
+  const avatar = Buffer.from(response.data, "binary").toString("base64");
+  const photo = "data:image/jpeg;base64, " + avatar;
+
+  return json<LoaderData>({
+    ENV: getEnv(),
+    user: user,
+    userPhoto: photo,
+  });
 };
+
+export const UserContext = createContext(null);
+
 export default function App() {
   const data = useLoaderData<LoaderData>();
+
   return (
     <html lang="en" className="h-full">
       <head>
@@ -38,11 +75,13 @@ export default function App() {
       </head>
       <body className="h-full">
         <div className="flex min-h-screen flex-col bg-orange-100">
-          <Navbar />
-          <div className="flex h-full flex-1 justify-center bg-zinc-100">
-            <Outlet />
-          </div>
-          <Footer />
+          <UserContext.Provider value={data.user}>
+            <Navbar userPhoto={data.userPhoto} />
+            <div className="flex h-full flex-1 justify-center bg-zinc-100">
+              <Outlet />
+            </div>
+            <Footer />
+          </UserContext.Provider>
         </div>
         <ScrollRestoration />
         <Scripts />

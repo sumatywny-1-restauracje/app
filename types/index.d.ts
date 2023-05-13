@@ -73,6 +73,14 @@ type SelectedLocation = {
   longitude: number;
 };
 
+type User = {
+  email: string;
+  name: string;
+  accessToken: string;
+  roles: string[];
+  basket: Product[];
+} | null;
+
 export {
   Product,
   Category,
@@ -84,4 +92,5 @@ export {
   JobApplication,
   Location,
   SelectedLocation,
+  User,
 };
