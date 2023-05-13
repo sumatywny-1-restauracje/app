@@ -11,14 +11,15 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getEnv } from "./env.server";
 
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import axios from "axios";
 
 import stylesheet from "./styles/tailwind.css";
 import Footer from "~/components/Footer";
 import Navbar from "~/components/Navbar";
 import { authenticator } from "./services/auth.server";
-import type { User } from "./types";
+import type { BasketItem, User } from "./types";
+import { getBasket } from "./models/basket";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -28,6 +29,7 @@ type LoaderData = {
   ENV: ReturnType<typeof getEnv>;
   user: User;
   userPhoto: string;
+  basket: Array<BasketItem>;
 };
 
 export const loader = async ({ request }: LoaderArgs) => {
@@ -39,8 +41,11 @@ export const loader = async ({ request }: LoaderArgs) => {
       ENV: getEnv(),
       user: null,
       userPhoto: "",
+      basket: [],
     });
   }
+
+  const basket = (await getBasket(user)) as Array<BasketItem>;
 
   const accessToken = user?.accessToken;
 
@@ -50,6 +55,16 @@ export const loader = async ({ request }: LoaderArgs) => {
     },
     responseType: "arraybuffer",
   });
+
+  if (response.status !== 200) {
+    return json<LoaderData>({
+      ENV: getEnv(),
+      user: user,
+      userPhoto: "",
+      basket: basket,
+    });
+  }
+
   const avatar = Buffer.from(response.data, "binary").toString("base64");
   const photo = "data:image/jpeg;base64, " + avatar;
 
@@ -57,13 +72,16 @@ export const loader = async ({ request }: LoaderArgs) => {
     ENV: getEnv(),
     user: user,
     userPhoto: photo,
+    basket: basket,
   });
 };
 
 export const UserContext = createContext(null);
+export const BasketContext = createContext(null);
 
 export default function App() {
   const data = useLoaderData<LoaderData>();
+  const [basket, setBasket] = useState(data.basket);
 
   return (
     <html lang="en" className="h-full">
@@ -76,11 +94,13 @@ export default function App() {
       <body className="h-full">
         <div className="flex min-h-screen flex-col bg-orange-100">
           <UserContext.Provider value={data.user}>
-            <Navbar userPhoto={data.userPhoto} />
-            <div className="flex h-full flex-1 justify-center bg-zinc-100">
-              <Outlet />
-            </div>
-            <Footer />
+            <BasketContext.Provider value={{ basket, setBasket }}>
+              <Navbar userPhoto={data.userPhoto} />
+              <div className="flex h-full flex-1 justify-center bg-zinc-100">
+                <Outlet />
+              </div>
+              <Footer />
+            </BasketContext.Provider>
           </UserContext.Provider>
         </div>
         <ScrollRestoration />

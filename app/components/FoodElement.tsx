@@ -1,11 +1,29 @@
-import type { Product } from "types";
+import type { Product, User } from "types";
+import { useContext } from "react";
 import { Rating } from "flowbite-react";
+import { BasketContext, UserContext } from "~/root";
+import { updateBasket } from "~/utils/updateBasket";
 
 type FoodElementProps = {
   product: Product;
 };
 
 const FoodElement = ({ product }: FoodElementProps) => {
+  const user = useContext(UserContext) as User;
+  const basketData = useContext(BasketContext);
+
+  const item = {
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    image: {
+      src: product.image,
+      alt: product.name,
+    },
+    quantity:
+      basketData.basket.find((item) => item.id === product.id)?.quantity ?? 0,
+  };
+
   return (
     <div className="relative mx-auto flex h-[18.5rem] w-44 items-end justify-start sm:h-[18.5rem] sm:w-52 md:h-80 md:w-60 lg:h-[20rem] lg:w-60 xl:h-[23rem] xl:w-64">
       <div className="absolute right-0 top-0 overflow-hidden rounded-full border-[12px] border-rose-400 text-[15rem] max-sm:w-full">
@@ -34,8 +52,19 @@ const FoodElement = ({ product }: FoodElementProps) => {
           </div>
           <div className="flex items-center justify-between">
             <span className="text-xl font-bold">${product?.price}</span>
-            <button className="rounded-2xl bg-rose-400 px-2 py-1 text-xs font-semibold text-white hover:bg-rose-500 lg:px-3 xl:text-base">
-              Buy Now
+            <button
+              className="rounded-2xl bg-rose-400 px-4 py-1 text-xs font-semibold text-white hover:bg-rose-500 lg:px-6 xl:text-base"
+              onClick={() =>
+                updateBasket(
+                  user?.accessToken,
+                  basketData.basket,
+                  basketData.setBasket,
+                  item,
+                  item.quantity + 1
+                )
+              }
+            >
+              Add
             </button>
           </div>
         </div>
