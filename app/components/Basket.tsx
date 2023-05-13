@@ -1,68 +1,18 @@
+import type { User } from "~/types";
+import { useContext } from "react";
 import { Dropdown } from "flowbite-react";
 import { FaShoppingBasket } from "react-icons/fa";
+import { BasketContext, UserContext } from "~/root";
+import { updateBasket } from "~/utils/updateBasket";
 
-const BASKET = [
-  {
-    id: 1,
-    price: 10.0,
-    quantity: 1,
-    image: {
-      src: "https://images.pexels.com/photos/15126955/pexels-photo-15126955.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      alt: "Pizza",
-    },
-  },
-  {
-    id: 2,
-    price: 5.0,
-    quantity: 5,
-    image: {
-      src: "https://images.pexels.com/photos/12034622/pexels-photo-12034622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      alt: "Hamburger",
-    },
-  },
-  {
-    id: 2,
-    price: 5.0,
-    quantity: 5,
-    image: {
-      src: "https://images.pexels.com/photos/12034622/pexels-photo-12034622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      alt: "Hamburger",
-    },
-  },
-  {
-    id: 2,
-    price: 5.0,
-    quantity: 5,
-    image: {
-      src: "https://images.pexels.com/photos/12034622/pexels-photo-12034622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      alt: "Hamburger",
-    },
-  },
-  {
-    id: 2,
-    price: 5.0,
-    quantity: 5,
-    image: {
-      src: "https://images.pexels.com/photos/12034622/pexels-photo-12034622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      alt: "Hamburger",
-    },
-  },
-  {
-    id: 2,
-    price: 5.0,
-    quantity: 5,
-    image: {
-      src: "https://images.pexels.com/photos/12034622/pexels-photo-12034622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      alt: "Hamburger",
-    },
-  },
-];
-
-const sumBasket = () => {
-  return BASKET.reduce((acc, item) => acc + item.price * item.quantity, 0);
+const sumBasket = (basket) => {
+  return basket.reduce((acc, item) => acc + item.price * item.quantity, 0);
 };
 
-const Basket = ({ visible }) => {
+const Basket = ({ visible }: { visible: boolean }) => {
+  const user = useContext(UserContext) as User;
+  const basketData = useContext(BasketContext);
+
   return (
     <div className="text-rose-400">
       {visible ? (
@@ -70,9 +20,9 @@ const Basket = ({ visible }) => {
           arrowIcon={false}
           inline={true}
           dismissOnClick={true}
-          className="w-[220px] rounded-xl bg-orange-200"
+          className="!min-w-[250px] rounded-xl bg-orange-200"
           label={
-            <div className="flex items-center justify-center rounded-full border-2 border-rose-400 bg-orange-100 p-2 text-[24px]">
+            <div className="flex items-center justify-center rounded-full border-2 border-rose-400 bg-orange-100 p-2 text-[24px] hover:border-rose-500 hover:text-rose-500">
               <FaShoppingBasket />
             </div>
           }
@@ -81,8 +31,8 @@ const Basket = ({ visible }) => {
             <span className="block text-sm">My Cart</span>
           </Dropdown.Header>
           <div className="flex max-h-[200px] flex-col overflow-y-auto">
-            {BASKET.length > 0 ? (
-              BASKET.map((item) => (
+            {basketData.basket.length > 0 ? (
+              basketData.basket.map((item) => (
                 <div key={item.id} className="text-xs text-gray-700">
                   <div className="flex w-full items-center justify-between px-3">
                     <img
@@ -91,11 +41,33 @@ const Basket = ({ visible }) => {
                       className="h-8 w-8 rounded-lg border-2 border-rose-400"
                     />
                     <div>
-                      <button className="w-8 rounded-full bg-gray-200 p-2 hover:bg-gray-600 hover:text-white">
+                      <button
+                        className="w-8 rounded-full bg-gray-200 p-2 hover:bg-gray-600 hover:text-white"
+                        onClick={() =>
+                          updateBasket(
+                            user.accessToken,
+                            basketData.basket,
+                            basketData.setBasket,
+                            item,
+                            item.quantity - 1
+                          )
+                        }
+                      >
                         -
                       </button>
                       <span className="text-gray-400"> {item.quantity} </span>
-                      <button className="w-8 rounded-full bg-gray-200 p-2 hover:bg-gray-600 hover:text-white">
+                      <button
+                        className="w-8 rounded-full bg-gray-200 p-2 hover:bg-gray-600 hover:text-white"
+                        onClick={() =>
+                          updateBasket(
+                            user?.accessToken,
+                            basketData.basket,
+                            basketData.setBasket,
+                            item,
+                            item.quantity + 1
+                          )
+                        }
+                      >
                         +
                       </button>
                     </div>
@@ -109,20 +81,25 @@ const Basket = ({ visible }) => {
               ))
             ) : (
               <div>
-                <div className="flex items-center gap-1">
-                  <span>Your cart is empty</span>
+                <div className="flex items-center gap-1 p-3">
+                  <span>Empty!</span>
+                  <span className="text-rose-400">Waiting for your order!</span>
                 </div>
               </div>
             )}
           </div>
-          <Dropdown.Item>
-            <div className="flex items-center gap-1">
-              <button>Make Order (${sumBasket().toFixed(2)})</button>
-            </div>
-          </Dropdown.Item>
+          {basketData.basket.length > 0 && (
+            <Dropdown.Item>
+              <div className="flex items-center gap-1">
+                <button>
+                  Make Order (${sumBasket(basketData.basket).toFixed(2)})
+                </button>
+              </div>
+            </Dropdown.Item>
+          )}
         </Dropdown>
       ) : (
-        <div className="flex items-center justify-center rounded-full border-2 border-rose-400 bg-orange-100 p-2 text-[24px]">
+        <div className="flex items-center justify-center rounded-full border-2 border-rose-400 bg-orange-100 p-2 text-[24px] hover:border-rose-500 hover:text-rose-500">
           <FaShoppingBasket />
         </div>
       )}

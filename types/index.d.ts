@@ -81,6 +81,13 @@ type User = {
   basket: Product[];
 } | null;
 
+type BasketItem = {
+  id: number;
+  price: number;
+  quantity: number;
+  image: Image;
+};
+
 export {
   Product,
   Category,
@@ -93,4 +100,5 @@ export {
   Location,
   SelectedLocation,
   User,
+  BasketItem,
 };

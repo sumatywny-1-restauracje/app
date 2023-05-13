@@ -7,6 +7,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import NavbarRoutesList from "./NavbarRoutesList";
 import LoginForm from "./LoginForm";
 import { UserContext } from "~/root";
+import Basket from "./Basket";
 
 type NavbarProps = {
   userPhoto: string;
@@ -74,7 +75,8 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
                 Login
               </button>
             ) : (
-              <>
+              <div className="flex gap-3">
+                <Basket visible={visible} />
                 {visible ? (
                   <Dropdown
                     arrowIcon={false}
@@ -128,7 +130,7 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
                     rounded={true}
                   />
                 )}
-              </>
+              </div>
             )}
           </div>
           <div className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto">
