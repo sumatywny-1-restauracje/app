@@ -45,7 +45,7 @@ const Basket = ({ visible }: { visible: boolean }) => {
                         className="w-8 rounded-full bg-gray-200 p-2 hover:bg-gray-600 hover:text-white"
                         onClick={() =>
                           updateBasket(
-                            user.accessToken,
+                            user?.accessToken,
                             basketData.basket,
                             basketData.setBasket,
                             item,
