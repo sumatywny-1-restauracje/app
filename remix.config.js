@@ -9,4 +9,5 @@ module.exports = {
     unstable_tailwind: true,
   },
   ignoredRouteFiles: ["**/.*", "**/*.css", "**/*.test.{js,jsx,ts,tsx}"],
+  serverDependenciesToBundle: ["axios"],
 };
