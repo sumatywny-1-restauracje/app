@@ -1,3 +1,4 @@
+import type { User } from "types";
 import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Dropdown } from "flowbite-react";
@@ -12,7 +13,7 @@ type NavbarProps = {
 };
 
 const Navbar = ({ userPhoto }: NavbarProps) => {
-  const user = useContext(UserContext);
+  const user = useContext(UserContext) as User;
   const [menuDropdown, setMenuDropdown] = useState(false);
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);

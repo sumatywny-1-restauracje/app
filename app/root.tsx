@@ -26,15 +26,15 @@ export const links: LinksFunction = () => [
 
 type LoaderData = {
   ENV: ReturnType<typeof getEnv>;
-  user: User | null;
+  user: User;
   userPhoto: string;
 };
 
 export const loader = async ({ request }: LoaderArgs) => {
-  const authenticatedData = await authenticator.isAuthenticated(request);
+  const user = (await authenticator.isAuthenticated(request)) as User;
   const graphEndpoint = "https://graph.microsoft.com/v1.0/me/photo/$value";
 
-  if (!authenticatedData?.user) {
+  if (!user) {
     return json<LoaderData>({
       ENV: getEnv(),
       user: null,
@@ -42,7 +42,7 @@ export const loader = async ({ request }: LoaderArgs) => {
     });
   }
 
-  const accessToken = authenticatedData?.user?.accessToken;
+  const accessToken = user?.accessToken;
 
   const response = await axios(graphEndpoint, {
     headers: {
@@ -55,7 +55,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 
   return json<LoaderData>({
     ENV: getEnv(),
-    user: authenticatedData?.user,
+    user: user,
     userPhoto: photo,
   });
 };

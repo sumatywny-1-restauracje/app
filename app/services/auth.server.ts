@@ -15,15 +15,15 @@ let microsoftStrategy = new MicrosoftStrategy(
     prompt: "select_account", // optional
   },
   async ({ accessToken, profile }) => {
-    const user = {
-      email: profile.emails[0].value,
-      name: profile.displayName,
+    const email = profile.emails[0].value;
+    const name = profile.displayName;
+    return {
+      email: email,
+      name: name,
       accessToken: accessToken,
       roles: ["cheffs", "admin"],
       basket: [],
     };
-
-    return { user };
   }
 );
 
