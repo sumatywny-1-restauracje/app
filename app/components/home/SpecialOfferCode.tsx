@@ -1,6 +1,13 @@
+import type { Image } from "types";
 import { useState } from "react";
 
-const SpecialOfferCode = ({ image, discountCode = "XDDDDDDDD" }) => {
+const SpecialOfferCode = ({
+  image,
+  discountCode,
+}: {
+  image: Image;
+  discountCode: string;
+}) => {
   const [codeCopied, setCodeCopied] = useState(false);
   return (
     <div className="relative flex h-full w-full items-center justify-center">
