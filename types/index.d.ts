@@ -33,6 +33,7 @@ type SpecialOffer = {
   id: number;
   image: Image;
   value: string;
+  discountCode: string;
 };
 
 type JobOffer = {

@@ -207,16 +207,19 @@ const SPECIAL_OFFERS: Array<SpecialOffer> = [
     id: 1,
     image: specialOfferImages.first,
     value: "50%",
+    discountCode: "BURGERS50DISCOUNT",
   },
   {
     id: 2,
     image: specialOfferImages.second,
     value: "25%",
+    discountCode: "DESSERTS25DISCOUNT",
   },
   {
     id: 3,
     image: specialOfferImages.third,
     value: "25%",
+    discountCode: "SALADS25DISCOUNT",
   },
 ];
 
