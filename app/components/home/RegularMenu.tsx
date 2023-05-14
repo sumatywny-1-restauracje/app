@@ -1,4 +1,5 @@
 import type { Product } from "types";
+import { Link } from "@remix-run/react";
 import FoodElement from "../FoodElement";
 
 type RegularMenuProps = {
@@ -16,9 +17,13 @@ const RegularMenu = ({ homeProducts }: RegularMenuProps) => {
           <span className="w-7/12 text-xs text-gray-500 max-sm:text-center sm:w-1/4 md:text-sm">
             These Are Our Regular Menus. You Can Order Anything You Like.
           </span>
-          <button className="rounded-2xl bg-rose-400 px-7 py-2 text-white hover:bg-rose-500">
+          <Link
+            to="/menu/"
+            prefetch="intent"
+            className="rounded-2xl bg-rose-400 px-7 py-2 text-white hover:bg-rose-500"
+          >
             See All
-          </button>
+          </Link>
         </div>
       </div>
       <div className="mx-auto flex w-full flex-wrap content-center gap-12 sm:grid sm:grid-cols-2 lg:grid-cols-3">
