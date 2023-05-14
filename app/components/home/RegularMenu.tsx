@@ -18,7 +18,7 @@ const RegularMenu = ({ homeProducts }: RegularMenuProps) => {
             These Are Our Regular Menus. You Can Order Anything You Like.
           </span>
           <Link
-            to="/menu/all?sortBy=recentlyAdded"
+            to="/menu/"
             prefetch="intent"
             className="rounded-2xl bg-rose-400 px-7 py-2 text-white hover:bg-rose-500"
           >

@@ -99,7 +99,7 @@ const Footer = () => {
               </li>
               <li className="mb-4">
                 <Link
-                  to="/locals"
+                  to="/delivery"
                   prefetch="intent"
                   className="hover:underline"
                 >
@@ -108,7 +108,7 @@ const Footer = () => {
               </li>
               <li className="mb-4">
                 <Link
-                  to="/locals"
+                  to="/contact"
                   prefetch="intent"
                   className="hover:underline"
                 >
