@@ -37,7 +37,7 @@ const Teaser = ({ homeHeaderAvatar, homeHeaderImg }: TeaserProps) => {
               </div>
               <div className="flex flex-col gap-3 max-sm:items-center sm:flex-row sm:gap-6">
                 <Link
-                  to="/menu/"
+                  to="/menu"
                   prefetch="intent"
                   className="flex items-center gap-3 rounded-3xl bg-rose-400 p-2 hover:bg-rose-500 max-sm:w-5/6"
                 >
