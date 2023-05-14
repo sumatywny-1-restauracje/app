@@ -49,14 +49,18 @@ export const loader = async ({ request }: LoaderArgs) => {
 
   const accessToken = user?.accessToken;
 
-  const response = await axios(graphEndpoint, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    responseType: "arraybuffer",
-  });
+  const response = await axios
+    .get(graphEndpoint, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      responseType: "arraybuffer",
+    })
+    .catch(function (error) {
+      console.log(error.toJSON());
+    });
 
-  if (response.status !== 200) {
+  if (response?.status !== 200) {
     return json<LoaderData>({
       ENV: getEnv(),
       user: user,
