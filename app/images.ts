@@ -27,6 +27,45 @@ const foodImages: ImagesObject = {
   },
 };
 
+const categoriesImages: ImagesObject = {
+  pizzas: {
+    src: require("~/assets/categories_icons/pizzas.svg"),
+    alt: "pizzas",
+  },
+  burgers: {
+    src: require("~/assets/categories_icons/burgers.svg"),
+    alt: "burgers",
+  },
+  salads: {
+    src: require("~/assets/categories_icons/salads.svg"),
+    alt: "salads",
+  },
+  desserts: {
+    src: require("~/assets/categories_icons/desserts.svg"),
+    alt: "desserts",
+  },
+  drinks: {
+    src: require("~/assets/categories_icons/drinks.svg"),
+    alt: "drinks",
+  },
+  burittos: {
+    src: require("~/assets/categories_icons/burittos.svg"),
+    alt: "burittos",
+  },
+  additions: {
+    src: require("~/assets/categories_icons/additions.svg"),
+    alt: "additions",
+  },
+  food_sets: {
+    src: require("~/assets/categories_icons/food_sets.svg"),
+    alt: "food sets",
+  },
+  pastas: {
+    src: require("~/assets/categories_icons/pastas.svg"),
+    alt: "pastas",
+  },
+};
+
 const avatarImage: Image = {
   src: "https://flowbite.com/docs/images/people/profile-picture-5.jpg",
   alt: "User avatar",
@@ -64,6 +103,7 @@ const jobApplicationImage: Image = {
 
 export {
   foodImages,
+  categoriesImages,
   avatarImage,
   specialOfferImages,
   homeHeaderImage,
