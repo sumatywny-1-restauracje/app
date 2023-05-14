@@ -35,7 +35,7 @@ export const loader: LoaderFunction = async () => {
     homeHeaderAvatar: menuHeaderAvatar,
     specialOffers: specialOffers,
     homeHeaderImg: homeHeaderImg,
-    foodCategories: foodCategories.slice(1, 4),
+    foodCategories: foodCategories.slice(0, 3),
     homeProducts: homeProducts.slice(0, 6),
   });
 };

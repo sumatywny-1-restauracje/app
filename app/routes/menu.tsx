@@ -9,7 +9,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   let { category } = params;
 
   if (category === undefined) {
-    return redirect("/menu/all?sortBy=recentlyAdded");
+    return redirect("/menu/burger?sortBy=recentlyAdded");
   }
   return null;
 };

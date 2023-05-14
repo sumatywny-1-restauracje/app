@@ -31,14 +31,14 @@ export default function CategoryButton({
       prefetch="intent"
       to={`/menu/${name}/?sortBy=${sortBy}`}
     >
-      <div className="flex items-center justify-center rounded-full bg-zinc-100 p-3">
+      <div className="flex w-max items-center justify-center rounded-full bg-zinc-100 p-3">
         <img
           src={image.src}
           alt={image.alt}
-          className="w-8 max-w-max md:w-8 lg:w-[26px] xl:w-8"
+          className="w-8 lg:w-[26px] xl:w-8"
         />
       </div>
-      <span className="mt-2 text-sm font-bold xl:mt-2">
+      <span className="mt-2 text-center text-sm font-bold xl:mt-2">
         {name.charAt(0).toUpperCase() + name.slice(1)}
       </span>
     </Link>
