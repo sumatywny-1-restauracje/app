@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import {
   BsPinterest,
   BsFacebook,
@@ -43,24 +44,24 @@ const Footer = () => {
             </h2>
             <ul className="text-sm font-medium text-gray-500 md:text-sm">
               <li className="mb-4">
-                <a href="/" className="hover:underline">
+                <Link to="/" prefetch="intent" className="hover:underline">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="mb-4">
-                <a href="/" className="hover:underline">
+                <Link to="/menu" prefetch="intent" className="hover:underline">
                   Offers
-                </a>
+                </Link>
               </li>
               <li className="mb-4">
-                <a href="/" className="hover:underline">
-                  Service
-                </a>
+                <Link to="/order" prefetch="intent" className="hover:underline">
+                  Your Basket
+                </Link>
               </li>
               <li className="mb-4">
-                <a href="/" className="hover:underline">
+                <Link to="/about" prefetch="intent" className="hover:underline">
                   About Us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -70,34 +71,49 @@ const Footer = () => {
             </h2>
             <ul className="md:text-md text-sm font-medium text-gray-500">
               <li className="mb-4">
-                <a href="/" className="hover:underline">
-                  Menu
-                </a>
+                <Link
+                  to="/locals"
+                  prefetch="intent"
+                  className="hover:underline"
+                >
+                  Locals
+                </Link>
               </li>
               <li className="mb-4">
-                <a href="/" className="hover:underline">
-                  Quality
-                </a>
+                <Link
+                  to="/job-application"
+                  prefetch="intent"
+                  className="hover:underline"
+                >
+                  Job Application
+                </Link>
               </li>
               <li className="mb-4">
-                <a href="/" className="hover:underline">
-                  Make a Choice
-                </a>
+                <Link
+                  to="/franchise-application"
+                  prefetch="intent"
+                  className="hover:underline"
+                >
+                  Franchise Application
+                </Link>
               </li>
               <li className="mb-4">
-                <a href="/" className="hover:underline">
-                  Salad With Vegetable
-                </a>
-              </li>
-              <li className="mb-4">
-                <a href="/" className="hover:underline">
+                <Link
+                  to="/locals"
+                  prefetch="intent"
+                  className="hover:underline"
+                >
                   Fast Delivery
-                </a>
+                </Link>
               </li>
               <li className="mb-4">
-                <a href="/" className="hover:underline">
+                <Link
+                  to="/locals"
+                  prefetch="intent"
+                  className="hover:underline"
+                >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
