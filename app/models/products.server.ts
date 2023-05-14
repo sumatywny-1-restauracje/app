@@ -27,7 +27,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 3,
     name: "Chicken Fry",
-    category: "chicken",
+    category: "additions",
     price: "5.00",
     rating: 5,
     numberOfRatings: 123,
@@ -38,7 +38,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 4,
     name: "Grill Sandwich",
-    category: "sandwich",
+    category: "additions",
     price: "4.80",
     rating: 5,
     numberOfRatings: 112,
@@ -49,7 +49,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 5,
     name: "Taco Traifi",
-    category: "taco",
+    category: "buritto",
     price: "3.63",
     rating: 5,
     numberOfRatings: 152,
@@ -60,7 +60,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 6,
     name: "Noddle's Ramen",
-    category: "noddle",
+    category: "pasta",
     price: "6.50",
     rating: 5,
     numberOfRatings: 163,
@@ -93,7 +93,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 9,
     name: "Chicken Fry",
-    category: "chicken",
+    category: "additions",
     price: "5.00",
     rating: 5,
     numberOfRatings: 123,
@@ -104,7 +104,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 10,
     name: "Grill Sandwich",
-    category: "sandwiche",
+    category: "additions",
     price: "4.80",
     rating: 5,
     numberOfRatings: 112,
@@ -115,7 +115,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 11,
     name: "Taco Traifi",
-    category: "taco",
+    category: "buritto",
     price: "3.63",
     rating: 5,
     numberOfRatings: 152,
@@ -126,7 +126,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 12,
     name: "Noddle's Ramen",
-    category: "noddle",
+    category: "pasta",
     price: "6.50",
     rating: 5,
     numberOfRatings: 163,
@@ -159,7 +159,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 15,
     name: "Chicken Fry",
-    category: "chicken",
+    category: "additions",
     price: "5.00",
     rating: 5,
     numberOfRatings: 123,
@@ -170,7 +170,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 16,
     name: "Grill Sandwich",
-    category: "sandwiche",
+    category: "additions",
     price: "4.80",
     rating: 5,
     numberOfRatings: 112,
@@ -181,7 +181,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 17,
     name: "Taco Traifi",
-    category: "taco",
+    category: "buritto",
     price: "3.63",
     rating: 5,
     numberOfRatings: 152,
@@ -192,7 +192,7 @@ const PRODUCTS: Array<Product> = [
   {
     id: 18,
     name: "Noddle's Ramen",
-    category: "noddle",
+    category: "pasta",
     price: "6.50",
     rating: 5,
     numberOfRatings: 163,
@@ -207,19 +207,19 @@ const SPECIAL_OFFERS: Array<SpecialOffer> = [
     id: 1,
     image: specialOfferImages.first,
     value: "50%",
-    discountCode: "BURGERS50DISCOUNT",
+    discountCode: "BURGERS50",
   },
   {
     id: 2,
     image: specialOfferImages.second,
     value: "25%",
-    discountCode: "DESSERTS25DISCOUNT",
+    discountCode: "DESSERTS25",
   },
   {
     id: 3,
     image: specialOfferImages.third,
     value: "25%",
-    discountCode: "SALADS25DISCOUNT",
+    discountCode: "SALADS25",
   },
 ];
 

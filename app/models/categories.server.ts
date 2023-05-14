@@ -1,18 +1,17 @@
 import type { Category, SortBy } from "types";
 
-import { foodImages } from "~/images";
+import { categoriesImages } from "~/images";
 
 const CATEGORIES: Array<Category> = [
-  { id: 1, name: "all", image: foodImages.hamburger },
-  { id: 2, name: "burger", image: foodImages.hamburger },
-  { id: 3, name: "pizza", image: foodImages.chickenPizza },
-  { id: 4, name: "dessert", image: foodImages.frenchFries },
-  { id: 5, name: "drinks", image: foodImages.frenchFries },
-  { id: 6, name: "chicken", image: foodImages.chickenPizza },
-  { id: 7, name: "sandwich", image: foodImages.hamburger },
-  { id: 8, name: "taco", image: foodImages.chickenPizza },
-  { id: 9, name: "noddle", image: foodImages.frenchFries },
-  { id: 10, name: "ramen", image: foodImages.frenchFries },
+  { id: 1, name: "burger", image: categoriesImages.burgers },
+  { id: 2, name: "pizza", image: categoriesImages.pizzas },
+  { id: 3, name: "pasta", image: categoriesImages.pastas },
+  { id: 4, name: "dessert", image: categoriesImages.desserts },
+  { id: 5, name: "drinks", image: categoriesImages.drinks },
+  { id: 6, name: "buritto", image: categoriesImages.burittos },
+  { id: 7, name: "sets", image: categoriesImages.food_sets },
+  { id: 8, name: "salads", image: categoriesImages.salads },
+  { id: 9, name: "additions", image: categoriesImages.additions },
 ];
 
 const SORT_BY: Array<SortBy> = [
