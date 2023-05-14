@@ -1,6 +1,10 @@
 import { Link, useLocation } from "@remix-run/react";
 
-const NavbarRoutesList = () => {
+const NavbarRoutesList = ({
+  setMenuDropdown,
+}: {
+  setMenuDropdown: (arg: boolean) => void;
+}) => {
   const location = useLocation();
 
   return (
@@ -8,6 +12,8 @@ const NavbarRoutesList = () => {
       <li>
         <Link
           to="/"
+          prefetch="intent"
+          onClick={() => setMenuDropdown(false)}
           className={
             " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
             (location.pathname === "/"
@@ -21,6 +27,8 @@ const NavbarRoutesList = () => {
       <li>
         <Link
           to="/locals"
+          prefetch="intent"
+          onClick={() => setMenuDropdown(false)}
           className={
             " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
             (location.pathname === "/locals"
@@ -34,6 +42,8 @@ const NavbarRoutesList = () => {
       <li>
         <Link
           to="/menu"
+          prefetch="intent"
+          onClick={() => setMenuDropdown(false)}
           className={
             " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
             (location.pathname.includes("/menu")
@@ -47,6 +57,8 @@ const NavbarRoutesList = () => {
       <li>
         <Link
           to="/about"
+          prefetch="intent"
+          onClick={() => setMenuDropdown(false)}
           className={
             " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
             (location.pathname === "/about"

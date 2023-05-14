@@ -139,7 +139,7 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
         </div>
         {menuDropdown && (
           <div className="flex w-full flex-auto md:hidden">
-            <NavbarRoutesList />
+            <NavbarRoutesList setMenuDropdown={setMenuDropdown} />
           </div>
         )}
       </nav>
