@@ -20,10 +20,15 @@ const NavbarRoutesList = () => {
       </li>
       <li>
         <Link
-          to="/"
-          className="block rounded py-2 pl-3 pr-4 hover:text-black hover:underline md:p-0"
+          to="/locals"
+          className={
+            " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
+            (location.pathname === "/locals"
+              ? "text-black underline"
+              : "hover:text-black hover:underline")
+          }
         >
-          Service
+          Locals
         </Link>
       </li>
       <li>
@@ -41,8 +46,13 @@ const NavbarRoutesList = () => {
       </li>
       <li>
         <Link
-          to="/"
-          className="block rounded py-2 pl-3 pr-4 hover:text-black hover:underline md:p-0"
+          to="/about"
+          className={
+            " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
+            (location.pathname === "/about"
+              ? "text-black underline"
+              : "hover:text-black hover:underline")
+          }
         >
           About Us
         </Link>
