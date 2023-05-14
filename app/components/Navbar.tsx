@@ -24,7 +24,7 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
 
-    if (currentScrollPos > prevScrollPos) {
+    if (currentScrollPos > prevScrollPos && !menuDropdown) {
       setVisible(false);
     } else {
       setVisible(true);
