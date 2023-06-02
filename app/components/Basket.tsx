@@ -1,9 +1,10 @@
 import type { User } from "~/types";
+import { Link } from "@remix-run/react";
 import { useContext } from "react";
 import { Dropdown } from "flowbite-react";
 import { FaShoppingBasket } from "react-icons/fa";
 import { BasketContext, UserContext } from "~/root";
-import { updateBasket } from "~/utils/updateBasket";
+import { updateBasket } from "~/utils/handleBasket";
 
 const sumBasket = (basket) => {
   return basket.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -97,13 +98,11 @@ const Basket = ({ visible }: { visible: boolean }) => {
             )}
           </div>
           {basketData.basket.length > 0 && (
-            <Dropdown.Item>
-              <div className="flex items-center gap-1">
-                <button>
-                  Make Order (${sumBasket(basketData.basket).toFixed(2)})
-                </button>
-              </div>
-            </Dropdown.Item>
+            <div className="flex items-center gap-1">
+              <Link to="/order" className="ml-3 py-2">
+                Make Order (${sumBasket(basketData.basket).toFixed(2)})
+              </Link>
+            </div>
           )}
         </Dropdown>
       ) : (
