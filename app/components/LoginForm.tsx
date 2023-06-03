@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { BsMicrosoft, BsGoogle } from "react-icons/bs";
 import useOnClickOutside from "~/hooks/useOnClickOutside";
 
@@ -8,6 +8,7 @@ type LoginFormProps = {
 };
 
 const LoginForm = ({ showModal, setShowModal }: LoginFormProps) => {
+  const [dataProcessingConsent, setDataProcessingConsent] = useState(true);
   const ref = useRef(null);
   useOnClickOutside(ref, () => setShowModal(false));
 
@@ -51,9 +52,31 @@ const LoginForm = ({ showModal, setShowModal }: LoginFormProps) => {
               Come to <span className="text-rose-400">Foodsi</span> for some
               delicious fast food! Log in to place your order!
             </p>
+            <div className="mx-auto flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-200 py-2 text-xs">
+              <input
+                type="checkbox"
+                name="dataProcessingConsent"
+                className="border-rose-400 text-rose-400 focus:border-rose-400 focus:ring-rose-400"
+                checked={dataProcessingConsent}
+                onClick={() => setDataProcessingConsent(!dataProcessingConsent)}
+              />
+              <p className="w-3/4 text-center">
+                By logging in, you give consent for the storage and processing
+                of your personal data for the purpose of using{" "}
+                <span className="text-rose-400">Foodsi</span> application.
+              </p>
+            </div>
             <div className="flex flex-col gap-2">
               <form action="/auth/microsoft" method="post">
-                <button className="flex w-full  items-center justify-center gap-2 rounded-xl bg-zinc-200 py-3 hover:bg-zinc-300">
+                <button
+                  className={
+                    " flex w-full  items-center justify-center gap-2 rounded-xl bg-zinc-200 py-3 " +
+                    (!dataProcessingConsent
+                      ? "cursor-not-allowed opacity-40"
+                      : "hover:bg-zinc-300")
+                  }
+                  disabled={!dataProcessingConsent}
+                >
                   <BsMicrosoft />
                   Login with Microsoft
                 </button>
