@@ -27,3 +27,14 @@ export const updateBasket = (
   setBasket(newBasket);
   updateUserBasket(accessToken, newBasket);
 };
+
+export const deleteItemFromBasket = (
+  basket: BasketItem[],
+  setBasket: (basket: BasketItem[]) => void,
+  item_id: number
+) => {
+  const itemIndex = basket.findIndex((basketItem) => basketItem.id === item_id);
+  const newBasket = [...basket];
+  newBasket.splice(itemIndex, 1);
+  setBasket(newBasket);
+};
