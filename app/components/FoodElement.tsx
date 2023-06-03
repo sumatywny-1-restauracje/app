@@ -2,7 +2,7 @@ import type { Product, User } from "types";
 import { useContext } from "react";
 import { Rating } from "flowbite-react";
 import { BasketContext, UserContext } from "~/root";
-import { updateBasket } from "~/utils/updateBasket";
+import { updateBasket } from "~/utils/handleBasket";
 
 type FoodElementProps = {
   product: Product;
