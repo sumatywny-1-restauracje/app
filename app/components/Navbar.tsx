@@ -1,13 +1,18 @@
 import type { User } from "types";
 import { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@remix-run/react";
 import { Avatar, Dropdown } from "flowbite-react";
-import { FaRegUser, FaHistory } from "react-icons/fa";
+import { FaRegUser, FaHistory, FaShoppingBasket } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import NavbarRoutesList from "./NavbarRoutesList";
 import LoginForm from "./LoginForm";
-import { UserContext } from "~/root";
+import { UserContext, BasketContext } from "~/root";
 import Basket from "./Basket";
+import UserProfile from "./UserProfile";
+
+const sumBasket = (basket) => {
+  return basket.reduce((acc, item) => acc + item.price * item.quantity, 0);
+};
 
 type NavbarProps = {
   userPhoto: string;
@@ -15,6 +20,7 @@ type NavbarProps = {
 
 const Navbar = ({ userPhoto }: NavbarProps) => {
   const user = useContext(UserContext) as User;
+  const basketData = useContext(BasketContext);
   const [menuDropdown, setMenuDropdown] = useState(false);
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -33,7 +39,9 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
     setPrevScrollPos(currentScrollPos);
   };
 
-  const [showModal, setShowModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showBasketModal, setShowBasketModal] = useState(false);
+  const [showUserModal, setShowUserModal] = useState(false);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -69,15 +77,41 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
             {!user ? (
               <button
                 type="button"
-                onClick={() => setShowModal(true)}
+                onClick={() => setShowLoginModal(true)}
                 className="text-md rounded-xl border border-rose-400 p-1 px-4 text-center font-semibold text-rose-400 hover:border-rose-600 hover:text-rose-600 md:mr-0"
               >
                 Login
               </button>
             ) : (
               <div className="flex gap-3">
-                <Basket visible={visible} />
-                {visible ? (
+                {/* <Basket visible={visible} /> */}
+                <button
+                  className="flex items-center justify-center rounded-full border-2 border-rose-400 bg-orange-100 p-2 text-[24px] text-rose-400 hover:border-rose-500 hover:text-rose-500"
+                  type="button"
+                  onClick={() => setShowBasketModal(true)}
+                >
+                  <FaShoppingBasket />
+                  {basketData.basket.length > 0 && (
+                    <span className="fixed block min-w-[32px] -translate-y-4 translate-x-5 rounded-full border-2 border-rose-400 bg-rose-300 p-1 text-center text-sm font-bold text-gray-700">
+                      {basketData.basket.reduce(
+                        (acc, item) => acc + item.quantity,
+                        0
+                      )}
+                    </span>
+                  )}
+                </button>
+                <button type="button" onClick={() => setShowUserModal(true)}>
+                  <Avatar
+                    alt="User profile"
+                    className="rounded-full border-2 border-rose-400"
+                    img={
+                      userPhoto ||
+                      "https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                    }
+                    rounded={true}
+                  />
+                </button>
+                {/* {visible ? (
                   <Dropdown
                     arrowIcon={false}
                     inline={true}
@@ -129,12 +163,12 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
                     }
                     rounded={true}
                   />
-                )}
+                )} */}
               </div>
             )}
           </div>
           <div className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto">
-            <NavbarRoutesList />
+            <NavbarRoutesList setMenuDropdown={setMenuDropdown} />
           </div>
         </div>
         {menuDropdown && (
@@ -143,7 +177,9 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
           </div>
         )}
       </nav>
-      <LoginForm showModal={showModal} setShowModal={setShowModal} />
+      <LoginForm showModal={showLoginModal} setShowModal={setShowLoginModal} />
+      <Basket showModal={showBasketModal} setShowModal={setShowBasketModal} />
+      <UserProfile showModal={showUserModal} setShowModal={setShowUserModal} />
     </>
   );
 };
