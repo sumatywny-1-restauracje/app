@@ -125,8 +125,9 @@
 import type { User } from "~/types";
 import { useContext, useRef } from "react";
 import { BasketContext, UserContext } from "~/root";
-import { updateBasket } from "~/utils/updateBasket";
+import { updateBasket } from "~/utils/handleBasket";
 import useOnClickOutside from "~/hooks/useOnClickOutside";
+import { Link } from "@remix-run/react";
 
 const sumBasket = (basket) => {
   return basket.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -254,9 +255,13 @@ const Basket = ({ showModal, setShowModal }: BasketProps) => {
           {basketData.basket.length > 0 && (
             <div className="flex w-full flex-col items-center">
               <div className="mb-2 w-full border border-gray-300" />
-              <button className="w-full rounded-xl bg-orange-400 px-4 py-2 font-semibold text-white hover:bg-orange-500">
+              <Link
+                to="/order"
+                onClick={() => setShowModal(false)}
+                className="w-full rounded-xl bg-orange-400 px-4 py-2 text-center font-semibold text-white hover:bg-orange-500"
+              >
                 Make Order (${sumBasket(basketData.basket).toFixed(2)})
-              </button>
+              </Link>
             </div>
           )}
         </div>
