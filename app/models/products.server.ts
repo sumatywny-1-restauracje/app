@@ -1,11 +1,12 @@
-import type { Product, SpecialOffer } from "~/types";
+import type { Product, SpecialOffer, ApiProductsData } from "~/types";
 import { specialOfferImages } from "~/images";
+import { api } from "~/utils/api";
 
 const PRODUCTS: Array<Product> = [
   {
     id: 1,
     name: "Chicken Burger",
-    category: "burger",
+    category: "burgers",
     price: "3.50",
     rating: 5,
     numberOfRatings: 160,
@@ -227,11 +228,66 @@ export function getProducts() {
   return PRODUCTS;
 }
 
+export async function getProducts2() {
+  const res = await api.get(`/menu`);
+
+  if (res.status !== 200) {
+    throw new Error("Error while fetching menu");
+  }
+
+  const products = res.data;
+  return products;
+}
+
 export function getProductsByCategory(category: string) {
   if (category === "all") {
     return getProducts();
   }
   return PRODUCTS.filter((product) => product.category === category);
+}
+
+export async function getProductsByCategory2(categoryId: string) {
+  const res = await api.get(`/menu/category/${categoryId}`);
+
+  if (res.status !== 200) {
+    throw new Error("Error while fetching menu by category");
+  }
+
+  const products = res.data;
+  return products;
+}
+
+export async function updateProduct(product) {
+  const res = await api.patch(`/menu/${product.id}`, product);
+
+  if (res.status !== 200) {
+    throw new Error("Error while updating product");
+  }
+
+  const updatedProduct = res.data;
+  return updatedProduct;
+}
+
+export async function deleteProduct(id) {
+  const res = await api.delete(`/menu/${id}`);
+
+  if (res.status !== 200) {
+    throw new Error("Error while deleting product");
+  }
+
+  const deletedProduct = res.data;
+  return deletedProduct;
+}
+
+export async function addProduct(product) {
+  const res = await api.post(`/menu`, product);
+
+  if (res.status !== 200) {
+    throw new Error("Error while adding product");
+  }
+
+  const addedProduct = res.data;
+  return addedProduct;
 }
 
 export function getProductById(id: number) {

@@ -1,39 +1,5 @@
-import type { JobOffer, JobApplication } from "types";
-
-const JOB_OFFERS: Array<JobOffer> = [
-  {
-    id: 1,
-    title: "Chef",
-    salary: {
-      min: 50,
-      max: 100,
-    },
-  },
-  {
-    id: 2,
-    title: "Chef's Assistant",
-    salary: {
-      min: 24,
-      max: 40,
-    },
-  },
-  {
-    id: 3,
-    title: "Food Delivery Driver",
-    salary: {
-      min: 24,
-      max: 40,
-    },
-  },
-  {
-    id: 4,
-    title: "Manager",
-    salary: {
-      min: 80,
-      max: 150,
-    },
-  },
-];
+import type { JobOffer, JobApplication, ApiJobOffersData } from "types";
+import { api } from "~/utils/api";
 
 let JOB_APPLICATIONS: Array<JobApplication> = [
   {
@@ -50,8 +16,25 @@ let JOB_APPLICATIONS: Array<JobApplication> = [
   },
 ];
 
-export function getJobOffers() {
-  return JOB_OFFERS;
+export async function getJobOffers() {
+  const res = await api.get(`/job`);
+
+  if (res.status !== 200) {
+    throw new Error("Error while fetching job offers");
+  }
+
+  const jobOffersData = res.data as ApiJobOffersData;
+  const job_offers = jobOffersData.jobs.map((job) => {
+    return {
+      id: job.jobId,
+      title: job.jobTitle,
+      salary: {
+        min: job.minSalary,
+        max: job.maxSalary,
+      },
+    };
+  });
+  return job_offers as Array<JobOffer>;
 }
 
 export function getJobApplicants() {
@@ -78,4 +61,37 @@ const isNumeric = (val: string): boolean => {
 
 export function createJobApplication(application: createJobApplicationParams) {
   // JOB_APPLICATIONS.push(application);
+}
+
+export async function getJobApplications() {
+  const res = await api.get(`/aplication/job`);
+
+  if (res.status !== 200) {
+    throw new Error("Error while fetching job applications");
+  }
+
+  const jobApplicationsData = res.data;
+  return jobApplicationsData;
+}
+
+export async function createJobApplication(JobApplication) {
+  const res = await api.post(`/aplication/job`, JobApplication);
+
+  if (res.status !== 200) {
+    throw new Error("Error while creating job application");
+  }
+
+  const JobApplicationData = res.data;
+  return JobApplicationData;
+}
+
+export async function markJobApplicationAsResponded(JobApplicationId: string) {
+  const res = await api.patch(`/aplication/job/${JobApplicationId}`);
+
+  if (res.status !== 200) {
+    throw new Error("Error while updating job application");
+  }
+
+  const JobApplicationData = res.data;
+  return JobApplicationData;
 }

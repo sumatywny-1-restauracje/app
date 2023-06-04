@@ -1,18 +1,6 @@
-import type { Category, SortBy } from "types";
-
+import { api } from "~/utils/api";
+import type { Category, SortBy, ApiCategoriesData } from "types";
 import { categoriesImages } from "~/images";
-
-const CATEGORIES: Array<Category> = [
-  { id: 1, name: "burger", image: categoriesImages.burgers },
-  { id: 2, name: "pizza", image: categoriesImages.pizzas },
-  { id: 3, name: "pasta", image: categoriesImages.pastas },
-  { id: 4, name: "dessert", image: categoriesImages.desserts },
-  { id: 5, name: "drinks", image: categoriesImages.drinks },
-  { id: 6, name: "buritto", image: categoriesImages.burittos },
-  { id: 7, name: "sets", image: categoriesImages.food_sets },
-  { id: 8, name: "salads", image: categoriesImages.salads },
-  { id: 9, name: "additions", image: categoriesImages.additions },
-];
 
 const SORT_BY: Array<SortBy> = [
   { label: "Recently Added", value: "recentlyAdded" },
@@ -22,10 +10,58 @@ const SORT_BY: Array<SortBy> = [
   { label: "Price - Descending", value: "priceDescending" },
 ];
 
-export function getCategories() {
-  return CATEGORIES;
+export async function getCategories() {
+  const res = await api.get(`/category`);
+
+  if (res.status !== 200) {
+    throw new Error("Error while fetching categories");
+  }
+
+  const categoriesData = res.data as ApiCategoriesData;
+  const job_offers = categoriesData.categories.map((category) => {
+    return {
+      id: category.categoryId,
+      name: category.categoryName.toLowerCase(),
+      image: categoriesImages[category.categoryName],
+    };
+  });
+  console.log(job_offers);
+  return job_offers as Array<Category>;
 }
 
 export function getSortByOptions() {
   return SORT_BY;
+}
+
+export async function createCategory(category) {
+  const res = await api.post(`/category`, category);
+
+  if (res.status !== 200) {
+    throw new Error("Error while creating category");
+  }
+
+  const categoryData = res.data;
+  return categoryData;
+}
+
+export async function updateCategory(category) {
+  const res = await api.patch(`/category/${category.id}`, category);
+
+  if (res.status !== 200) {
+    throw new Error("Error while updating category");
+  }
+
+  const categoryData = res.data;
+  return categoryData;
+}
+
+export async function deleteCategory(categoryId) {
+  const res = await api.delete(`/category/${categoryId}`);
+
+  if (res.status !== 200) {
+    throw new Error("Error while deleting category");
+  }
+
+  const categoryData = res.data;
+  return categoryData;
 }
