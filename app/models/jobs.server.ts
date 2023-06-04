@@ -59,9 +59,9 @@ const isNumeric = (val: string): boolean => {
   return !isNaN(Number(val));
 };
 
-export function createJobApplication(application: createJobApplicationParams) {
-  // JOB_APPLICATIONS.push(application);
-}
+// export function createJobApplication(application: createJobApplicationParams) {
+//   // JOB_APPLICATIONS.push(application);
+// }
 
 export async function getJobApplications() {
   const res = await api.get(`/aplication/job`);

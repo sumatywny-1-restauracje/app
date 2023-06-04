@@ -12,6 +12,6 @@ export async function getUserInformation() {
     throw new Error("Error while fetching user information");
   }
 
-  const userData = res.data;
+  const userData = res.data.userData;
   return userData;
 }
