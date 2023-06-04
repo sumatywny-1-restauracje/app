@@ -28,31 +28,31 @@ const foodImages: ImagesObject = {
 };
 
 const categoriesImages: ImagesObject = {
-  pizzas: {
+  Pizza: {
     src: require("~/assets/categories_icons/pizzas.svg"),
     alt: "pizzas",
   },
-  burgers: {
+  Burgers: {
     src: require("~/assets/categories_icons/burgers.svg"),
     alt: "burgers",
   },
-  salads: {
+  Salads: {
     src: require("~/assets/categories_icons/salads.svg"),
     alt: "salads",
   },
-  desserts: {
+  Desserts: {
     src: require("~/assets/categories_icons/desserts.svg"),
     alt: "desserts",
   },
-  drinks: {
+  Drinks: {
     src: require("~/assets/categories_icons/drinks.svg"),
     alt: "drinks",
   },
-  burittos: {
+  Burrito: {
     src: require("~/assets/categories_icons/burittos.svg"),
     alt: "burittos",
   },
-  additions: {
+  Starters: {
     src: require("~/assets/categories_icons/additions.svg"),
     alt: "additions",
   },
@@ -60,7 +60,7 @@ const categoriesImages: ImagesObject = {
     src: require("~/assets/categories_icons/food_sets.svg"),
     alt: "food sets",
   },
-  pastas: {
+  Pasta: {
     src: require("~/assets/categories_icons/pastas.svg"),
     alt: "pastas",
   },
