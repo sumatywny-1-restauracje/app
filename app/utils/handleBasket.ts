@@ -1,16 +1,22 @@
-import type { BasketItem } from "types";
-import { updateUserBasket } from "~/models/basket";
+import type { BasketItem, User } from "types";
 
 export const updateBasket = (
-  accessToken: string,
+  user: User,
   basket: BasketItem[],
   setBasket: (basket: BasketItem[]) => void,
   item: BasketItem,
   quantity: number
 ) => {
+  if (!user) {
+    return;
+  }
+
   if (basket.length === 0) {
     setBasket([{ ...item, quantity }]);
-    updateUserBasket(accessToken, [{ ...item, quantity }]);
+    window.localStorage.setItem(
+      `userBasket:${user?.email}`,
+      JSON.stringify({ ...item, quantity })
+    );
     return;
   }
   const itemIndex = basket.findIndex((basketItem) => basketItem.id === item.id);
@@ -25,16 +31,28 @@ export const updateBasket = (
     }
   }
   setBasket(newBasket);
-  updateUserBasket(accessToken, newBasket);
+  window.localStorage.setItem(
+    `userBasket:${user?.email}`,
+    JSON.stringify(newBasket)
+  );
 };
 
 export const deleteItemFromBasket = (
+  user: User,
   basket: BasketItem[],
   setBasket: (basket: BasketItem[]) => void,
   item_id: number
 ) => {
+  if (!user) {
+    return;
+  }
+
   const itemIndex = basket.findIndex((basketItem) => basketItem.id === item_id);
   const newBasket = [...basket];
   newBasket.splice(itemIndex, 1);
   setBasket(newBasket);
+  window.localStorage.setItem(
+    `userBasket:${user?.email}`,
+    JSON.stringify(newBasket)
+  );
 };

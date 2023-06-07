@@ -2,7 +2,7 @@
 import { MicrosoftStrategy } from "remix-auth-microsoft";
 import { Authenticator } from "remix-auth";
 import { sessionStorage } from "~/services/session.server";
-import { getUserInformation } from "~/models/user.server";
+import { signNewUser } from "~/models/user.server";
 
 export let authenticator = new Authenticator(sessionStorage); //User is a custom user types you can define as you want
 
@@ -22,8 +22,8 @@ let microsoftStrategy = new MicrosoftStrategy(
 
     global.TOKEN = idToken;
 
-    const userInformation = await getUserInformation();
-    const userRole = userInformation?.userRole;
+    const user = await signNewUser(email);
+    const userRole = user?.userRole;
 
     return {
       email: email,

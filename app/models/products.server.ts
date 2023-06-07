@@ -224,26 +224,37 @@ const SPECIAL_OFFERS: Array<SpecialOffer> = [
   },
 ];
 
-export function getProducts() {
-  return PRODUCTS;
-}
+// export function getProducts() {
+//   return PRODUCTS;
+// }
 
-export async function getProducts2() {
+export async function getProducts() {
   const res = await api.get(`/menu`);
 
   if (res.status !== 200) {
     throw new Error("Error while fetching menu");
   }
 
-  const products = res.data;
-  return products;
+  const productsData = res.data as ApiProductsData;
+  const products = productsData.menuItems.map((product) => {
+    return {
+      id: product.itemId,
+      name: product.name,
+      category: product.category.categoryName,
+      price: product.price,
+      rating: product.rating,
+      numberOfRatings: product.numberOfRatings,
+      image: product.photoUrl,
+      added: product.createdAt,
+    };
+  });
+
+  return products as Array<Product>;
 }
 
-export function getProductsByCategory(category: string) {
-  if (category === "all") {
-    return getProducts();
-  }
-  return PRODUCTS.filter((product) => product.category === category);
+export async function getProductsByCategory(category: string) {
+  const products = await getProducts();
+  return products.filter((product) => product.category === category);
 }
 
 export async function getProductsByCategory2(categoryId: string) {

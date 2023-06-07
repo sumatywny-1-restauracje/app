@@ -1,4 +1,7 @@
+import type { User } from "types";
+import { useContext } from "react";
 import { Link } from "@remix-run/react";
+import { UserContext, BasketContext } from "~/root";
 import {
   BsPinterest,
   BsFacebook,
@@ -7,6 +10,8 @@ import {
 } from "react-icons/bs";
 
 const Footer = () => {
+  const user = useContext(UserContext) as User;
+
   return (
     <footer>
       <div className="flex h-max flex-col items-center self-center bg-orange-100 font-sans">
@@ -53,11 +58,17 @@ const Footer = () => {
                   Offers
                 </Link>
               </li>
-              <li className="mb-4">
-                <Link to="/order" prefetch="intent" className="hover:underline">
-                  Your Basket
-                </Link>
-              </li>
+              {user && (
+                <li className="mb-4">
+                  <Link
+                    to="/order"
+                    prefetch="intent"
+                    className="hover:underline"
+                  >
+                    Your Basket
+                  </Link>
+                </li>
+              )}
               <li className="mb-4">
                 <Link to="/about" prefetch="intent" className="hover:underline">
                   About Us
@@ -95,15 +106,6 @@ const Footer = () => {
                   className="hover:underline"
                 >
                   Franchise Application
-                </Link>
-              </li>
-              <li className="mb-4">
-                <Link
-                  to="/delivery"
-                  prefetch="intent"
-                  className="hover:underline"
-                >
-                  Fast Delivery
                 </Link>
               </li>
               <li className="mb-4">

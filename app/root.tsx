@@ -11,15 +11,14 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getEnv } from "./env.server";
 
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 import stylesheet from "./styles/tailwind.css";
 import Footer from "~/components/Footer";
 import Navbar from "~/components/Navbar";
 import { authenticator } from "./services/auth.server";
-import type { BasketItem, User } from "./types";
-import { getBasket } from "./models/basket";
+import type { User } from "./types";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -29,7 +28,6 @@ type LoaderData = {
   ENV: ReturnType<typeof getEnv>;
   user: User;
   userPhoto: string;
-  basket: Array<BasketItem>;
 };
 
 export const loader = async ({ request }: LoaderArgs) => {
@@ -41,11 +39,8 @@ export const loader = async ({ request }: LoaderArgs) => {
       ENV: getEnv(),
       user: null,
       userPhoto: "",
-      basket: [],
     });
   }
-
-  const basket = (await getBasket(user)) as Array<BasketItem>;
 
   const accessToken = user?.accessToken;
 
@@ -65,7 +60,6 @@ export const loader = async ({ request }: LoaderArgs) => {
       ENV: getEnv(),
       user: user,
       userPhoto: "",
-      basket: basket,
     });
   }
 
@@ -76,7 +70,6 @@ export const loader = async ({ request }: LoaderArgs) => {
     ENV: getEnv(),
     user: user,
     userPhoto: photo,
-    basket: basket,
   });
 };
 
@@ -85,7 +78,17 @@ export const BasketContext = createContext(null);
 
 export default function App() {
   const data = useLoaderData<LoaderData>();
-  const [basket, setBasket] = useState(data.basket);
+  const user = data.user;
+  const [basket, setBasket] = useState([]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const savedBasket = window.localStorage.getItem(`userBasket:${user.email}`);
+    const parsedBasket = savedBasket ? JSON.parse(savedBasket) : [];
+    setBasket(parsedBasket);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <html lang="en" className="h-full">
@@ -97,7 +100,7 @@ export default function App() {
       </head>
       <body className="h-full">
         <div className="flex min-h-screen flex-col bg-orange-100">
-          <UserContext.Provider value={data.user}>
+          <UserContext.Provider value={user}>
             <BasketContext.Provider value={{ basket, setBasket }}>
               <Navbar userPhoto={data.userPhoto} />
               <div className="flex h-full flex-1 justify-center bg-zinc-100">

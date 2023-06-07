@@ -21,8 +21,11 @@ export async function getCategories() {
   const job_offers = categoriesData.categories.map((category) => {
     return {
       id: category.categoryId,
-      name: category.categoryName.toLowerCase(),
-      image: categoriesImages[category.categoryName],
+      name: category.categoryName,
+      image: {
+        src: category.photoUrl,
+        alt: category.categoryName,
+      },
     };
   });
   console.log(job_offers);
@@ -55,7 +58,7 @@ export async function updateCategory(category) {
   return categoryData;
 }
 
-export async function deleteCategory(categoryId) {
+export async function deleteCategory(categoryId: string) {
   const res = await api.delete(`/category/${categoryId}`);
 
   if (res.status !== 200) {
