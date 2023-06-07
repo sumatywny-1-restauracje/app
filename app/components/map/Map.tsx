@@ -99,15 +99,27 @@ const MapComponent = ({
           <div className="flex gap-2">
             <img
               width="80px"
-              src={popupInfo.image.src}
-              alt={popupInfo.image.alt}
+              src={popupInfo.photoUrl}
+              alt={`Local in ${popupInfo.address.city}`}
             />
-            <div>
+            <div className="flex flex-col gap-2">
               <p>
-                {popupInfo.address}, {popupInfo.city}
+                {popupInfo.address.street} {popupInfo.address.streetNo},{" "}
+                {popupInfo.address.city}
               </p>
-              <p>{popupInfo.workingHours}</p>
-              <p>{popupInfo.phone}</p>
+              {popupInfo.openingHoursPretty &&
+              popupInfo.openingHoursPretty.includes(",") ? (
+                <ul>
+                  {popupInfo.openingHoursPretty
+                    .split(",")
+                    .map((element, index) => (
+                      <li key={index}>{element}</li>
+                    ))}
+                </ul>
+              ) : (
+                <p>{popupInfo.openingHoursPretty}</p>
+              )}
+              <p>{popupInfo.phoneNumber}</p>
             </div>
           </div>
         </Popup>
