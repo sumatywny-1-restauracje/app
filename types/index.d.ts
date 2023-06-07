@@ -133,6 +133,8 @@ type Location = {
     country: string;
   };
   openingHours: LocationOpeningHours[];
+  photoUrl: string;
+  phoneNumber: string
 };
 
 type SelectedLocation = {
