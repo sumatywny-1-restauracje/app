@@ -107,7 +107,8 @@ const MapComponent = ({
                 {popupInfo.address.street} {popupInfo.address.streetNo},{" "}
                 {popupInfo.address.city}
               </p>
-              {popupInfo.openingHoursPretty.includes(",") ? (
+              {popupInfo.openingHoursPretty &&
+              popupInfo.openingHoursPretty.includes(",") ? (
                 <ul>
                   {popupInfo.openingHoursPretty
                     .split(",")
@@ -116,7 +117,7 @@ const MapComponent = ({
                     ))}
                 </ul>
               ) : (
-                <li>{popupInfo.openingHoursPretty}</li>
+                <p>{popupInfo.openingHoursPretty}</p>
               )}
               <p>{popupInfo.phoneNumber}</p>
             </div>
