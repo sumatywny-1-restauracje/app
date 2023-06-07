@@ -104,7 +104,7 @@ export default function JobApplicationRoute() {
                               className="w-8 rounded-full bg-orange-300 p-2 hover:bg-orange-400 hover:text-white"
                               onClick={() =>
                                 updateBasket(
-                                  user?.accessToken,
+                                  user,
                                   basketData.basket,
                                   basketData.setBasket,
                                   item,
@@ -123,7 +123,7 @@ export default function JobApplicationRoute() {
                               className="w-8 rounded-full bg-orange-300 p-2 hover:bg-orange-400 hover:text-white"
                               onClick={() =>
                                 updateBasket(
-                                  user?.accessToken,
+                                  user,
                                   basketData.basket,
                                   basketData.setBasket,
                                   item,
@@ -139,6 +139,7 @@ export default function JobApplicationRoute() {
                             className="text-base text-gray-700"
                             onClick={() =>
                               deleteItemFromBasket(
+                                user,
                                 basketData.basket,
                                 basketData.setBasket,
                                 item.id
@@ -349,11 +350,13 @@ export default function JobApplicationRoute() {
                       </option>
                       {data.restaurants.map((restaurant) => (
                         <option
-                          key={restaurant.id}
-                          value={restaurant.id}
+                          key={restaurant.restaurantId}
+                          value={restaurant.restaurantId}
                           className="text-gray-700"
                         >
-                          {restaurant.address}, {restaurant.city}
+                          {restaurant.address.street}{" "}
+                          {restaurant.address.streetNo},{" "}
+                          {restaurant.address.city}
                         </option>
                       ))}
                     </select>

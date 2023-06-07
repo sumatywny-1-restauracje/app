@@ -203,7 +203,7 @@ const Basket = ({ showModal, setShowModal }: BasketProps) => {
                           className="w-8 rounded-full bg-gray-200 p-2 hover:bg-gray-600 hover:text-white"
                           onClick={() =>
                             updateBasket(
-                              user?.accessToken,
+                              user,
                               basketData.basket,
                               basketData.setBasket,
                               item,
@@ -221,7 +221,7 @@ const Basket = ({ showModal, setShowModal }: BasketProps) => {
                           className="w-8 rounded-full bg-gray-200 p-2 hover:bg-gray-600 hover:text-white"
                           onClick={() =>
                             updateBasket(
-                              user?.accessToken,
+                              user,
                               basketData.basket,
                               basketData.setBasket,
                               item,

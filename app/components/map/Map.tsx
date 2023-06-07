@@ -69,9 +69,9 @@ const MapComponent = ({
       )}
       {locations.map((location) => (
         <Marker
-          key={location.id}
-          longitude={location.longitude}
-          latitude={location.latitude}
+          key={location.restaurantId}
+          longitude={location.geoLon}
+          latitude={location.geoLat}
           color="#3FB1CE"
           anchor="bottom"
           onClick={(e) => {
@@ -91,8 +91,8 @@ const MapComponent = ({
       {popupInfo && withPopups && (
         <Popup
           anchor="top"
-          longitude={Number(popupInfo?.longitude)}
-          latitude={Number(popupInfo?.latitude)}
+          longitude={Number(popupInfo?.geoLon)}
+          latitude={Number(popupInfo?.geoLat)}
           onClose={() => setPopupInfo(null)}
           maxWidth="320px"
         >

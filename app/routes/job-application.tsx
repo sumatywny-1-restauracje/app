@@ -241,6 +241,7 @@ export default function JobApplicationRoute() {
               <input type="hidden" name="jobTitle" value={jobTitle.title} />
               {data.jobOffers.map((jobOffer) => (
                 <button
+                  type="button"
                   key={jobOffer.id}
                   onClick={() => {
                     setJobTitle({

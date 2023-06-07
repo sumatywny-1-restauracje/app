@@ -28,7 +28,7 @@ const FoodCategories = ({ foodCategories }: FoodCategoriesProps) => {
             {foodCategories[0].name.toUpperCase()}
           </span>
           <Link
-            to="/menu/burger?sortBy=recentlyAdded"
+            to="/menu/burgers?sortBy=recentlyAdded"
             prefetch="intent"
             className="text-sm font-semibold text-rose-400 hover:text-rose-500 md:text-lg"
           >
