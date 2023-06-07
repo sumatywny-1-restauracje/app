@@ -58,7 +58,9 @@ const LoginForm = ({ showModal, setShowModal }: LoginFormProps) => {
                 name="dataProcessingConsent"
                 className="border-rose-400 text-rose-400 focus:border-rose-400 focus:ring-rose-400"
                 checked={dataProcessingConsent}
-                onClick={() => setDataProcessingConsent(!dataProcessingConsent)}
+                onChange={() =>
+                  setDataProcessingConsent(!dataProcessingConsent)
+                }
               />
               <p className="w-3/4 text-center">
                 By logging in, you give consent for the storage and processing
