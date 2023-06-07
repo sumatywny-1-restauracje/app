@@ -12,7 +12,7 @@ import FoodCategories from "~/components/home/FoodCategories";
 import RegularMenu from "~/components/home/RegularMenu";
 import SpecialOffers from "~/components/home/SpecialOffers";
 
-export const meta: V2_MetaFunction = () => [{ title: "Home" }];
+export const meta: V2_MetaFunction = () => [{ title: "Foodsi" }];
 
 type LoaderData = {
   homeHeaderAvatar: Image;
