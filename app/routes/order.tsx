@@ -30,13 +30,13 @@ export default function JobApplicationRoute() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
-  const [showCart, setShowCart] = useState(false);
-  const [showClientInfo, setShowClientInfo] = useState(false);
+  const [showCart, setShowCart] = useState(true);
+  const [showClientInfo, setShowClientInfo] = useState(true);
   const [deliveryMethod, setDeliveryMethod] = useState("");
   const [restaurantChoice, setRestaurantChoice] = useState("");
-  const [showDeliveryMethod, setShowDeliveryMethod] = useState(false);
+  const [showDeliveryMethod, setShowDeliveryMethod] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [showPaymentMethod, setShowPaymentMethod] = useState(false);
+  const [showPaymentMethod, setShowPaymentMethod] = useState(true);
 
   const user = useContext(UserContext) as User;
   const basketData = useContext(BasketContext);
