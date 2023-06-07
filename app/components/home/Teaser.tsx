@@ -45,7 +45,7 @@ const Teaser = ({ homeHeaderAvatar, homeHeaderImg }: TeaserProps) => {
                     <FiShoppingCart />
                   </div>
                   <span className="pr-2 text-xs font-bold text-white  xl:text-base">
-                    Buy Now
+                    Order Now!
                   </span>
                 </Link>
                 <button className="flex items-center gap-3 rounded-3xl border-4 border-rose-400 p-2 hover:border-rose-500 max-sm:w-5/6">

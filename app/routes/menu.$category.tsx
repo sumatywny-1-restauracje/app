@@ -132,7 +132,11 @@ export default function MenuCategoryRoute() {
         ) : (
           <div className="mx-auto flex w-4/6 flex-wrap content-center gap-12 sm:grid sm:grid-cols-2 lg:grid-cols-3">
             {data.products.map((product) => (
-              <FoodElement key={product.id} product={product} />
+              <FoodElement
+                key={product.id}
+                product={product}
+                categories={data.categories}
+              />
             ))}
           </div>
         )}

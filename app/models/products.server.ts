@@ -240,6 +240,7 @@ export async function getProducts() {
     return {
       id: product.itemId,
       name: product.name,
+      description: product.description,
       category: product.category.categoryName,
       price: product.price,
       rating: product.rating,

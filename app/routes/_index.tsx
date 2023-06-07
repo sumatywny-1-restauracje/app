@@ -35,7 +35,7 @@ export const loader: LoaderFunction = async () => {
     homeHeaderAvatar: menuHeaderAvatar,
     specialOffers: specialOffers,
     homeHeaderImg: homeHeaderImg,
-    foodCategories: foodCategories.slice(0, 3),
+    foodCategories: foodCategories,
     homeProducts: homeProducts.slice(0, 6),
   });
 };
@@ -49,8 +49,11 @@ export default function IndexRoute() {
         homeHeaderImg={data.homeHeaderImg}
       />
       <div className="flex w-full max-w-screen-2xl flex-col items-center gap-16 sm:gap-20 lg:gap-24">
-        <FoodCategories foodCategories={data.foodCategories} />
-        <RegularMenu homeProducts={data.homeProducts} />
+        <FoodCategories foodCategories={data.foodCategories.slice(0, 3)} />
+        <RegularMenu
+          homeProducts={data.homeProducts}
+          categories={data.foodCategories}
+        />
         <SpecialOffers specialOffers={data.specialOffers} />
       </div>
     </div>
