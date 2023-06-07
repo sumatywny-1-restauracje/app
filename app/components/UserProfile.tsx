@@ -28,7 +28,7 @@ const UserProfile = ({ showModal, setShowModal }: UserProfileProps) => {
     >
       <div
         ref={ref}
-        className="relative h-auto w-max rounded-xl bg-zinc-50 p-4 sm:w-1/3 sm:min-w-[400px] xl:w-1/5"
+        className="relative mx-3 h-auto w-full rounded-xl bg-zinc-50 p-4 sm:w-1/3 sm:min-w-[400px] xl:w-1/5"
       >
         <div className="flex items-start justify-between rounded-t p-2">
           <button

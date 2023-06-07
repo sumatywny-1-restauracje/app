@@ -1,6 +1,7 @@
 type Product = {
   id: string;
   name: string;
+  description: string;
   category: string;
   price: number;
   rating: number;
@@ -122,6 +123,7 @@ type Location = {
   geoLon: number;
   managerId: string;
   addressId: string;
+  openingHoursPretty: string;
   address: {
     addressId: string;
     street: string;
@@ -175,8 +177,9 @@ type User = {
 } | null;
 
 type BasketItem = {
-  id: number;
+  id: string;
   name: string;
+  description: string;
   price: number;
   quantity: number;
   image: Image;

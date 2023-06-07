@@ -157,7 +157,7 @@ const Basket = ({ showModal, setShowModal }: BasketProps) => {
     >
       <div
         ref={ref}
-        className="relative h-auto w-max rounded-xl bg-zinc-50 p-4 sm:w-1/3 sm:min-w-[400px] xl:w-1/5"
+        className="relative mx-3 h-auto w-full rounded-xl bg-zinc-50 p-4 sm:w-1/3 sm:min-w-[400px] xl:w-1/5"
       >
         <div className="flex items-start justify-between rounded-t p-2">
           <button
@@ -192,7 +192,7 @@ const Basket = ({ showModal, setShowModal }: BasketProps) => {
               basketData.basket.map((item) => (
                 <div key={item.id}>
                   <div className="mt-1 text-xs text-gray-700">
-                    <div className="flex w-full items-center justify-center gap-7 px-3">
+                    <div className="mx-auto flex w-11/12 items-center justify-around px-3">
                       <img
                         src={item.image.src}
                         alt={item.image.alt}

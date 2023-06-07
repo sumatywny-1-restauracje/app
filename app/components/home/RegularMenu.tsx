@@ -1,12 +1,13 @@
-import type { Product } from "types";
+import type { Category, Product } from "types";
 import { Link } from "@remix-run/react";
 import FoodElement from "../FoodElement";
 
 type RegularMenuProps = {
   homeProducts: Array<Product>;
+  categories: Array<Category>;
 };
 
-const RegularMenu = ({ homeProducts }: RegularMenuProps) => {
+const RegularMenu = ({ homeProducts, categories }: RegularMenuProps) => {
   return (
     <div className="flex w-5/6 flex-col gap-10 px-1 font-sans text-gray-700 md:w-4/6 md:gap-12">
       <div className="flex flex-col gap-7">
@@ -28,7 +29,11 @@ const RegularMenu = ({ homeProducts }: RegularMenuProps) => {
       </div>
       <div className="mx-auto flex w-full flex-wrap content-center gap-12 sm:grid sm:grid-cols-2 lg:grid-cols-3">
         {homeProducts.map((product) => (
-          <FoodElement key={product?.id} product={product} />
+          <FoodElement
+            key={product?.id}
+            product={product}
+            categories={categories}
+          />
         ))}
       </div>
     </div>
