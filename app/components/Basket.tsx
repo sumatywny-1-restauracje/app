@@ -190,8 +190,8 @@ const Basket = ({ showModal, setShowModal }: BasketProps) => {
           <div className="flex max-h-[400px] w-full flex-col overflow-y-auto">
             {basketData.basket.length > 0 ? (
               basketData.basket.map((item) => (
-                <>
-                  <div key={item.id} className="mt-1 text-xs text-gray-700">
+                <div key={item.id}>
+                  <div className="mt-1 text-xs text-gray-700">
                     <div className="flex w-full items-center justify-center gap-7 px-3">
                       <img
                         src={item.image.src}
@@ -239,7 +239,7 @@ const Basket = ({ showModal, setShowModal }: BasketProps) => {
                     </div>
                   </div>
                   <div className="mt-1 w-full border border-gray-100" />
-                </>
+                </div>
               ))
             ) : (
               <div>
