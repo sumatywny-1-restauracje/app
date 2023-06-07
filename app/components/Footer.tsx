@@ -109,13 +109,9 @@ const Footer = () => {
                 </Link>
               </li>
               <li className="mb-4">
-                <Link
-                  to="/contact"
-                  prefetch="intent"
-                  className="hover:underline"
-                >
+                <a href="mailto:info@foodsi.com" className="hover:underline">
                   Contact
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
