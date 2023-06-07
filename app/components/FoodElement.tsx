@@ -1,22 +1,26 @@
-import type { Product, User } from "types";
+import type { Product, User, Category, BasketItem } from "types";
 import { useContext, useState } from "react";
 import { Rating } from "flowbite-react";
 import LoginForm from "./LoginForm";
+import AddToBasketPopup from "./AddToBasketPopup";
 import { BasketContext, UserContext } from "~/root";
 import { updateBasket } from "~/utils/handleBasket";
 
 type FoodElementProps = {
   product: Product;
+  categories: Array<Category>;
 };
 
-const FoodElement = ({ product }: FoodElementProps) => {
+const FoodElement = ({ product, categories }: FoodElementProps) => {
   const user = useContext(UserContext) as User;
   const basketData = useContext(BasketContext);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showAddToBasketModal, setShowAddToBasketModal] = useState(false);
 
   const item = {
     id: product.id,
     name: product.name,
+    description: product.description,
     price: product.price,
     image: {
       src: product.image,
@@ -24,7 +28,7 @@ const FoodElement = ({ product }: FoodElementProps) => {
     },
     quantity:
       basketData.basket.find((item) => item.id === product.id)?.quantity ?? 0,
-  };
+  } as BasketItem;
 
   const handleAddToBasket = () => {
     if (user) {
@@ -35,11 +39,11 @@ const FoodElement = ({ product }: FoodElementProps) => {
         item,
         item.quantity + 1
       );
+      setShowAddToBasketModal(true);
     } else {
       setShowLoginModal(true);
     }
   };
-
   return (
     <>
       <div className="relative mx-auto flex h-fit w-44 items-end justify-start pt-[100px] sm:w-52 sm:pt-[7rem] md:w-60 md:pt-[7.5rem] lg:w-60 xl:w-64 xl:pt-[9rem]">
@@ -63,7 +67,7 @@ const FoodElement = ({ product }: FoodElementProps) => {
                 <Rating.Star filled={product.rating > 3 && true} />
                 <Rating.Star filled={product.rating > 4 && true} />
                 <p className="ml-2 text-xs font-medium text-gray-500 lg:text-sm">
-                  ({product?.numberOfRatings})
+                  ({product?.numberOfRatings ?? 0})
                 </p>
               </Rating>
             </div>
@@ -80,6 +84,12 @@ const FoodElement = ({ product }: FoodElementProps) => {
         </div>
       </div>
       <LoginForm showModal={showLoginModal} setShowModal={setShowLoginModal} />
+      <AddToBasketPopup
+        showModal={showAddToBasketModal}
+        setShowModal={setShowAddToBasketModal}
+        item={item}
+        categories={categories}
+      />
     </>
   );
 };
