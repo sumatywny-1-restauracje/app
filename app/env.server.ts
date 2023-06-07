@@ -20,6 +20,7 @@ type ENV = ReturnType<typeof getEnv>;
 
 declare global {
   var ENV: ENV;
+  var TOKEN: string;
   interface Window {
     ENV: ENV;
   }
