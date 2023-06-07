@@ -47,6 +47,15 @@ export const deleteItemFromBasket = (
     return;
   }
 
+  if (basket.length === 1) {
+    setBasket([]);
+    window.localStorage.setItem(
+      `userBasket:${user?.email}`,
+      JSON.stringify([])
+    );
+    return;
+  }
+
   const itemIndex = basket.findIndex((basketItem) => basketItem.id === item_id);
   const newBasket = [...basket];
   newBasket.splice(itemIndex, 1);
