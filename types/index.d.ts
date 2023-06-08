@@ -170,13 +170,7 @@ type ApiLocationsData = {
   }>;
 };
 
-type User = {
-  email: string;
-  name: string;
-  accessToken: string;
-  roles: string[];
-  basket: Product[];
-} | null;
+type User = any;
 
 type BasketItem = {
   id: string;
