@@ -242,6 +242,7 @@ export async function getProducts() {
       name: product.name,
       description: product.description,
       category: product.category.categoryName,
+      ingredients: product.ingredients,
       price: product.price,
       rating: product.rating,
       numberOfRatings: product.numberOfRatings,

@@ -179,7 +179,12 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
       </nav>
       <LoginForm showModal={showLoginModal} setShowModal={setShowLoginModal} />
       <Basket showModal={showBasketModal} setShowModal={setShowBasketModal} />
-      <UserProfile showModal={showUserModal} setShowModal={setShowUserModal} />
+      {user && (
+        <UserProfile
+          showModal={showUserModal}
+          setShowModal={setShowUserModal}
+        />
+      )}
     </>
   );
 };
