@@ -101,7 +101,7 @@ type JobApplication = {
   age: number;
   email: string;
   aboutMe: string | null;
-  resumee: string | null;
+  resumee: File;
   jobTitle: string;
   prefferedSalary: number;
   dataProcessingConsent: boolean;
@@ -134,7 +134,7 @@ type Location = {
   };
   openingHours: LocationOpeningHours[];
   photoUrl: string;
-  phoneNumber: string
+  phoneNumber: string;
 };
 
 type SelectedLocation = {

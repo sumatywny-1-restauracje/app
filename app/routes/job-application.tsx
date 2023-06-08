@@ -41,7 +41,6 @@ type ActionData =
       lastName?: string;
       age?: string;
       email?: string;
-      resumee?: string;
       prefferedSalary?: string;
       dataProcessingConsent?: string;
       emailExists?: string;
@@ -68,7 +67,6 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   const lastName = formData.get("lastName");
   const age = formData.get("age");
   const aboutMe = formData.get("aboutMe");
-  const resumee = formData.get("resumee");
   const jobTitle = formData.get("jobTitle");
   const prefferedSalary = formData.get("prefferedSalary");
   const dataProcessingConsent = formData.get("dataProcessingConsent");
@@ -78,7 +76,6 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     lastName: lastName ? undefined : "Last name is required",
     age: age ? undefined : "Age is required",
     email: email ? undefined : "Email is required",
-    resumee: resumee ? undefined : "Resumee is required",
     prefferedSalary: prefferedSalary
       ? undefined
       : "Preffered salary is required",
@@ -97,7 +94,6 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   invariant(typeof age === "string", "age must be string");
   invariant(typeof email === "string", "email must be string");
   invariant(typeof aboutMe === "string", "about me must be string");
-  invariant(typeof resumee === "string", "resumee must be string");
   invariant(typeof jobTitle === "string", "job title must be string");
   invariant(
     typeof prefferedSalary === "string",
@@ -107,17 +103,14 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     typeof dataProcessingConsent === "string",
     "data processing consent must be string"
   );
-
   await createJobApplication({
-    firstName,
-    lastName,
-    age,
-    email,
-    aboutMe,
-    resumee,
-    jobTitle,
-    prefferedSalary,
-    dataProcessingConsent,
+    firstName: firstName,
+    lastName: lastName,
+    age: Number(age),
+    email: email,
+    aboutMe: aboutMe,
+    jobTitle: jobTitle,
+    prefferedSalary: Number(prefferedSalary),
   });
 
   return json({
@@ -156,6 +149,7 @@ export default function JobApplicationRoute() {
           <Form
             method="post"
             className="flex w-full flex-col items-center gap-6 lg:w-1/2"
+            encType="multipart/form-data"
           >
             <div className="grid w-full grid-cols-2 gap-2">
               <div className="col-span-2 mb-2 flex flex-col gap-2 rounded-xl border border-rose-400 p-2">
@@ -218,20 +212,6 @@ export default function JobApplicationRoute() {
                   <textarea
                     name="aboutMe"
                     className="resize-y rounded-xl border-rose-400 bg-orange-50 focus:border-rose-500 focus:ring-rose-500"
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="pl-3 text-gray-500" htmlFor="resumee">
-                    Resumee [PDF]:
-                    {actionData?.resumee ? (
-                      <em className="text-red-600"> {actionData.resumee}</em>
-                    ) : null}
-                  </label>
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    name="resumee"
-                    className="text-grey-500 file:text-md text-sm file:mr-5 file:rounded-full file:border-0 file:px-10 file:py-3 file:font-semibold file:text-white hover:file:cursor-pointer hover:file:opacity-80"
                   />
                 </div>
               </div>
