@@ -64,7 +64,7 @@ const isNumeric = (val: string): boolean => {
 // }
 
 export async function getJobApplications() {
-  const res = await api.get(`/aplication/job`);
+  const res = await api.get(`/application/job`);
 
   if (res.status !== 200) {
     throw new Error("Error while fetching job applications");
@@ -74,10 +74,10 @@ export async function getJobApplications() {
   return jobApplicationsData;
 }
 
-export async function createJobApplication(JobApplication) {
-  const res = await api.post(`/aplication/job`, JobApplication);
+export async function createJobApplication(jobApplication) {
+  const res = await api.post("/application/job", jobApplication);
 
-  if (res.status !== 200) {
+  if (res.status !== 201) {
     throw new Error("Error while creating job application");
   }
 
@@ -86,7 +86,7 @@ export async function createJobApplication(JobApplication) {
 }
 
 export async function markJobApplicationAsResponded(JobApplicationId: string) {
-  const res = await api.patch(`/aplication/job/${JobApplicationId}`);
+  const res = await api.patch(`/application/job/${JobApplicationId}`);
 
   if (res.status !== 200) {
     throw new Error("Error while updating job application");
