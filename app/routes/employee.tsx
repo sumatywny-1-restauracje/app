@@ -49,7 +49,9 @@ export const links: LinksFunction = () => [
 
 export const loader: LoaderFunction = async () => {
   const user = await getUserInformation();
-  const orders = getClientsOrdersByRestaurant(user.employeeData.restaurantId);
+  const orders = await getClientsOrdersByRestaurant(
+    user.employeeData.restaurantId
+  );
   return json({ user, orders });
 };
 
@@ -93,10 +95,11 @@ const OrderItem = ({ order }: any) => {
 };
 
 export default function EmployeePanelRoute() {
-  const { user: userRes } = useLoaderData();
+  const {
+    user: userRes,
+    orders: { orders },
+  } = useLoaderData();
   const { userData: user, employeeData: employee } = userRes;
-
-  const orders = ordersFake;
 
   console.log(orders);
 
@@ -108,7 +111,7 @@ export default function EmployeePanelRoute() {
       <h2 className="text-center text-2xl font-bold text-gray-500">
         Twoje konto
       </h2>
-      <div className="flex flex-col gap-2 px-4">
+      <div className="flex flex-col gap-2 px-6">
         <InfoItem big label="ID użytkownika" value={user.userId} />
         <InfoItem big label="Adres e-mail" value={user.userEmail} />
         <InfoItem big label="Rola" value={user.userRole} />
@@ -119,9 +122,15 @@ export default function EmployeePanelRoute() {
       </h2>
       <div className="h-full min-h-[600px] w-full break-all">
         <div className="flex flex-col gap-6">
-          {orders.map((order: any) => (
-            <OrderItem key={order.id} order={order} />
-          ))}
+          {!!orders.length &&
+            orders.map((order: any) => (
+              <OrderItem key={order.id} order={order} />
+            ))}
+          {!orders.length && (
+            <p className="px-6 text-gray-500">
+              Brak zamówień dla danej restauracji
+            </p>
+          )}
         </div>
       </div>
     </div>
