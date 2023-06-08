@@ -108,6 +108,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     lastName: lastName,
     age: Number(age),
     email: email,
+    resumee: [],
     aboutMe: aboutMe,
     jobTitle: jobTitle,
     prefferedSalary: Number(prefferedSalary),
