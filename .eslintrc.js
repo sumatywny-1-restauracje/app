@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0,
+    "no-unused-vars": "warn",
   },
   plugins: ["react", "import", "jsx-a11y"],
   parserOptions: {
