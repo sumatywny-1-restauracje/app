@@ -2,6 +2,7 @@ import type { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import type { V2_MetaFunction } from "@remix-run/react";
 import { useLoaderData } from "@remix-run/react";
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { getUserInformation } from "~/models/user.server";
 
@@ -52,9 +53,11 @@ export const loader: LoaderFunction = async () => {
   return json({ user, orders: ordersFake });
 };
 
-const InfoItem = ({ label, value }: any) => {
+const InfoItem = ({ big, label, value }: any) => {
   return (
-    <div className="flex items-center gap-2 text-sm">
+    <div
+      className={clsx("flex items-center gap-2", big ? "text-lg" : "text-sm")}
+    >
       <p className="font-semibold text-gray-500">{`${label}:`}</p>
       <p className="font-bold">{value}</p>
     </div>
@@ -84,9 +87,10 @@ const OrderItem = ({ order }: any) => {
 };
 
 export default function EmployeePanelRoute() {
-  const { user, orders } = useLoaderData();
+  const { user: userRes, orders } = useLoaderData();
+  const { userData: user, employeeData: employee } = userRes;
 
-  console.log(orders);
+  console.log(employee);
 
   // userData: {
   //   userId: '73f74fa2-a75a-4362-8c19-9610150400c6',
@@ -104,6 +108,12 @@ export default function EmployeePanelRoute() {
       <h2 className="text-center text-2xl font-bold text-gray-500">
         Twoje konto
       </h2>
+      <div className="flex flex-col gap-2 px-4">
+        <InfoItem big label="ID użytkownika" value={user.userId} />
+        <InfoItem big label="Adres e-mail" value={user.userEmail} />
+        <InfoItem big label="Rola" value={user.userRole} />
+        <InfoItem big label="ID restauracji" value={employee.restaurantId} />
+      </div>
       <h2 className="text-center text-2xl font-bold text-gray-500">
         Zamówienia
       </h2>
