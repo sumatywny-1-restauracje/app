@@ -44,6 +44,22 @@ export async function cancelOrder(orderId) {
   return orderData;
 }
 
+export async function getClientsPendingOrders() {
+  const {
+    data: { restaurants },
+  } = await api.get(`/restaurant`);
+  const ids = restaurants.map(({ restaurantId }: any) => restaurantId);
+  const promises = ids.map((id: any) => api.get(`/order/restaurant/${id}`));
+
+  const res: any = await Promise.all(promises);
+
+  if (res.status !== 200) {
+    throw new Error("Error while fetching orders");
+  }
+
+  return res.data;
+}
+
 export async function getClientsPendingOrdersByRestaurant(
   restaurantId: string
 ) {

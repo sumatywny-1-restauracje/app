@@ -12,7 +12,7 @@ export async function getUserInformation() {
     throw new Error("Error while fetching user information");
   }
 
-  const userData = res.data.userData;
+  const userData = res.data;
   return userData;
 }
 
