@@ -434,6 +434,7 @@ export default function JobApplicationRoute() {
                       </label>
                       <input
                         type="number"
+                        min={0}
                         name="houseNumber"
                         id="houseNumber"
                         className="rounded-lg border border-gray-700 bg-orange-100 p-2 text-center text-gray-700"
@@ -452,6 +453,7 @@ export default function JobApplicationRoute() {
                       </label>
                       <input
                         type="number"
+                        min={0}
                         name="apartment"
                         id="apartment"
                         className="rounded-lg border border-gray-700 bg-orange-100 p-2 text-center text-gray-700"
