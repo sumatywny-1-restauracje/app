@@ -4,6 +4,7 @@ import type { V2_MetaFunction } from "@remix-run/react";
 import { useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import dayjs from "dayjs";
+import { getClientsOrdersByRestaurant } from "~/models/order.server";
 import { getUserInformation } from "~/models/user.server";
 
 const ordersFake = [...Array(10).keys()].map((key) => ({
@@ -48,9 +49,8 @@ export const links: LinksFunction = () => [
 
 export const loader: LoaderFunction = async () => {
   const user = await getUserInformation();
-  // const orders = await getClientsPendingOrders();
-
-  return json({ user, orders: ordersFake });
+  const orders = getClientsOrdersByRestaurant(user.employeeData.restaurantId);
+  return json({ user, orders });
 };
 
 const InfoItem = ({ big, label, value }: any) => {
@@ -66,11 +66,15 @@ const InfoItem = ({ big, label, value }: any) => {
 
 const OrderItem = ({ order }: any) => {
   const date = dayjs(order.createdAt).format("DD.MM.YYYY");
+  const { street, houseNumber, apartment } = order.address;
+  const addressLine = `${street} ${houseNumber}${
+    apartment ? `/${apartment}` : ""
+  }`;
 
   return (
-    <div className="flex gap-8 rounded-2xl bg-orange-200 px-10 py-6 hover:bg-orange-300">
+    <div className="flex gap-8 rounded-2xl bg-orange-200 px-10 py-6">
       <div className="flex flex-col gap-1">
-        <div className="flex items-center gap-3">
+        <div className="mb-2 flex items-center gap-3">
           <p className="text-lg font-bold">{`Zamówienie #${order.id}`}</p>
           <div className="rounded-xl bg-rose-500 px-2 py-1">
             <span className="block text-xs font-bold text-white">
@@ -80,25 +84,21 @@ const OrderItem = ({ order }: any) => {
         </div>
         <InfoItem label="Data złożenia" value={date} />
         <InfoItem label="ID restauracji" value={order.restaurantId} />
-        <InfoItem label="Adres" value={JSON.stringify(order.address)} />
+        <InfoItem label="Ulica i numer domu" value={addressLine} />
+        <InfoItem label="Miasto" value={order.address.city} />
+        <InfoItem label="Kraj" value={order.address.country} />
       </div>
     </div>
   );
 };
 
 export default function EmployeePanelRoute() {
-  const { user: userRes, orders } = useLoaderData();
+  const { user: userRes } = useLoaderData();
   const { userData: user, employeeData: employee } = userRes;
 
-  console.log(employee);
+  const orders = ordersFake;
 
-  // userData: {
-  //   userId: '73f74fa2-a75a-4362-8c19-9610150400c6',
-  //   createdAt: '2023-06-08T11:51:14.877Z',
-  //   userEmail: '236614@edu.p.lodz.pl',
-  //   userRole: 'CLIENT',
-  //   loyaltyPoints: 0
-  // }
+  console.log(orders);
 
   return (
     <div className="mb-12 mt-8 flex w-5/6 max-w-screen-lg flex-col gap-9 rounded-xl border-rose-300 bg-orange-100 p-4 md:w-4/6">
