@@ -4,9 +4,10 @@ import type { V2_MetaFunction } from "@remix-run/react";
 import { useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { getClientsOrdersByRestaurant } from "~/models/order.server";
 import { getUserInformation } from "~/models/user.server";
+import { UserContext } from "~/root";
 import { api } from "~/utils/api";
 
 const statuses: any = {
@@ -62,9 +63,12 @@ export const links: LinksFunction = () => [
 
 export const loader: LoaderFunction = async () => {
   const user = await getUserInformation();
-  const orders = await getClientsOrdersByRestaurant(
-    user.employeeData.restaurantId
-  );
+  let orders = [];
+  if (user?.employeeData?.restaurantId) {
+    orders = await getClientsOrdersByRestaurant(
+      user?.employeeData?.restaurantId
+    );
+  }
   return json({ user, orders });
 };
 
@@ -85,6 +89,7 @@ const OrderItem = ({ order, onChange, role }: any) => {
   const addressLine = `${street} ${houseNumber}${
     apartment ? `/${apartment}` : ""
   }`;
+  console.log(order.orderedItems);
 
   return (
     <div className="flex items-start justify-between gap-8 rounded-2xl bg-orange-200 px-10 py-6">
@@ -97,11 +102,21 @@ const OrderItem = ({ order, onChange, role }: any) => {
             </span>
           </div>
         </div>
-        <InfoItem label="Data złożenia" value={date} />
-        <InfoItem label="ID restauracji" value={order.restaurantId} />
-        <InfoItem label="Ulica i numer domu" value={addressLine} />
-        <InfoItem label="Miasto" value={order.address.city} />
-        <InfoItem label="Kraj" value={order.address.country} />
+        <InfoItem label="Order date" value={date} />
+        <InfoItem label="Restaurant ID" value={order.restaurantId} />
+        <InfoItem label="Street and house number" value={addressLine} />
+        <InfoItem label="City" value={order.address.city} />
+        <InfoItem label="Country" value={order.address.country} />
+        <div className="my-2 h-[1px] bg-orange-900"></div>
+        <p className="text-sm font-semibold text-gray-500">Ordered items:</p>
+        <ul className="ml-4 list-disc text-sm font-bold">
+          {order.orderedItems.map((item: any) => (
+            <li key={item.id}>
+              {item.name}
+              <span className="text-gray-500">{` (${item.quantity} quantity)`}</span>
+            </li>
+          ))}
+        </ul>
       </div>
       <select
         className="rounded-lg border-4 border-rose-400 bg-orange-100 bg-transparent p-2 font-bold focus:border-rose-500 focus:ring-0"
@@ -109,11 +124,19 @@ const OrderItem = ({ order, onChange, role }: any) => {
         name="status"
         onChange={onChange}
       >
-        {statuses[role].map((status: any) => (
-          <option key={status} className="bg-rose-300" value={status}>
-            {status}
-          </option>
-        ))}
+        {statuses[role].map((status: any, index: number) => {
+          const roleIndex = statuses[role].findIndex(
+            (status: any) => status === order.status
+          );
+
+          if (roleIndex !== -1 && index < roleIndex) return null;
+
+          return (
+            <option key={status} className="bg-rose-300" value={status}>
+              {status}
+            </option>
+          );
+        })}
       </select>
     </div>
   );
@@ -122,16 +145,23 @@ const OrderItem = ({ order, onChange, role }: any) => {
 export default function EmployeePanelRoute() {
   const {
     user: userRes,
-    // orders: { orders },
+    orders: { orders: ordersData },
   } = useLoaderData();
+  const { jwtToken } = useContext(UserContext) as any;
+  const configEssunia = {
+    headers: { Authorization: `Bearer ${jwtToken}` },
+  };
+  const [orders, setOrders] = useState(ordersData);
   const { userData: user, employeeData: employee } = userRes;
-  const [orders, setOrders] = useState(ordersFake);
 
   const handleChange = async (id: any, value: any) => {
     try {
-      await api.patch(`/orders/${id}/${value}`);
-      const res = await api.get(`/order/restaurant/${employee.restaurantId}`);
-      setOrders(res.data);
+      await api.patch(`/order/${id}/${value}`, undefined, configEssunia);
+      const res = await api.get(
+        `/order/restaurant/${employee.restaurantId}`,
+        configEssunia
+      );
+      setOrders(res.data.orders);
     } catch {}
   };
 
@@ -141,17 +171,15 @@ export default function EmployeePanelRoute() {
         Employee Panel
       </h1>
       <h2 className="text-center text-2xl font-bold text-gray-500">
-        Twoje konto
+        Your account
       </h2>
       <div className="flex flex-col gap-2 px-6">
-        <InfoItem big label="ID użytkownika" value={user.userId} />
-        <InfoItem big label="Adres e-mail" value={user.userEmail} />
-        <InfoItem big label="Rola" value={user.userRole} />
-        <InfoItem big label="ID restauracji" value={employee.restaurantId} />
+        <InfoItem big label="User ID" value={user.userId} />
+        <InfoItem big label="E-mail address" value={user.userEmail} />
+        <InfoItem big label="Role" value={user.userRole} />
+        <InfoItem big label="Restaurant ID" value={employee?.restaurantId} />
       </div>
-      <h2 className="text-center text-2xl font-bold text-gray-500">
-        Zamówienia
-      </h2>
+      <h2 className="text-center text-2xl font-bold text-gray-500">Orders</h2>
       <div className="h-full min-h-[600px] w-full break-all">
         <div className="flex flex-col gap-6">
           {!!orders.length &&
@@ -177,9 +205,7 @@ export default function EmployeePanelRoute() {
               );
             })}
           {!orders.length && (
-            <p className="px-6 text-gray-500">
-              Brak zamówień dla danej restauracji
-            </p>
+            <p className="px-6 text-gray-500">No orders in this restaurant</p>
           )}
         </div>
       </div>

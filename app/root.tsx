@@ -1,4 +1,5 @@
 import type { LinksFunction, LoaderArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -6,18 +7,17 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 import { getEnv } from "./env.server";
 
-import { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 
-import stylesheet from "./styles/tailwind.css";
 import Footer from "~/components/Footer";
 import Navbar from "~/components/Navbar";
 import { authenticator } from "./services/auth.server";
+import stylesheet from "./styles/tailwind.css";
 import type { User } from "./types";
 
 export const links: LinksFunction = () => [
@@ -32,6 +32,7 @@ type LoaderData = {
 
 export const loader = async ({ request }: LoaderArgs) => {
   const user = (await authenticator.isAuthenticated(request)) as User;
+  if (user) user.jwtToken = global.TOKEN;
   const graphEndpoint = "https://graph.microsoft.com/v1.0/me/photo/$value";
 
   if (!user) {
