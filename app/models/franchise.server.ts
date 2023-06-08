@@ -11,10 +11,10 @@ export async function getFranchiseApplications() {
   return franchiseApplicationsData;
 }
 
-export async function createFranchiseApplication(franchiseApplication) {
-  const res = await api.post(`/aplication/franchise`, franchiseApplication);
+export async function createFranchiseApplication(franchiseApplication: any) {
+  const res = await api.post(`/application/franchise`, franchiseApplication);
 
-  if (res.status !== 200) {
+  if (res.status !== 201) {
     throw new Error("Error while creating franchise application");
   }
 
