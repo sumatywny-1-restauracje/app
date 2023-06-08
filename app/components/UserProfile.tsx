@@ -4,6 +4,7 @@ import { UserContext } from "~/root";
 import useOnClickOutside from "~/hooks/useOnClickOutside";
 import { FaRegUser, FaHistory } from "react-icons/fa";
 import { Link } from "@remix-run/react";
+import dayjs from "dayjs";
 
 type UserProfileProps = {
   showModal: boolean;
@@ -12,6 +13,38 @@ type UserProfileProps = {
 
 const UserProfile = ({ showModal, setShowModal }: UserProfileProps) => {
   const user = useContext(UserContext) as User;
+  const loyaltyPoints = user?.info?.loyaltyPoints;
+
+  const orders = [
+    {
+      id: "string",
+      createdAt: "2023-06-08T16:01:11.107Z",
+      updatedAt: "2023-06-08T16:01:11.107Z",
+      status: "NOT_APPROVED",
+      userEmail: "string",
+      address: {
+        street: "string",
+        houseNumber: 0,
+        apartment: 0,
+        city: "string",
+        country: "string",
+      },
+      restaurantId: "string",
+      orderedItems: [
+        {
+          itemId: 0,
+          name: "string",
+          photoUrl: "string",
+          description: "string",
+          ingredients: "string",
+          quantity: 5,
+          price: 0,
+        },
+      ],
+      totalPrice: 214.5,
+      currency: "string",
+    },
+  ];
 
   const ref = useRef(null);
   useOnClickOutside(ref, () => setShowModal(false));
@@ -68,32 +101,41 @@ const UserProfile = ({ showModal, setShowModal }: UserProfileProps) => {
               <span>My Orders</span>
             </div>
             <ul className="flex w-full flex-col gap-1">
-              {/* {user?.orders?.map((order) => ( */}
-              <li
-                key={1}
-                className="flex w-full justify-center rounded-xl bg-orange-300 py-2"
-              >
-                <Link
-                  to={`/orders/${1}`}
-                  prefetch="intent"
-                  className="text-white"
-                >
-                  2021-09-01, 12:00, 2 items, $20
-                </Link>
-              </li>
-              {/* ))} */}
+              {orders.length === 0 ? (
+                <li className="flex w-full justify-center rounded-xl bg-orange-300 py-2">
+                  No orders yet
+                </li>
+              ) : (
+                <>
+                  {orders.map((order) => (
+                    <li
+                      key={1}
+                      className="flex w-full justify-center rounded-xl bg-orange-300 py-2 hover:bg-orange-400"
+                    >
+                      <Link
+                        to={`/orders/${1}`}
+                        prefetch="intent"
+                        className="text-white"
+                      >
+                        {dayjs(order.createdAt).format("DD.MM.YYYY HH:mm")};{" "}
+                        {order.orderedItems.reduce(
+                          (acc, item) => acc + item.quantity,
+                          0
+                        )}{" "}
+                        items; ${order.totalPrice.toFixed(2)}
+                      </Link>
+                    </li>
+                  ))}
+                </>
+              )}
             </ul>
           </div>
 
           <div className="my-2 w-full border border-gray-300" />
-          <Link
-            to="/profile"
-            prefetch="intent"
-            className="item-center flex h-max w-full justify-center gap-2 rounded-xl bg-orange-400 px-4 py-2 font-semibold text-white hover:bg-orange-500"
-          >
+          <div className="item-center flex h-max w-full justify-center gap-2 rounded-xl bg-orange-300 px-4 py-2 font-semibold text-white">
             <FaRegUser className="my-auto h-full" />
-            Profile
-          </Link>
+            Current Loyalty Points: {loyaltyPoints}
+          </div>
           <div className="my-2 w-full border border-gray-300" />
           <div className="w-full">
             <form action="/logout" method="post">
