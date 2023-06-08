@@ -60,6 +60,12 @@ export async function getClientsPendingOrders() {
   return res.data;
 }
 
+export async function getClientsOrdersByRestaurant(restaurantId: string) {
+  const res = await api.get(`/order/restaurant/${restaurantId}`);
+  if (res.status !== 200) throw new Error("Error while fetching orders");
+  return res.data;
+}
+
 export async function getClientsPendingOrdersByRestaurant(
   restaurantId: string
 ) {
