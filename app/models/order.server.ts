@@ -37,7 +37,7 @@ export async function getClientOrderById(orderId) {
     throw new Error("Error while fetching order");
   }
 
-  const orderData = res.data;
+  const orderData = res.data?.order;
   return orderData;
 }
 

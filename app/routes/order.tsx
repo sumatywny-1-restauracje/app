@@ -124,7 +124,7 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
   }
 };
 
-export default function JobApplicationRoute() {
+export default function OrderRoute() {
   const data = useLoaderData<LoaderData>();
   const actionData = useActionData();
   const navigation = useNavigation();
@@ -145,11 +145,11 @@ export default function JobApplicationRoute() {
   const [discount, setDiscount] = useState(0);
 
   const [userGeoLocation, setUserGeoLocation] = useState({
-    latitude: 0,
-    longitude: 0,
+    latitude: null,
+    longitude: null,
   });
 
-  const [restaurantsInRange, setRestaurantsInRange] = useState([]);
+  const [restaurantsInRange, setRestaurantsInRange] = useState(null);
 
   const success = (pos) => {
     var crd = pos.coords;
@@ -161,20 +161,6 @@ export default function JobApplicationRoute() {
 
   const errors = (err) => {
     console.warn(`ERROR(${err.code}): ${err.message}`);
-  };
-
-  const handleDeliveryMethod = async () => {
-    const res = await api.get(
-      `/restaurant/filter/range?userLat=${userGeoLocation.latitude}&userLon=${userGeoLocation.longitude}`
-    );
-
-    if (res.status !== 200) {
-      throw new Error("Error while fetching order");
-    }
-
-    const locals = res.data.restaurants;
-    setRestaurantsInRange(locals);
-    setDeliveryMethod("courier");
   };
 
   useEffect(() => {
@@ -200,6 +186,25 @@ export default function JobApplicationRoute() {
       console.log("Geolocation is not supported by this browser.");
     }
   }, []);
+
+  useEffect(() => {
+    const fetchRestaurantInRange = async () => {
+      const res = await api.get(
+        `/restaurant/filter/range?userLat=${userGeoLocation.latitude}&userLon=${userGeoLocation.longitude}`
+      );
+
+      if (res.status !== 200) {
+        throw new Error("Error while fetching order");
+      }
+
+      const locals = res.data.restaurants;
+      setRestaurantsInRange(locals);
+    };
+
+    if (userGeoLocation.latitude !== null) {
+      fetchRestaurantInRange();
+    }
+  }, [userGeoLocation]);
 
   const handleDiscountCode = async () => {
     const res = await api.get(`/coupon/validate?code=${discountCode}`);
@@ -240,13 +245,12 @@ export default function JobApplicationRoute() {
       {actionData?.success ? (
         <div className="flex h-full w-full flex-col justify-center gap-4 text-center text-rose-400">
           <h2 className="text-3xl font-bold">We Have Received Your Order!</h2>
-          <Link
-            prefetch="intent"
-            to={`/order/${actionData.success}`}
+          <a
+            href={`/orders/${actionData.success}`}
             className="mx-auto w-max rounded-xl bg-rose-400 p-2 text-xl text-white hover:bg-rose-500"
           >
             Check Status
-          </Link>
+          </a>
         </div>
       ) : (
         <>
@@ -280,7 +284,7 @@ export default function JobApplicationRoute() {
                   <ul
                     className={
                       " mx-auto flex w-full flex-col  gap-2 px-4 sm:w-2/3 md:grid " +
-                      (basketData.basket.length > 1
+                      (basketData?.basket?.length > 1
                         ? "md:w-full md:grid-cols-2"
                         : "md:2/3 items-center md:grid-cols-1")
                     }
@@ -293,21 +297,21 @@ export default function JobApplicationRoute() {
                     ) : null}
                     {basketData?.basket?.map((item) => (
                       <li
-                        key={item.id}
+                        key={item?.id}
                         className="flex gap-3 rounded-lg border border-gray-700 bg-orange-100 p-1"
                       >
                         <img
-                          src={item.image.src}
-                          alt={item.image.alt}
+                          src={item?.image.src}
+                          alt={item?.image.alt}
                           className="aspect-square w-1/3 rounded-lg border-2 border-gray-700 sm:w-1/5 md:w-1/3"
                         />
                         <div className="flex w-7/12 flex-col justify-between">
                           <div className="flex flex-col gap-1">
                             <span className="text-xl font-bold">
-                              {item.name}
+                              {item?.name}
                             </span>
                             <span className="text-sm text-gray-500">
-                              ${item.price.toFixed(2)}
+                              ${item?.price?.toFixed(2)}
                             </span>
                           </div>
                           <div className="flex w-full justify-between pr-3 text-xs">
@@ -557,7 +561,7 @@ export default function JobApplicationRoute() {
                             name="deliveryMethod"
                             value="COURIER"
                             checked={deliveryMethod === "courier"}
-                            onClick={handleDeliveryMethod}
+                            onClick={() => setDeliveryMethod("courier")}
                           />
                           <label
                             htmlFor="deliveryMethodChoice2"
@@ -596,11 +600,17 @@ export default function JobApplicationRoute() {
                     )}
                     {deliveryMethod === "courier" && (
                       <>
-                        {restaurantsInRange.length === 0 ? (
+                        {restaurantsInRange === null && (
+                          <p className="text-center text-gray-700">
+                            Loading...
+                          </p>
+                        )}
+                        {restaurantsInRange?.length === 0 && (
                           <p className="text-center text-gray-700">
                             There are no restaurants in your area.
                           </p>
-                        ) : (
+                        )}
+                        {restaurantsInRange?.length > 0 && (
                           <select
                             className="mx-auto w-max rounded-lg border border-gray-700 bg-orange-100 p-2"
                             name="restaurantId"
