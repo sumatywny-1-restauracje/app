@@ -3,6 +3,7 @@ type Product = {
   name: string;
   description: string;
   category: string;
+  ingredients: string;
   price: number;
   rating: number;
   numberOfRatings: number;
@@ -176,6 +177,7 @@ type BasketItem = {
   id: string;
   name: string;
   description: string;
+  ingredients: string;
   price: number;
   quantity: number;
   image: Image;

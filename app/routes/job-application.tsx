@@ -189,6 +189,7 @@ export default function JobApplicationRoute() {
                   </label>
                   <input
                     type="number"
+                    min={18}
                     name="age"
                     className="rounded-xl border-rose-400 bg-orange-50 focus:border-rose-500 focus:ring-rose-500"
                   />

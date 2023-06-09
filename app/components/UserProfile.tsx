@@ -1,10 +1,11 @@
 import type { User } from "~/types";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "~/root";
 import useOnClickOutside from "~/hooks/useOnClickOutside";
 import { FaRegUser, FaHistory } from "react-icons/fa";
 import { Link } from "@remix-run/react";
 import dayjs from "dayjs";
+import { api } from "~/utils/api";
 
 type UserProfileProps = {
   showModal: boolean;
@@ -15,39 +16,28 @@ const UserProfile = ({ showModal, setShowModal }: UserProfileProps) => {
   const user = useContext(UserContext) as User;
   const loyaltyPoints = user?.info?.loyaltyPoints;
 
-  const orders = [
-    {
-      id: "string",
-      createdAt: "2023-06-08T16:01:11.107Z",
-      updatedAt: "2023-06-08T16:01:11.107Z",
-      status: "NOT_APPROVED",
-      userEmail: "string",
-      address: {
-        street: "string",
-        houseNumber: 0,
-        apartment: 0,
-        city: "string",
-        country: "string",
-      },
-      restaurantId: "string",
-      orderedItems: [
-        {
-          itemId: 0,
-          name: "string",
-          photoUrl: "string",
-          description: "string",
-          ingredients: "string",
-          quantity: 5,
-          price: 0,
-        },
-      ],
-      totalPrice: 214.5,
-      currency: "string",
-    },
-  ];
-
   const ref = useRef(null);
   useOnClickOutside(ref, () => setShowModal(false));
+
+  const [clientOrders, setClientOrders] = useState([]);
+
+  useEffect(() => {
+    const fetchClientOrders = async () => {
+      const jwtToken = user?.jwtToken;
+      const res = await api.get(`/order`, {
+        headers: { Authorization: `Bearer ${jwtToken}` },
+      });
+
+      if (res.status !== 200) {
+        throw new Error("Error while fetching orders");
+      }
+
+      const ordersData = res.data.orders;
+      setClientOrders(ordersData.reverse());
+    };
+
+    fetchClientOrders();
+  }, []);
 
   return (
     <div
@@ -100,29 +90,30 @@ const UserProfile = ({ showModal, setShowModal }: UserProfileProps) => {
               <FaHistory className="my-auto h-full" />
               <span>My Orders</span>
             </div>
-            <ul className="flex w-full flex-col gap-1">
-              {orders.length === 0 ? (
-                <li className="flex w-full justify-center rounded-xl bg-orange-300 py-2">
+            <ul className="flex max-h-[300px] w-full flex-col gap-1 overflow-y-auto">
+              {clientOrders.length === 0 ? (
+                <li className="flex w-full justify-center rounded-xl bg-orange-300 py-2 text-white">
                   No orders yet
                 </li>
               ) : (
                 <>
-                  {orders.map((order) => (
+                  {clientOrders.map((order) => (
                     <li
-                      key={1}
+                      key={order?.id}
                       className="flex w-full justify-center rounded-xl bg-orange-300 py-2 hover:bg-orange-400"
                     >
                       <Link
-                        to={`/orders/${1}`}
+                        to={`/orders/${order?.id}`}
                         prefetch="intent"
                         className="text-white"
+                        onClick={() => setShowModal(false)}
                       >
-                        {dayjs(order.createdAt).format("DD.MM.YYYY HH:mm")};{" "}
-                        {order.orderedItems.reduce(
+                        {dayjs(order?.createdAt).format("DD.MM.YYYY HH:mm")};{" "}
+                        {order?.orderedItems.reduce(
                           (acc, item) => acc + item.quantity,
                           0
                         )}{" "}
-                        items; ${order.totalPrice.toFixed(2)}
+                        items; ${order?.totalPrice.toFixed(2)}
                       </Link>
                     </li>
                   ))}

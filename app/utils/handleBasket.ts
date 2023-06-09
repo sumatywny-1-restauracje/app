@@ -15,7 +15,7 @@ export const updateBasket = (
     setBasket([{ ...item, quantity }]);
     window.localStorage.setItem(
       `userBasket:${user?.email}`,
-      JSON.stringify({ ...item, quantity })
+      JSON.stringify([{ ...item, quantity }])
     );
     return;
   }
@@ -64,4 +64,16 @@ export const deleteItemFromBasket = (
     `userBasket:${user?.email}`,
     JSON.stringify(newBasket)
   );
+};
+
+export const clearBasket = (
+  user: User,
+  setBasket: (basket: BasketItem[]) => void
+) => {
+  if (!user) {
+    return;
+  }
+
+  setBasket([]);
+  window.localStorage.setItem(`userBasket:${user?.email}`, JSON.stringify([]));
 };

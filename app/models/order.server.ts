@@ -12,14 +12,22 @@ export async function getClientOrders() {
 }
 
 export async function createOrder(order) {
-  const res = await api.post(`/order`, order);
-
-  if (res.status !== 200) {
-    throw new Error("Error while creating order");
+  try {
+    const res = await api.post(`/order`, order);
+    const orderData = res.data;
+    return {
+      status: res.status,
+      data: orderData,
+    };
+  } catch (e) {
+    if (e.response.data.statusCode !== 405) {
+      throw new Error(e);
+    }
+    return {
+      status: e.response.data.statusCode,
+      data: e.response.data.message,
+    };
   }
-
-  const orderData = res.data;
-  return orderData;
 }
 
 export async function getClientOrderById(orderId) {
@@ -29,7 +37,7 @@ export async function getClientOrderById(orderId) {
     throw new Error("Error while fetching order");
   }
 
-  const orderData = res.data;
+  const orderData = res.data?.order;
   return orderData;
 }
 

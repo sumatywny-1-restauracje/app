@@ -34,7 +34,6 @@ let microsoftStrategy = new MicrosoftStrategy(
       accessToken: accessToken,
       userRole: userRole,
       info: user,
-      clientOrders: clientOrders?.orders,
     };
   }
 );
