@@ -7,7 +7,7 @@ export async function getEmployees() {
     throw new Error("Error while fetching employees");
   }
 
-  const employeesData = res.data;
+  const employeesData = res.data?.employees;
   return employeesData;
 }
 

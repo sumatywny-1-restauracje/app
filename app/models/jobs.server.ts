@@ -70,7 +70,7 @@ export async function getJobApplications() {
     throw new Error("Error while fetching job applications");
   }
 
-  const jobApplicationsData = res.data;
+  const jobApplicationsData = res.data?.jobApplications;
   return jobApplicationsData;
 }
 

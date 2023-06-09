@@ -3,7 +3,6 @@ import { MicrosoftStrategy } from "remix-auth-microsoft";
 import { Authenticator } from "remix-auth";
 import { sessionStorage } from "~/services/session.server";
 import { signNewUser } from "~/models/user.server";
-import { getClientOrders } from "~/models/order.server";
 
 export let authenticator = new Authenticator(sessionStorage); //User is a custom user types you can define as you want
 

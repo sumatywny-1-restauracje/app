@@ -18,7 +18,7 @@ export const loader: LoaderFunction = async ({
   }
 
   if (
-    request.url.includes("/employeelocal") ||
+    request.url.includes("/employee/local") ||
     request.url.includes("/employee/boss")
   ) {
     return null;

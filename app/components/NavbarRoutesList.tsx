@@ -71,7 +71,7 @@ const NavbarRoutesList = ({
           About Us
         </Link>
       </li>
-      {["BOSS", "EMPLOYEE", "DELIVERY".includes(userRole)] && (
+      {["BOSS", "EMPLOYEE", "DELIVERY"].includes(userRole) && (
         <li>
           <Link
             to="/employee"
@@ -79,7 +79,7 @@ const NavbarRoutesList = ({
             onClick={() => setMenuDropdown(false)}
             className={
               " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
-              (location.pathname === "/employee"
+              (location.pathname.includes("/employee")
                 ? "text-black underline"
                 : "hover:text-black hover:underline")
             }
