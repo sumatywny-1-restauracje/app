@@ -1,11 +1,13 @@
 import type { V2_MetaFunction } from "@remix-run/react";
+import type { User } from "./types";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction, LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { useContext, useState } from "react";
 import { UserContext } from "~/root";
 import invariant from "tiny-invariant";
 import { getClientOrderById } from "~/models/order.server";
+import { authenticator } from "~/services/auth.server";
 import { getLocations } from "~/models/locations.server";
 import VoteProductPopup from "~/components/VoteProductPopup";
 import { api } from "~/utils/api";
@@ -16,7 +18,15 @@ type LoaderData = {
   order: any;
 };
 
-export const loader: LoaderFunction = async ({ params }: LoaderArgs) => {
+export const loader: LoaderFunction = async ({
+  params,
+  request,
+}: LoaderArgs) => {
+  const user = (await authenticator.isAuthenticated(request)) as User;
+  if (!user) {
+    return redirect("/");
+  }
+
   invariant(params.id, "order id not found");
   const order = await getClientOrderById(params.id);
   const restaurants = await getLocations();
@@ -28,11 +38,11 @@ export const loader: LoaderFunction = async ({ params }: LoaderArgs) => {
   if (!order) {
     throw new Response("Not Found", { status: 404 });
   }
-  return json({ order });
+  return json<LoaderData>({ order });
 };
 
 export default function HistoryOrderRoute() {
-  const data = useLoaderData();
+  const data = useLoaderData() as LoaderData;
   const user = useContext(UserContext);
 
   const [rateProduct, setRateProduct] = useState(null);

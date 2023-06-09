@@ -1,10 +1,16 @@
-import type { LinksFunction, LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type {
+  LinksFunction,
+  LoaderArgs,
+  LoaderFunction,
+} from "@remix-run/node";
+import type { User } from "./types";
+import { json, redirect } from "@remix-run/node";
 import type { V2_MetaFunction } from "@remix-run/react";
 import { useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import dayjs from "dayjs";
 import { useContext, useState } from "react";
+import { authenticator } from "~/services/auth.server";
 import { getClientsOrdersByRestaurant } from "~/models/order.server";
 import { getUserInformation } from "~/models/user.server";
 import { UserContext } from "~/root";
@@ -61,7 +67,14 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
+  const emp = (await authenticator.isAuthenticated(request)) as User;
+  if (!emp || emp?.userRole !== "EMPLOYEE" || emp?.userRole !== "DELIVERY") {
+    return redirect("/");
+  }
+
+  console.log(emp);
+
   const user = await getUserInformation();
   let orders = [];
   if (user?.employeeData?.restaurantId) {
