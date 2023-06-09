@@ -63,7 +63,7 @@ const AddToBasketPopup = ({
               You have added the item to your basket!
             </p>
 
-            <div className="mx-auto flex w-7/12 gap-6">
+            <div className="mx-auto flex w-7/12 gap-6 max-sm:w-full max-sm:justify-center">
               <img
                 src={item.image.src}
                 alt={item.image.alt}

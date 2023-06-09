@@ -17,17 +17,22 @@ const FoodElement = ({ product, categories }: FoodElementProps) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showAddToBasketModal, setShowAddToBasketModal] = useState(false);
 
+  const quantity =
+    basketData.basket.length > 0
+      ? basketData.basket.find((item) => item.id === product.id)?.quantity ?? 0
+      : 0;
+
   const item = {
     id: product.id,
     name: product.name,
     description: product.description,
     price: product.price,
+    ingredients: product.ingredients,
     image: {
       src: product.image,
       alt: product.name,
     },
-    quantity:
-      basketData.basket.find((item) => item.id === product.id)?.quantity ?? 0,
+    quantity: quantity,
   } as BasketItem;
 
   const handleAddToBasket = () => {
