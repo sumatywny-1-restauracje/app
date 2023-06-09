@@ -26,8 +26,6 @@ let microsoftStrategy = new MicrosoftStrategy(
     const user = await signNewUser(email);
     const userRole = user?.userRole;
 
-    const clientOrders = await getClientOrders();
-
     return {
       email: email,
       name: name,

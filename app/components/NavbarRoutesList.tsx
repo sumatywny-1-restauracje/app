@@ -2,8 +2,10 @@ import { Link, useLocation } from "@remix-run/react";
 
 const NavbarRoutesList = ({
   setMenuDropdown,
+  userRole,
 }: {
   setMenuDropdown: (arg: boolean) => void;
+  userRole: string;
 }) => {
   const location = useLocation();
 
@@ -69,6 +71,23 @@ const NavbarRoutesList = ({
           About Us
         </Link>
       </li>
+      {["BOSS", "EMPLOYEE", "DELIVERY".includes(userRole)] && (
+        <li>
+          <Link
+            to="/employee"
+            prefetch="intent"
+            onClick={() => setMenuDropdown(false)}
+            className={
+              " block rounded py-2 pl-3 pr-4 md:bg-transparent md:p-0 " +
+              (location.pathname === "/employee"
+                ? "text-black underline"
+                : "hover:text-black hover:underline")
+            }
+          >
+            Employee Panel
+          </Link>
+        </li>
+      )}
     </ul>
   );
 };

@@ -1,18 +1,14 @@
 import type { User } from "types";
 import { useEffect, useState, useContext } from "react";
 import { Link } from "@remix-run/react";
-import { Avatar, Dropdown } from "flowbite-react";
-import { FaRegUser, FaHistory, FaShoppingBasket } from "react-icons/fa";
+import { Avatar } from "flowbite-react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FaShoppingBasket } from "react-icons/fa";
 import NavbarRoutesList from "./NavbarRoutesList";
 import LoginForm from "./LoginForm";
 import { UserContext, BasketContext } from "~/root";
 import Basket from "./Basket";
 import UserProfile from "./UserProfile";
-
-const sumBasket = (basket) => {
-  return basket.reduce((acc, item) => acc + item.price * item.quantity, 0);
-};
 
 type NavbarProps = {
   userPhoto: string;
@@ -111,69 +107,22 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
                     rounded={true}
                   />
                 </button>
-                {/* {visible ? (
-                  <Dropdown
-                    arrowIcon={false}
-                    inline={true}
-                    dismissOnClick={true}
-                    className="rounded-xl bg-orange-200"
-                    label={
-                      <Avatar
-                        alt="User profile"
-                        className="rounded-full border-2 border-rose-400"
-                        img={
-                          userPhoto ||
-                          "https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                        }
-                        rounded={true}
-                      />
-                    }
-                  >
-                    {user?.name && (
-                      <Dropdown.Header>
-                        <span className="block text-sm">{user?.name}</span>
-                      </Dropdown.Header>
-                    )}
-                    <Dropdown.Item>
-                      <div className="flex items-center gap-1">
-                        <FaHistory />
-                        <span>Orders</span>
-                      </div>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                      <div className="flex items-center gap-1">
-                        <FaRegUser />
-                        <span>Profile</span>
-                      </div>
-                    </Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item>
-                      <form action="/logout" method="post">
-                        <button>Log out</button>
-                      </form>
-                    </Dropdown.Item>
-                  </Dropdown>
-                ) : (
-                  <Avatar
-                    alt="User profile"
-                    className="rounded-full border-2 border-rose-400"
-                    img={
-                      userPhoto ||
-                      "https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                    }
-                    rounded={true}
-                  />
-                )} */}
               </div>
             )}
           </div>
           <div className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto">
-            <NavbarRoutesList setMenuDropdown={setMenuDropdown} />
+            <NavbarRoutesList
+              setMenuDropdown={setMenuDropdown}
+              userRole={user?.userRole}
+            />
           </div>
         </div>
         {menuDropdown && (
           <div className="flex w-full flex-auto md:hidden">
-            <NavbarRoutesList setMenuDropdown={setMenuDropdown} />
+            <NavbarRoutesList
+              setMenuDropdown={setMenuDropdown}
+              userRole={user?.userRole}
+            />
           </div>
         )}
       </nav>
