@@ -4,9 +4,10 @@ import type {
   LoaderFunction,
   ActionFunction,
   ActionArgs,
+  LoaderArgs,
 } from "@remix-run/node";
 import type { Location } from "~/types";
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import type { User } from "~/types";
 import { Form, useNavigation, Link } from "@remix-run/react";
 import { useContext, useState, useEffect } from "react";
@@ -21,6 +22,7 @@ import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { getLocations } from "~/models/locations.server";
 import { api } from "~/utils/api";
 import { createOrder } from "~/models/order.server";
+import { authenticator } from "~/services/auth.server";
 
 export const meta: V2_MetaFunction = () => [{ title: "Make order" }];
 
@@ -28,7 +30,12 @@ type LoaderData = {
   restaurants: Array<Location>;
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
+  const user = (await authenticator.isAuthenticated(request)) as User;
+  if (!user) {
+    return redirect("/");
+  }
+
   const restaurants = await getLocations();
 
   return json<LoaderData>({ restaurants: restaurants });
