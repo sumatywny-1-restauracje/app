@@ -54,14 +54,27 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
         }
       >
         <div className="mx-auto flex w-4/6 max-w-screen-lg flex-wrap items-center justify-between font-sans">
-          <Link to="/" className="flex items-center max-md:hidden">
+          <Link
+            to="/"
+            className={
+              " flex items-center " +
+              (!["BOSS", "EMPLOYEE", "DELIVERY"].includes(user?.userRole)
+                ? "max-md:hidden"
+                : "max-lg:hidden")
+            }
+          >
             <span className="self-center whitespace-nowrap text-2xl font-bold text-gray-700">
               Foodsi
             </span>
           </Link>
           <button
             type="button"
-            className="ml-1 inline-flex items-center rounded-lg p-1 text-sm text-gray-500 focus:ring-2 active:outline-none active:ring-gray-200 md:hidden"
+            className={
+              " ml-1 inline-flex items-center rounded-lg p-1 text-sm text-gray-500 focus:ring-2 active:outline-none active:ring-gray-200 " +
+              (!["BOSS", "EMPLOYEE", "DELIVERY"].includes(user?.userRole)
+                ? "md:hidden"
+                : "lg:hidden")
+            }
             onClick={() => setMenuDropdown(!menuDropdown)}
           >
             <span className="sr-only">Open main menu</span>
@@ -69,12 +82,24 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
               <GiHamburgerMenu />
             </div>
           </button>
-          <div className="flex justify-center gap-1 md:order-2">
+          <div
+            className={
+              " flex justify-center gap-1 " +
+              (!["BOSS", "EMPLOYEE", "DELIVERY"].includes(user?.userRole)
+                ? "md:order-2"
+                : "lg:order-2")
+            }
+          >
             {!user ? (
               <button
                 type="button"
                 onClick={() => setShowLoginModal(true)}
-                className="text-md rounded-xl border border-rose-400 p-1 px-4 text-center font-semibold text-rose-400 hover:border-rose-600 hover:text-rose-600 md:mr-0"
+                className={
+                  " text-md rounded-xl border border-rose-400 p-1 px-4 text-center font-semibold text-rose-400 hover:border-rose-600 hover:text-rose-600 " +
+                  (!["BOSS", "EMPLOYEE", "DELIVERY"].includes(user?.userRole)
+                    ? "md:mr-0"
+                    : "lg:mr-0")
+                }
               >
                 Login
               </button>
@@ -110,7 +135,14 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
               </div>
             )}
           </div>
-          <div className="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto">
+          <div
+            className={
+              " hidden w-full items-center justify-between " +
+              (!["BOSS", "EMPLOYEE", "DELIVERY"].includes(user?.userRole)
+                ? "md:order-1 md:flex md:w-auto"
+                : "lg:order-1 lg:flex lg:w-auto")
+            }
+          >
             <NavbarRoutesList
               setMenuDropdown={setMenuDropdown}
               userRole={user?.userRole}
@@ -118,7 +150,14 @@ const Navbar = ({ userPhoto }: NavbarProps) => {
           </div>
         </div>
         {menuDropdown && (
-          <div className="flex w-full flex-auto md:hidden">
+          <div
+            className={
+              " flex w-full flex-auto " +
+              (!["BOSS", "EMPLOYEE", "DELIVERY"].includes(user?.userRole)
+                ? "md:hidden"
+                : "lg:hidden")
+            }
+          >
             <NavbarRoutesList
               setMenuDropdown={setMenuDropdown}
               userRole={user?.userRole}

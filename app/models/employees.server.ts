@@ -11,6 +11,17 @@ export async function getEmployees() {
   return employeesData;
 }
 
+export async function getManagers() {
+  const res = await api.get(`/manager`);
+
+  if (res.status !== 200) {
+    throw new Error("Error while fetching managers");
+  }
+
+  const employeesData = res.data?.managers;
+  return employeesData;
+}
+
 export async function createEmployee(employee) {
   const res = await api.post(`/employee`, employee);
 

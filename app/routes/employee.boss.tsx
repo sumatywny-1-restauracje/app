@@ -4,9 +4,9 @@ import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { getCategories } from "~/models/categories.server";
 import { getProducts } from "~/models/products.server";
-import { getEmployees } from "~/models/employees.server";
+import { getEmployees, getManagers } from "~/models/employees.server";
 import { getFranchiseApplications } from "~/models/franchise.server";
-import { getJobApplications } from "~/models/jobs.server";
+import { getJobApplications, getJobOffers } from "~/models/jobs.server";
 import { getLocations } from "~/models/locations.server";
 import { getCoupons } from "~/models/coupons.server";
 import CategoriesPanel from "~/components/employeeBoss/CategoriesPanel";
@@ -21,19 +21,23 @@ export const loader: LoaderFunction = async () => {
   const categories = await getCategories();
   const products = await getProducts();
   const employees = await getEmployees();
+  const managers = await getManagers();
   const franchiseApplications = await getFranchiseApplications();
   const jobApplications = await getJobApplications();
   const restaurants = await getLocations();
   const coupons = await getCoupons();
+  const jobs = await getJobOffers();
 
   return json({
     categories: categories,
     products: products,
     employees: employees,
+    managers: managers,
     franchiseApplications: franchiseApplications,
     jobApplications: jobApplications,
     restaurants: restaurants,
     coupons: coupons,
+    jobs: jobs,
   });
 };
 
@@ -48,6 +52,7 @@ export default function MenuCategoryRoute() {
       <EmployeePanel
         employees={data?.employees}
         restaurants={data?.restaurants}
+        jobs={data?.jobs}
       />
     ),
     "Franchise Applications": (
@@ -58,7 +63,12 @@ export default function MenuCategoryRoute() {
     "Job Applications": (
       <JobApplicationsPanel jobApplications={data?.jobApplications} />
     ),
-    Restaurants: <RestaurantsPanel restaurants={data?.restaurants} />,
+    Restaurants: (
+      <RestaurantsPanel
+        restaurants={data?.restaurants}
+        managers={data?.managers}
+      />
+    ),
     Coupons: (
       <CouponsPanel coupons={data?.coupons} categories={data?.categories} />
     ),

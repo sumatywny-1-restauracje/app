@@ -1,10 +1,12 @@
 import type { Image } from "types";
+import { useState } from "react";
 import { TbTruckDelivery } from "react-icons/tb";
 import { FiRefreshCcw, FiShoppingCart } from "react-icons/fi";
 import { TbCashOff } from "react-icons/tb";
 import { FaPlay } from "react-icons/fa";
 import { Avatar } from "flowbite-react";
 import { Link } from "@remix-run/react";
+import HowToOrderPopup from "../HowToOrderPopup";
 
 type TeaserProps = {
   homeHeaderAvatar: Image;
@@ -12,6 +14,8 @@ type TeaserProps = {
 };
 
 const Teaser = ({ homeHeaderAvatar, homeHeaderImg }: TeaserProps) => {
+  const [showHowToOrderPopup, setShowHowToOrderPopup] = useState(false);
+
   return (
     <div className="flex w-full justify-center rounded-b-3xl bg-orange-100 pt-10">
       <div className="flex w-full max-w-screen-2xl flex-col items-center">
@@ -48,7 +52,10 @@ const Teaser = ({ homeHeaderAvatar, homeHeaderImg }: TeaserProps) => {
                     Order Now!
                   </span>
                 </Link>
-                <button className="flex items-center gap-3 rounded-3xl border-4 border-rose-400 p-2 hover:border-rose-500 max-sm:w-5/6">
+                <button
+                  onClick={() => setShowHowToOrderPopup(true)}
+                  className="flex items-center gap-3 rounded-3xl border-4 border-rose-400 p-2 hover:border-rose-500 max-sm:w-5/6"
+                >
                   <div className="rounded-full bg-amber-400 p-2">
                     <FaPlay />
                   </div>
@@ -120,6 +127,12 @@ const Teaser = ({ homeHeaderAvatar, homeHeaderImg }: TeaserProps) => {
           </ul>
         </div>
       </div>
+      {showHowToOrderPopup && (
+        <HowToOrderPopup
+          showModal={showHowToOrderPopup}
+          setShowModal={setShowHowToOrderPopup}
+        />
+      )}
     </div>
   );
 };

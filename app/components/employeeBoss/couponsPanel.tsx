@@ -15,8 +15,10 @@ const CouponsPanel = ({ coupons, categories }: any) => {
     const formData = new FormData(e.target);
     const name = formData.get("name");
     const code = formData.get("code");
-    const categoryId = formData.get("category");
+    const category = formData.get("category");
     const discount = formData.get("discount");
+
+    const categoryId = category === "All" ? null : category;
 
     const jwtToken = user?.jwtToken;
     const res = await api.post(
@@ -35,6 +37,9 @@ const CouponsPanel = ({ coupons, categories }: any) => {
     if (res.status === 201) {
       setCouponsData((couponsData) => [...couponsData, res.data?.coupon]);
     }
+
+    e.target.reset();
+    setShowAddModal(false);
   };
 
   const handleDelete = async (couponId) => {
@@ -104,6 +109,7 @@ const CouponsPanel = ({ coupons, categories }: any) => {
               </label>
               <input
                 type="text"
+                required
                 name="name"
                 className="rounded-lg border border-gray-700 bg-orange-100 p-2 text-center text-gray-700"
               />{" "}
@@ -114,15 +120,20 @@ const CouponsPanel = ({ coupons, categories }: any) => {
               </label>
               <input
                 type="text"
+                required
                 name="code"
                 className="rounded-lg border border-gray-700 bg-orange-100 p-2 text-center text-gray-700"
               />{" "}
             </div>
             <div className="flex flex-col items-center justify-center">
-              <label htmlFor="houseNumber" className="text-gray-500">
+              <label htmlFor="category" className="text-gray-500">
                 Category:
               </label>
-              <select className="w-full rounded-lg border border-gray-700 bg-orange-100 p-2 text-center text-gray-700 focus:border-gray-700 focus:ring-0">
+              <select
+                name="category"
+                required
+                className="w-full rounded-lg border border-gray-700 bg-orange-100 p-2 text-center text-gray-700 focus:border-gray-700 focus:ring-0"
+              >
                 <option value={"All"} className="bg-orange-100">
                   All
                 </option>
@@ -146,6 +157,7 @@ const CouponsPanel = ({ coupons, categories }: any) => {
                 type="number"
                 min={0}
                 max={100}
+                required
                 name="discount"
                 className="rounded-lg border border-gray-700 bg-orange-100 p-2 text-center text-gray-700"
               />
@@ -154,7 +166,6 @@ const CouponsPanel = ({ coupons, categories }: any) => {
           <div className="flex w-full justify-center">
             <button
               type="submit"
-              onClick={() => setShowAddModal(false)}
               className="mt-8 w-max rounded-lg bg-rose-400 px-10 py-1 text-base text-white hover:bg-rose-500"
             >
               Add

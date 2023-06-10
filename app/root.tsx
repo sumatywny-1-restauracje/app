@@ -22,6 +22,10 @@ import type { User } from "./types";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  {
+    rel: "stylesheet",
+    href: "https://video-react.github.io/assets/video-react.css",
+  },
 ];
 
 type LoaderData = {

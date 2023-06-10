@@ -11,7 +11,7 @@ const JobApplicationsPanel = ({ jobApplications }: any) => {
   const [jobApplicationsData, setJobApplicationsData] =
     useState(jobApplications);
 
-  const handleMarkAsRead = async (applicationId) => {
+  const handleClear = async (applicationId) => {
     const jwtToken = user?.jwtToken;
     console.log(jwtToken);
     const res = await api.patch(
@@ -64,10 +64,10 @@ const JobApplicationsPanel = ({ jobApplications }: any) => {
                 Details
               </button>
               <button
-                onClick={() => handleMarkAsRead(jobApplication?.id)}
+                onClick={() => handleClear(jobApplication?.id)}
                 className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
               >
-                Mark as Read
+                Clear
               </button>
             </div>
           </li>

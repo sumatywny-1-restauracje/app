@@ -12,8 +12,8 @@ export async function getUserInformation() {
     throw new Error("Error while fetching user information");
   }
 
-  const userData = res.data;
-  return userData;
+  const user = res.data;
+  return user;
 }
 
 export async function signNewUser(email: string) {
