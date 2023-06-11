@@ -108,7 +108,7 @@ export default function EmployeeLocalRoute() {
                       </span>
                       <p className="w-max rounded-xl border-2 border-gray-600 px-4 py-2 text-sm font-bold capitalize text-gray-600 sm:text-lg">
                         {order?.status?.includes("_")
-                          ? order?.status?.replace("_", " ")
+                          ? order?.status?.replaceAll("_", " ")
                           : order?.status}
                       </p>
                     </div>
@@ -164,7 +164,7 @@ export default function EmployeeLocalRoute() {
                                 value={status}
                               >
                                 {status?.includes("_")
-                                  ? status?.replace("_", " ")
+                                  ? status?.replaceAll("_", " ")
                                   : status}
                               </option>
                             );

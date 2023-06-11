@@ -73,7 +73,7 @@ const CouponsPanel = ({ coupons, categories }: any) => {
             className="flex w-full items-center justify-between gap-3 rounded-lg border border-gray-700 bg-orange-100 p-1 pr-3"
           >
             <div className="flex w-full gap-1">
-              <span className="w-full break-all text-xs font-semibold sm:text-sm">
+              <span className="w-max text-xs font-semibold sm:text-sm">
                 {coupon?.name}
               </span>
               <span className="w-max text-sm font-semibold text-gray-500">
