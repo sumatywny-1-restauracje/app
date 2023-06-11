@@ -3,6 +3,7 @@ import { MicrosoftStrategy } from "remix-auth-microsoft";
 import { Authenticator } from "remix-auth";
 import { sessionStorage } from "~/services/session.server";
 import { signNewUser } from "~/models/user.server";
+import { api } from "~/utils/api";
 
 export let authenticator = new Authenticator(sessionStorage); //User is a custom user types you can define as you want
 
@@ -24,6 +25,8 @@ let microsoftStrategy = new MicrosoftStrategy(
 
     const user = await signNewUser(email);
     const userRole = user?.userRole;
+
+    api.defaults.headers.common["Authorization"] = `Bearer ${idToken}`;
 
     return {
       email: email,
