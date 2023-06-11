@@ -233,7 +233,7 @@ export default function OrderRoute() {
         const totalPrice = basketData?.basket?.reduce((acc, item) => {
           return acc + item.price * item.quantity;
         }, 0);
-        const value = totalPrice * (1 - coupon?.discount);
+        const value = totalPrice * 1 - coupon?.discount;
         setDiscount(value);
       } else {
         const items = basketData?.basket?.filter((item) => {
@@ -244,7 +244,7 @@ export default function OrderRoute() {
           return acc + item.price * item.quantity;
         }, 0);
 
-        const value = itemsPrice * (1 - coupon.discount);
+        const value = itemsPrice * coupon?.discount;
         setDiscount(value);
       }
     } catch (e) {
