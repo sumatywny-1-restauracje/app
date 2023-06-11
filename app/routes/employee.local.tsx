@@ -8,16 +8,18 @@ import { getClientsOrdersByRestaurant } from "~/models/order.server";
 import { getUserInformation } from "~/models/user.server";
 import { UserContext } from "~/root";
 import { api } from "~/utils/api";
+import { FiRefreshCw } from "react-icons/fi";
 
 const statuses: any = {
   EMPLOYEE: [
-    "NOT_APPROVED",
     "APPROVED",
     "IN_PROGRESS",
-    "DELIVERY",
+    "READY_FOR_DELIVERY",
+    "COMPLETED",
     "EMPLOYEE_CANCELLED",
   ],
-  DELIVERY: ["DELIVERY", "COMPLETED"],
+
+  DELIVERY: ["READY_FOR_DELIVERY", "DELIVERY", "COMPLETED"],
 };
 
 export const meta: V2_MetaFunction = () => [{ title: "Employee Local" }];
@@ -33,13 +35,18 @@ export const loader: LoaderFunction = async () => {
   }
 
   const preparedOrders = ordersData?.orders?.filter((order: any) => {
-    if (userRole === "DELIVERY" && order?.status !== "DELIVERY") {
+    if (
+      userRole === "DELIVERY" &&
+      order?.status !== "READY_FOR_DELIVERY" &&
+      order?.status !== "DELIVERY"
+    ) {
       return false;
     }
 
     if (
       userRole === "EMPLOYEE" &&
       (order?.status === "COMPLETED" ||
+        order?.status === "READY_FOR_DELIVERY" ||
         order?.status === "DELIVERY" ||
         order?.status === "EMPLOYEE_CANCELLED" ||
         order?.status === "CLIENT_CANCELLED")
@@ -68,7 +75,6 @@ export default function EmployeeLocalRoute() {
         `/order/restaurant/${data?.user?.userData?.employee?.restaurantId}`,
         configEssunia
       );
-      window.location.reload();
     } catch {}
   };
 
@@ -79,6 +85,15 @@ export default function EmployeeLocalRoute() {
           <h2 className="text-center text-2xl font-bold text-gray-500">
             Orders
           </h2>
+          <form className="flex w-full justify-end" method="GET">
+            <button
+              type="submit"
+              className="rounded-xl border-2 border-rose-400 p-2"
+            >
+              <FiRefreshCw className="h-6 w-6 text-gray-700" />
+            </button>
+          </form>
+
           <ul className="mx-auto mt-4 flex w-full flex-col gap-6">
             {data?.ordersData.map((order: any) => {
               return (
@@ -106,19 +121,47 @@ export default function EmployeeLocalRoute() {
                             handleChange(order?.id, e.target.value)
                           }
                         >
+                          <option
+                            className="bg-rose-300"
+                            value="Change status"
+                            disabled
+                            selected
+                            hidden
+                          >
+                            Change status
+                          </option>
                           {statuses[userRole].map((status, index) => {
                             const roleIndex = statuses[userRole].findIndex(
-                              (status: any) => status === order.status
+                              (status: any) => status === order?.status
                             );
 
-                            if (roleIndex !== -1 && index < roleIndex)
+                            if (roleIndex !== -1 && index <= roleIndex)
                               return null;
+
+                            if (
+                              status === "DELIVERY" &&
+                              order?.deliveryMethod !== "COURIER"
+                            )
+                              return null;
+
+                            if (
+                              status === "READY_FOR_DELIVERY" &&
+                              order?.deliveryMethod !== "COURIER"
+                            )
+                              return null;
+
+                            if (
+                              status === "COMPLETED" &&
+                              order?.deliveryMethod !== "SELF_PICKUP" &&
+                              userRole === "EMPLOYEE"
+                            )
+                              return null;
+
                             return (
                               <option
-                                key={status}
+                                key={index}
                                 className="bg-rose-300"
                                 value={status}
-                                selected={order?.status === status}
                               >
                                 {status?.includes("_")
                                   ? status?.replace("_", " ")
@@ -133,21 +176,64 @@ export default function EmployeeLocalRoute() {
                   <div className="my-1 w-full border border-gray-700" />
                   <div className="flex flex-col px-4">
                     <p className="mx-auto text-sm font-semibold text-gray-700">
-                      Date: {dayjs(order.createdAt).format("DD.MM.YYYY HH:mm")}
+                      Date: {dayjs(order?.createdAt).format("DD.MM.YYYY HH:mm")}
                     </p>
-                    <p className="mx-auto mt-4 text-sm font-bold text-gray-700">
-                      Ordered items:
-                    </p>
-                    <ul className="ml-4 mt-1 list-disc text-xs font-bold sm:text-sm">
-                      {order?.orderedItems.map((item: any) => (
-                        <li key={item.id} className="flex flex-wrap">
-                          {item.quantity} {item.name}
-                          {item.ingredients !== null && (
-                            <span className="w-full break-all text-gray-500">{` (${item.ingredients})`}</span>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
+                    {userRole === "EMPLOYEE" && (
+                      <>
+                        <p className="mx-auto text-sm font-semibold text-gray-700">
+                          Delivery Method:{" "}
+                          <span className="font-bold">
+                            {order?.deliveryMethod === "SELF_PICKUP" &&
+                              "Self Pickup"}
+                            {order?.deliveryMethod === "COURIER" && "Delivery"}
+                          </span>
+                        </p>
+                        <p className="mx-auto mt-4 text-sm font-bold text-gray-700">
+                          Ordered items:
+                        </p>
+                        <ul className="ml-4 mt-1 list-disc text-xs font-bold sm:text-sm">
+                          {order?.orderedItems.map((item: any) => (
+                            <li key={item?.id} className="flex flex-wrap">
+                              {item?.quantity} {item?.name}
+                              {item?.ingredients !== null && (
+                                <span className="w-full break-all text-gray-500">{` (${item?.ingredients})`}</span>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                    {userRole === "DELIVERY" && (
+                      <>
+                        <p className="mx-auto text-sm font-semibold text-gray-700">
+                          Payment Method:{" "}
+                          <span className="font-bold">
+                            {order?.paymentMethod === "CASH" && "Cash"}
+                            {order?.paymentMethod === "CARD" && "Card"}
+                          </span>
+                        </p>
+                        <p className="mx-auto text-sm font-semibold text-gray-700">
+                          Total Price:{" "}
+                          <span className="font-bold">
+                            ${order?.totalPrice.toFixed(2)}
+                          </span>
+                        </p>
+                        <p className="mx-auto mt-4 text-sm font-bold text-gray-700">
+                          Delivery Address:
+                        </p>
+                        <ul className="ml-4 mt-1 list-disc text-xs font-bold sm:text-sm">
+                          <li className="flex flex-wrap">
+                            {order?.address?.street}{" "}
+                            {order?.address?.houseNumber}
+                            {order?.address?.apartment !== null &&
+                              `/${order?.address?.apartment}`}
+                          </li>
+                          <li className="flex flex-wrap">
+                            {order?.address?.city}, {order?.address?.country}
+                          </li>
+                        </ul>
+                      </>
+                    )}
                   </div>
                 </li>
               );

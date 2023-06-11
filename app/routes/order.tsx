@@ -109,8 +109,8 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     userEmail: userEmail,
     address: {
       street: street,
-      houseNumber: Number(houseNumber),
-      apartment: Number(apartment),
+      houseNumber: houseNumber,
+      apartment: apartment,
       city: city,
       country: country,
     },
@@ -456,7 +456,7 @@ export default function OrderRoute() {
                         ) : null}
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         min={0}
                         name="houseNumber"
                         id="houseNumber"
@@ -475,7 +475,7 @@ export default function OrderRoute() {
                         <span className="text-gray-400">(Optional)</span>
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         min={0}
                         name="apartment"
                         id="apartment"

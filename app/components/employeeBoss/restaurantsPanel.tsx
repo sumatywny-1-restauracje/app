@@ -26,40 +26,89 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
     const photoUrl = formData.get("photoUrl");
     const phoneNumber = formData.get("phoneNumber");
 
-    const dayMondayStart = `1970-01-01T${formData.get(
-      "dayMondayStart"
-    )}:00.000Z`;
-    const dayMondayEnd = `1970-01-01T${formData.get("dayMondayEnd")}:00.000Z`;
-    const dayTuesdayStart = `1970-01-01T${formData.get(
-      "dayTuesdayStart"
-    )}:00.000Z`;
-    const dayTuesdayEnd = `1970-01-01T${formData.get("dayTuesdayEnd")}:00.000Z`;
-    const dayWednesdayStart = `1970-01-01T${formData.get(
-      "dayWednesdayStart"
-    )}:00.000Z`;
-    const dayWednesdayEnd = `1970-01-01T${formData.get(
-      "dayWednesdayEnd"
-    )}:00.000Z`;
-    const dayThursdayStart = `1970-01-01T${formData.get(
-      "dayThursdayStart"
-    )}:00.000Z`;
-    const dayThursdayEnd = `1970-01-01T${formData.get(
-      "dayThursdayEnd"
-    )}:00.000Z`;
-    const dayFridayStart = `1970-01-01T${formData.get(
-      "dayFridayStart"
-    )}:00.000Z`;
-    const dayFridayEnd = `1970-01-01T${formData.get("dayFridayEnd")}:00.000Z`;
-    const daySaturdayStart = `1970-01-01T${formData.get(
-      "daySaturdayStart"
-    )}:00.000Z`;
-    const daySaturdayEnd = `1970-01-01T${formData.get(
-      "daySaturdayEnd"
-    )}:00.000Z`;
-    const daySundayStart = `1970-01-01T${formData.get(
-      "daySundayStart"
-    )}:00.000Z`;
-    const daySundayEnd = `1970-01-01T${formData.get("daySundayEnd")}:00.000Z`;
+    const dayMondayStart = new Date();
+    dayMondayStart.setUTCHours(
+      formData.get("dayMondayStart").split(":")[0],
+      formData.get("dayMondayStart").split(":")[1]
+    );
+
+    const dayMondayEnd = new Date();
+    dayMondayEnd.setUTCHours(
+      formData.get("dayMondayEnd").split(":")[0],
+      formData.get("dayMondayEnd").split(":")[1]
+    );
+
+    const dayTuesdayStart = new Date();
+    dayTuesdayStart.setUTCHours(
+      formData.get("dayTuesdayStart").split(":")[0],
+      formData.get("dayTuesdayStart").split(":")[1]
+    );
+
+    const dayTuesdayEnd = new Date();
+    dayTuesdayEnd.setUTCHours(
+      formData.get("dayTuesdayEnd").split(":")[0],
+      formData.get("dayTuesdayEnd").split(":")[1]
+    );
+
+    const dayWednesdayStart = new Date();
+    dayWednesdayStart.setUTCHours(
+      formData.get("dayWednesdayStart").split(":")[0],
+      formData.get("dayWednesdayStart").split(":")[1]
+    );
+
+    const dayWednesdayEnd = new Date();
+    dayWednesdayEnd.setUTCHours(
+      formData.get("dayWednesdayEnd").split(":")[0],
+      formData.get("dayWednesdayEnd").split(":")[1]
+    );
+
+    const dayThursdayStart = new Date();
+    dayThursdayStart.setUTCHours(
+      formData.get("dayThursdayStart").split(":")[0],
+      formData.get("dayThursdayStart").split(":")[1]
+    );
+
+    const dayThursdayEnd = new Date();
+    dayThursdayEnd.setUTCHours(
+      formData.get("dayThursdayEnd").split(":")[0],
+      formData.get("dayThursdayEnd").split(":")[1]
+    );
+
+    const dayFridayStart = new Date();
+    dayFridayStart.setUTCHours(
+      formData.get("dayFridayStart").split(":")[0],
+      formData.get("dayFridayStart").split(":")[1]
+    );
+
+    const dayFridayEnd = new Date();
+    dayFridayEnd.setUTCHours(
+      formData.get("dayFridayEnd").split(":")[0],
+      formData.get("dayFridayEnd").split(":")[1]
+    );
+
+    const daySaturdayStart = new Date();
+    daySaturdayStart.setUTCHours(
+      formData.get("daySaturdayStart").split(":")[0],
+      formData.get("daySaturdayStart").split(":")[1]
+    );
+
+    const daySaturdayEnd = new Date();
+    daySaturdayEnd.setUTCHours(
+      formData.get("daySaturdayEnd").split(":")[0],
+      formData.get("daySaturdayEnd").split(":")[1]
+    );
+
+    const daySundayStart = new Date();
+    daySundayStart.setUTCHours(
+      formData.get("daySundayStart").split(":")[0],
+      formData.get("daySundayStart").split(":")[1]
+    );
+
+    const daySundayEnd = new Date();
+    daySundayEnd.setUTCHours(
+      formData.get("daySundayEnd").split(":")[0],
+      formData.get("daySundayEnd").split(":")[1]
+    );
 
     const manager =
       managerId === "empty" ? undefined : { connect: { managerId: managerId } };
@@ -84,38 +133,38 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
           create: [
             {
               weekday: "Monday",
-              startHourUtc: dayMondayStart,
+              startHourUtc: dayMondayStart.toISOString(),
               endHourUtc: dayMondayEnd,
             },
             {
               weekday: "Tuesday",
-              startHourUtc: dayTuesdayStart,
-              endHourUtc: dayTuesdayEnd,
+              startHourUtc: dayTuesdayStart.toISOString(),
+              endHourUtc: dayTuesdayEnd.toISOString(),
             },
             {
               weekday: "Wednesday",
-              startHourUtc: dayWednesdayStart,
-              endHourUtc: dayWednesdayEnd,
+              startHourUtc: dayWednesdayStart.toISOString(),
+              endHourUtc: dayWednesdayEnd.toISOString(),
             },
             {
               weekday: "Thursday",
-              startHourUtc: dayThursdayStart,
-              endHourUtc: dayThursdayEnd,
+              startHourUtc: dayThursdayStart.toISOString(),
+              endHourUtc: dayThursdayEnd.toISOString(),
             },
             {
               weekday: "Friday",
-              startHourUtc: dayFridayStart,
-              endHourUtc: dayFridayEnd,
+              startHourUtc: dayFridayStart.toISOString(),
+              endHourUtc: dayFridayEnd.toISOString(),
             },
             {
               weekday: "Saturday",
-              startHourUtc: daySaturdayStart,
-              endHourUtc: daySaturdayEnd,
+              startHourUtc: daySaturdayStart.toISOString(),
+              endHourUtc: daySaturdayEnd.toISOString(),
             },
             {
               weekday: "Sunday",
-              startHourUtc: daySundayStart,
-              endHourUtc: daySundayEnd,
+              startHourUtc: daySundayStart.toISOString(),
+              endHourUtc: daySundayEnd.toISOString(),
             },
           ],
         },
@@ -155,40 +204,89 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
     const photoUrl = formData.get("photoUrl");
     const phoneNumber = formData.get("phoneNumber");
 
-    const dayMondayStart = `1970-01-01T${formData.get(
-      "dayMondayStart"
-    )}:00.000Z`;
-    const dayMondayEnd = `1970-01-01T${formData.get("dayMondayEnd")}:00.000Z`;
-    const dayTuesdayStart = `1970-01-01T${formData.get(
-      "dayTuesdayStart"
-    )}:00.000Z`;
-    const dayTuesdayEnd = `1970-01-01T${formData.get("dayTuesdayEnd")}:00.000Z`;
-    const dayWednesdayStart = `1970-01-01T${formData.get(
-      "dayWednesdayStart"
-    )}:00.000Z`;
-    const dayWednesdayEnd = `1970-01-01T${formData.get(
-      "dayWednesdayEnd"
-    )}:00.000Z`;
-    const dayThursdayStart = `1970-01-01T${formData.get(
-      "dayThursdayStart"
-    )}:00.000Z`;
-    const dayThursdayEnd = `1970-01-01T${formData.get(
-      "dayThursdayEnd"
-    )}:00.000Z`;
-    const dayFridayStart = `1970-01-01T${formData.get(
-      "dayFridayStart"
-    )}:00.000Z`;
-    const dayFridayEnd = `1970-01-01T${formData.get("dayFridayEnd")}:00.000Z`;
-    const daySaturdayStart = `1970-01-01T${formData.get(
-      "daySaturdayStart"
-    )}:00.000Z`;
-    const daySaturdayEnd = `1970-01-01T${formData.get(
-      "daySaturdayEnd"
-    )}:00.000Z`;
-    const daySundayStart = `1970-01-01T${formData.get(
-      "daySundayStart"
-    )}:00.000Z`;
-    const daySundayEnd = `1970-01-01T${formData.get("daySundayEnd")}:00.000Z`;
+    const dayMondayStart = new Date();
+    dayMondayStart.setUTCHours(
+      formData.get("dayMondayStart").split(":")[0],
+      formData.get("dayMondayStart").split(":")[1]
+    );
+
+    const dayMondayEnd = new Date();
+    dayMondayEnd.setUTCHours(
+      formData.get("dayMondayEnd").split(":")[0],
+      formData.get("dayMondayEnd").split(":")[1]
+    );
+
+    const dayTuesdayStart = new Date();
+    dayTuesdayStart.setUTCHours(
+      formData.get("dayTuesdayStart").split(":")[0],
+      formData.get("dayTuesdayStart").split(":")[1]
+    );
+
+    const dayTuesdayEnd = new Date();
+    dayTuesdayEnd.setUTCHours(
+      formData.get("dayTuesdayEnd").split(":")[0],
+      formData.get("dayTuesdayEnd").split(":")[1]
+    );
+
+    const dayWednesdayStart = new Date();
+    dayWednesdayStart.setUTCHours(
+      formData.get("dayWednesdayStart").split(":")[0],
+      formData.get("dayWednesdayStart").split(":")[1]
+    );
+
+    const dayWednesdayEnd = new Date();
+    dayWednesdayEnd.setUTCHours(
+      formData.get("dayWednesdayEnd").split(":")[0],
+      formData.get("dayWednesdayEnd").split(":")[1]
+    );
+
+    const dayThursdayStart = new Date();
+    dayThursdayStart.setUTCHours(
+      formData.get("dayThursdayStart").split(":")[0],
+      formData.get("dayThursdayStart").split(":")[1]
+    );
+
+    const dayThursdayEnd = new Date();
+    dayThursdayEnd.setUTCHours(
+      formData.get("dayThursdayEnd").split(":")[0],
+      formData.get("dayThursdayEnd").split(":")[1]
+    );
+
+    const dayFridayStart = new Date();
+    dayFridayStart.setUTCHours(
+      formData.get("dayFridayStart").split(":")[0],
+      formData.get("dayFridayStart").split(":")[1]
+    );
+
+    const dayFridayEnd = new Date();
+    dayFridayEnd.setUTCHours(
+      formData.get("dayFridayEnd").split(":")[0],
+      formData.get("dayFridayEnd").split(":")[1]
+    );
+
+    const daySaturdayStart = new Date();
+    daySaturdayStart.setUTCHours(
+      formData.get("daySaturdayStart").split(":")[0],
+      formData.get("daySaturdayStart").split(":")[1]
+    );
+
+    const daySaturdayEnd = new Date();
+    daySaturdayEnd.setUTCHours(
+      formData.get("daySaturdayEnd").split(":")[0],
+      formData.get("daySaturdayEnd").split(":")[1]
+    );
+
+    const daySundayStart = new Date();
+    daySundayStart.setUTCHours(
+      formData.get("daySundayStart").split(":")[0],
+      formData.get("daySundayStart").split(":")[1]
+    );
+
+    const daySundayEnd = new Date();
+    daySundayEnd.setUTCHours(
+      formData.get("daySundayEnd").split(":")[0],
+      formData.get("daySundayEnd").split(":")[1]
+    );
 
     const manager =
       managerId === "empty" ? undefined : { connect: { managerId: managerId } };
@@ -213,38 +311,38 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
           create: [
             {
               weekday: "Monday",
-              startHourUtc: dayMondayStart,
-              endHourUtc: dayMondayEnd,
+              startHourUtc: dayMondayStart.toISOString(),
+              endHourUtc: dayMondayEnd.toISOString(),
             },
             {
               weekday: "Tuesday",
-              startHourUtc: dayTuesdayStart,
-              endHourUtc: dayTuesdayEnd,
+              startHourUtc: dayTuesdayStart.toISOString(),
+              endHourUtc: dayTuesdayEnd.toISOString(),
             },
             {
               weekday: "Wednesday",
-              startHourUtc: dayWednesdayStart,
-              endHourUtc: dayWednesdayEnd,
+              startHourUtc: dayWednesdayStart.toISOString(),
+              endHourUtc: dayWednesdayEnd.toISOString(),
             },
             {
               weekday: "Thursday",
-              startHourUtc: dayThursdayStart,
-              endHourUtc: dayThursdayEnd,
+              startHourUtc: dayThursdayStart.toISOString(),
+              endHourUtc: dayThursdayEnd.toISOString(),
             },
             {
               weekday: "Friday",
-              startHourUtc: dayFridayStart,
-              endHourUtc: dayFridayEnd,
+              startHourUtc: dayFridayStart.toISOString(),
+              endHourUtc: dayFridayEnd.toISOString(),
             },
             {
               weekday: "Saturday",
-              startHourUtc: daySaturdayStart,
-              endHourUtc: daySaturdayEnd,
+              startHourUtc: daySaturdayStart.toISOString(),
+              endHourUtc: daySaturdayEnd.toISOString(),
             },
             {
               weekday: "Sunday",
-              startHourUtc: daySundayStart,
-              endHourUtc: daySundayEnd,
+              startHourUtc: daySundayStart.toISOString(),
+              endHourUtc: daySundayEnd.toISOString(),
             },
           ],
         },
@@ -465,7 +563,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </select>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Monday:</p>
+              <p className="text-gray-500">Monday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -483,7 +581,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Tuesday:</p>
+              <p className="text-gray-500">Tuesday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -501,7 +599,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Wednesday:</p>
+              <p className="text-gray-500">Wednesday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -519,7 +617,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Thursday:</p>
+              <p className="text-gray-500">Thursday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -537,7 +635,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Friday:</p>
+              <p className="text-gray-500">Friday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -555,7 +653,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Saturday:</p>
+              <p className="text-gray-500">Saturday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -573,7 +671,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Sunday:</p>
+              <p className="text-gray-500">Sunday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -752,7 +850,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </select>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Monday:</p>
+              <p className="text-gray-500">Monday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -788,7 +886,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Tuesday:</p>
+              <p className="text-gray-500">Tuesday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -824,7 +922,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Wednesday:</p>
+              <p className="text-gray-500">Wednesday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -860,7 +958,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Thursday:</p>
+              <p className="text-gray-500">Thursday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -896,7 +994,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Friday:</p>
+              <p className="text-gray-500">Friday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -932,7 +1030,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Saturday:</p>
+              <p className="text-gray-500">Saturday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
@@ -968,7 +1066,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <p className="text-gray-500">Sunday:</p>
+              <p className="text-gray-500">Sunday (UTC):</p>
               <div className="flex items-center gap-2">
                 <input
                   type="time"
