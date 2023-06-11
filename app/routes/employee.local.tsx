@@ -151,7 +151,7 @@ export default function EmployeeLocalRoute() {
               );
             })}
             {!data?.ordersData.length && (
-              <p className="px-6 text-gray-500">No orders in this restaurant</p>
+              <p className="mx-auto px-6 text-gray-500">No new orders</p>
             )}
           </ul>
         </div>

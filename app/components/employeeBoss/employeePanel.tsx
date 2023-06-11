@@ -163,7 +163,7 @@ const EmployeePanel = ({ employees, restaurants, jobs }: any) => {
       <h1 className="text-2xl font-bold">Employees</h1>
       <div className="flex w-full justify-end gap-4">
         <select
-          className="w-max rounded-lg border border-rose-400 bg-inherit px-3 py-1 text-base text-rose-400 focus:border-rose-400 focus:ring-0"
+          className="w-max rounded-lg border border-rose-400 bg-inherit px-3 py-1 text-xs text-rose-400 focus:border-rose-400 focus:ring-0 sm:text-base"
           defaultValue={currentRestaurant || "Restaurants"}
           onChange={(e) => setCurrentRestaurant(e.target.value)}
         >
@@ -196,16 +196,16 @@ const EmployeePanel = ({ employees, restaurants, jobs }: any) => {
               key={employee?.employeeId}
               className="flex w-full items-center justify-between gap-3 rounded-lg border border-gray-700 bg-orange-100 p-1 pr-3"
             >
-              <div className="flex w-full gap-1">
-                <span className="w-max text-sm font-semibold">
+              <div className="flex w-full flex-col gap-1 sm:flex-row">
+                <span className="w-max text-xs font-semibold sm:text-sm">
                   {employee?.firstName?.charAt(0)?.toUpperCase() +
                     employee?.firstName?.slice(1)}
                 </span>
-                <span className="w-max text-sm font-semibold">
+                <span className="w-max text-xs font-semibold sm:text-sm">
                   {employee?.lastName?.charAt(0)?.toUpperCase() +
                     employee?.lastName?.slice(1)}
                 </span>
-                <span className="w-max text-sm font-semibold text-gray-500">
+                <span className="w-full break-all text-xs font-semibold text-gray-500 sm:text-sm">
                   (
                   {
                     restaurants?.find(
@@ -239,13 +239,13 @@ const EmployeePanel = ({ employees, restaurants, jobs }: any) => {
                     setSelectedJobTitle(employee?.job?.jobId);
                     setShowEditModal(true);
                   }}
-                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(employee?.employeeId)}
-                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
                 >
                   Delete
                 </button>
@@ -254,7 +254,10 @@ const EmployeePanel = ({ employees, restaurants, jobs }: any) => {
           ))}
       </ul>
       <FormModal showModal={showAddModal} setShowModal={setShowAddModal}>
-        <form className="p-4" onSubmit={handleAdd}>
+        <form
+          className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max"
+          onSubmit={handleAdd}
+        >
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2">
             <div className="flex flex-col items-center justify-center">
               <label htmlFor="firstName" className="text-gray-500">
@@ -418,7 +421,10 @@ const EmployeePanel = ({ employees, restaurants, jobs }: any) => {
         </form>
       </FormModal>
       <FormModal showModal={showEditModal} setShowModal={setShowEditModal}>
-        <form className="p-4" onSubmit={handleEdit}>
+        <form
+          className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max"
+          onSubmit={handleEdit}
+        >
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2">
             <div className="flex flex-col items-center justify-center">
               <label htmlFor="firstName" className="text-gray-500">

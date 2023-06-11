@@ -139,7 +139,7 @@ const MenuPanel = ({ products, categories }: any) => {
       <h1 className="text-2xl font-bold">Menu</h1>
       <div className="flex w-full justify-end gap-4">
         <select
-          className="w-max rounded-lg border border-rose-400 bg-inherit px-3 py-1 text-base text-rose-400 focus:border-rose-400 focus:ring-0"
+          className="w-max rounded-lg border border-rose-400 bg-inherit px-3 py-1 text-xs text-rose-400 focus:border-rose-400 focus:ring-0 sm:text-base"
           defaultValue={currentCategory}
           onChange={(e) => setCurrentCategory(e.target.value)}
         >
@@ -174,7 +174,7 @@ const MenuPanel = ({ products, categories }: any) => {
                 alt={product?.name}
                 className="aspect-square w-12 rounded-lg border-2 border-gray-700"
               />
-              <span className="w-full text-xl font-bold">
+              <span className="w-full break-all text-xs font-bold sm:text-xl">
                 {product?.name?.charAt(0)?.toUpperCase() +
                   product?.name?.slice(1)}
               </span>
@@ -184,13 +184,13 @@ const MenuPanel = ({ products, categories }: any) => {
                     setSelectedProduct(product);
                     setShowEditModal(true);
                   }}
-                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(product?.id)}
-                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
                 >
                   Delete
                 </button>
@@ -199,7 +199,10 @@ const MenuPanel = ({ products, categories }: any) => {
           ))}
       </ul>
       <FormModal showModal={showAddModal} setShowModal={setShowAddModal}>
-        <form className="p-4" onSubmit={handleAdd}>
+        <form
+          className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max"
+          onSubmit={handleAdd}
+        >
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2">
             <div className="flex flex-col items-center justify-center">
               <label htmlFor="name" className="text-gray-500">
@@ -291,7 +294,10 @@ const MenuPanel = ({ products, categories }: any) => {
         </form>
       </FormModal>
       <FormModal showModal={showEditModal} setShowModal={setShowEditModal}>
-        <form className="p-4" onSubmit={handleEdit}>
+        <form
+          className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max"
+          onSubmit={handleEdit}
+        >
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2">
             <div className="flex flex-col items-center justify-center">
               <label htmlFor="name" className="text-gray-500">

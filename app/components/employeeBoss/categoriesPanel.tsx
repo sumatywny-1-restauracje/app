@@ -132,7 +132,7 @@ const CategoriesPanel = ({ categories }: any) => {
                 alt={category?.image?.alt}
                 className="aspect-square w-12 rounded-lg border-2 border-gray-700"
               />
-              <span className="w-full text-xl font-bold">
+              <span className="w-full break-all text-xs font-bold sm:text-xl">
                 {category?.name?.charAt(0)?.toUpperCase() +
                   category?.name?.slice(1)}
               </span>
@@ -142,13 +142,13 @@ const CategoriesPanel = ({ categories }: any) => {
                     setSelectedCategory(category);
                     setShowEditModal(true);
                   }}
-                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(category?.id)}
-                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                  className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
                 >
                   Delete
                 </button>
@@ -158,7 +158,10 @@ const CategoriesPanel = ({ categories }: any) => {
         </ul>
       </div>
       <FormModal showModal={showAddModal} setShowModal={setShowAddModal}>
-        <form className="p-4" onSubmit={handleAdd}>
+        <form
+          className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max"
+          onSubmit={handleAdd}
+        >
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2">
             <div className="flex flex-col items-center justify-center">
               <label htmlFor="categoryName" className="text-gray-500">
@@ -194,7 +197,10 @@ const CategoriesPanel = ({ categories }: any) => {
         </form>
       </FormModal>
       <FormModal showModal={showEditModal} setShowModal={setShowEditModal}>
-        <form className="p-4" onSubmit={handleEdit}>
+        <form
+          className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max"
+          onSubmit={handleEdit}
+        >
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2">
             <div className="flex flex-col items-center justify-center">
               <label htmlFor="categoryName" className="text-gray-500">

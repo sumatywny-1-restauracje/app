@@ -73,7 +73,7 @@ const CouponsPanel = ({ coupons, categories }: any) => {
             className="flex w-full items-center justify-between gap-3 rounded-lg border border-gray-700 bg-orange-100 p-1 pr-3"
           >
             <div className="flex w-full gap-1">
-              <span className="w-max text-sm font-semibold">
+              <span className="w-full break-all text-xs font-semibold sm:text-sm">
                 {coupon?.name}
               </span>
               <span className="w-max text-sm font-semibold text-gray-500">
@@ -86,13 +86,13 @@ const CouponsPanel = ({ coupons, categories }: any) => {
                   setSelectedCoupon(coupon);
                   setShowDetailsModal(true);
                 }}
-                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
               >
                 Details
               </button>
               <button
                 onClick={() => handleDelete(coupon?.id)}
-                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
               >
                 Delete
               </button>
@@ -101,7 +101,10 @@ const CouponsPanel = ({ coupons, categories }: any) => {
         ))}
       </ul>
       <FormModal showModal={showAddModal} setShowModal={setShowAddModal}>
-        <form className="p-4" onSubmit={handleAdd}>
+        <form
+          className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max"
+          onSubmit={handleAdd}
+        >
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2">
             <div className="flex flex-col items-center justify-center">
               <label htmlFor="name" className="text-gray-500">
@@ -177,7 +180,7 @@ const CouponsPanel = ({ coupons, categories }: any) => {
         showModal={showDetailsModal}
         setShowModal={setShowDetailsModal}
       >
-        <div className="p-4">
+        <div className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max">
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2">
             <div className="flex flex-col items-center justify-center">
               <p className="text-gray-500">Name:</p>

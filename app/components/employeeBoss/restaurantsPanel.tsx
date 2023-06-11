@@ -306,7 +306,7 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
               alt={restaurant?.name}
               className="aspect-square w-12 rounded-lg border-2 border-gray-700"
             />
-            <span className="w-full text-xl font-bold">
+            <span className="w-full break-all text-xs font-bold sm:text-xl">
               {restaurant?.address?.street} {restaurant?.address?.streetNo},{" "}
               {restaurant?.address?.city}
             </span>
@@ -316,13 +316,13 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
                   setSelectedRestaurant(restaurant);
                   setShowEditModal(true);
                 }}
-                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
               >
                 Edit
               </button>
               <button
                 onClick={() => handleDelete(restaurant?.restaurantId)}
-                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
               >
                 Delete
               </button>
@@ -331,7 +331,10 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
         ))}
       </ul>
       <FormModal showModal={showAddModal} setShowModal={setShowAddModal}>
-        <form className="p-4" onSubmit={handleAdd}>
+        <form
+          className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max"
+          onSubmit={handleAdd}
+        >
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2">
             <div className="flex flex-col items-center justify-center">
               <label htmlFor="street" className="text-gray-500">
@@ -599,7 +602,10 @@ const RestaurantsPanel = ({ restaurants, managers }: any) => {
         </form>
       </FormModal>
       <FormModal showModal={showEditModal} setShowModal={setShowEditModal}>
-        <form className="p-4" onSubmit={handleEdit}>
+        <form
+          className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max"
+          onSubmit={handleEdit}
+        >
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2">
             <div className="flex flex-col items-center justify-center">
               <label htmlFor="street" className="text-gray-500">

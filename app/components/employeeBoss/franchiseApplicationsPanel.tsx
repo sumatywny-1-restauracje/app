@@ -41,32 +41,32 @@ const FranchiseApplicationsPanel = ({ franchiseApplications }: any) => {
             key={franchise?.id}
             className="flex w-full items-center justify-between gap-3 rounded-lg border border-gray-700 bg-orange-100 p-1 pr-3"
           >
-            <div className="flex w-full gap-1">
-              <span className="w-max text-sm font-semibold">
+            <div className="flex w-full flex-col gap-1 sm:flex-row">
+              <span className="w-max text-xs font-semibold sm:text-sm">
                 {franchise?.firstName?.charAt(0)?.toUpperCase() +
                   franchise?.firstName?.slice(1)}
               </span>
-              <span className="w-max text-sm font-semibold">
+              <span className="w-max text-xs font-semibold sm:text-sm">
                 {franchise?.lastName?.charAt(0)?.toUpperCase() +
                   franchise?.lastName?.slice(1)}
               </span>
-              <span className="w-max text-sm font-semibold text-gray-500">
+              <span className="w-max text-xs font-semibold text-gray-500 sm:text-sm">
                 ({franchise?.phoneNumber})
               </span>
             </div>
-            <div className="flex w-max items-center justify-end gap-4">
+            <div className="flex w-full items-center justify-end gap-4 break-all">
               <button
                 onClick={() => {
                   setSelectedApplication(franchise);
                   setShowDetailsModal(true);
                 }}
-                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
               >
                 Details
               </button>
               <button
                 onClick={() => handleClear(franchise?.id)}
-                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-base text-rose-400 hover:bg-rose-500 hover:text-white"
+                className="w-max rounded-lg border border-rose-400 px-3 py-1 text-xs text-rose-400 hover:bg-rose-500 hover:text-white sm:text-base"
               >
                 Clear
               </button>
@@ -78,7 +78,7 @@ const FranchiseApplicationsPanel = ({ franchiseApplications }: any) => {
         showModal={showDetailsModal}
         setShowModal={setShowDetailsModal}
       >
-        <div className="p-4">
+        <div className="max-h-[600px] overflow-y-auto p-4 sm:max-h-max">
           <div className="grid w-full grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3">
             <div className="flex flex-col items-center justify-center">
               <p className="text-gray-500">Created Date:</p>
