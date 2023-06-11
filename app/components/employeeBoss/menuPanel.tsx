@@ -7,6 +7,9 @@ const MenuPanel = ({ products, categories }: any) => {
   const user = useContext(UserContext);
   const [currentCategory, setCurrentCategory] = useState("burgers");
 
+  console.log(currentCategory);
+  console.log(products);
+
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -163,7 +166,9 @@ const MenuPanel = ({ products, categories }: any) => {
       </div>
       <ul className="mx-auto flex w-full flex-col  gap-2">
         {productsData
-          ?.filter((product) => product?.category === currentCategory)
+          ?.filter(
+            (product) => product?.category.toLowerCase() === currentCategory
+          )
           ?.map((product) => (
             <li
               key={product?.id}
