@@ -1,35 +1,37 @@
-# App
+# COVID-19 VISUALIZATION REPORT
 
-## Quickstart
+## MapLibre GL API TOKEN
 
-## Development
+1. Sign up at https://account.mapbox.com/auth/signin/?route-to=%22https%3A%2F%2Faccount.mapbox.com%2Faccess-tokens%2F%22, a token will be generated there
+2. Create the '.env' file in the root directory of the project
+3. Create a variable named mapboxAccessToken (as in the '.env.example' file)
+4. Initialize the variable with the value of the generated token
 
-- This step only applies if you've opted out of having the CLI install dependencies for you:
+## Azure Active Directory - App Registration
+
+1. Create a new App Registration in AAD (Azure Active Directory).
+2. Go to the Overview panel and retrieve the Client ID. Then, in the Authorization panel, create a new Web Instance with a redirect to your application's '<domain>/auth/microsoft/callback' (e.g., 'http://localhost:3000/auth/microsoft/callback' for localhost). Afterward, generate a Client Secret.
+3. Take note of the Client ID, Redirect URI, and Client Secret. Create new variables in the '.env' file named aad_client_id, aad_client_secret, and auth_redirect (following the '.env.example' file).
+
+## Development (Locally)
 
 - Start dev server:
 
   ```sh
+  npm install
   npm run dev
   ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+This starts your app in development mode at: http://localhost3000, rebuilding assets on file changes.
 
-## Deployment
+## Production
 
-## GitHub Actions
+- Start production server:
 
-We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
+  ```sh
+  npm install
+  npm run build
+  npm start
+  ```
 
-## Testing
-
-### Type Checking
-
-This project uses TypeScript. It's recommended to get TypeScript set up for your editor to get a really great in-editor experience with type checking and auto-complete. To run type checking across the whole project, run `npm run typecheck`.
-
-### Linting
-
-This project uses ESLint for linting. That is configured in `.eslintrc.js`.
-
-### Formatting
-
-We use [Prettier](https://prettier.io/) for auto-formatting in this project. It's recommended to install an editor plugin (like the [VSCode Prettier plugin](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)) to get auto-formatting on save. There's also a `npm run format` script you can run to format all files in the project.
+This starts your app in production mode.
