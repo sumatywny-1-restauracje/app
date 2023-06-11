@@ -86,12 +86,12 @@ export default function EmployeeLocalRoute() {
                   key={order?.id}
                   className="flex w-full flex-col items-center gap-3 rounded-lg border-2 border-gray-700 bg-orange-100 py-2"
                 >
-                  <div className="flex w-full items-end justify-between px-4">
+                  <div className="flex w-full flex-wrap items-end justify-between gap-2 px-4 ">
                     <div className="flex flex-col gap-4">
-                      <span className="w-full text-xl font-bold">
+                      <span className="w-full text-sm font-bold sm:text-xl">
                         Order ID: {order?.id}
                       </span>
-                      <p className="w-max rounded-xl border-2 border-gray-600 px-4 py-2 text-lg font-bold capitalize text-gray-600 max-sm:text-sm">
+                      <p className="w-max rounded-xl border-2 border-gray-600 px-4 py-2 text-sm font-bold capitalize text-gray-600 sm:text-lg">
                         {order?.status?.includes("_")
                           ? order?.status?.replace("_", " ")
                           : order?.status}
@@ -100,7 +100,7 @@ export default function EmployeeLocalRoute() {
                     <div className="flex w-max justify-end gap-4">
                       <form>
                         <select
-                          className="h-max rounded-xl border-4 border-rose-400 bg-orange-100 bg-transparent p-2 font-bold focus:border-rose-500 focus:ring-0"
+                          className="h-max rounded-xl border-4 border-rose-400 bg-orange-100 bg-transparent p-2 text-sm font-bold focus:border-rose-500 focus:ring-0 sm:text-base"
                           name="status"
                           onChange={(e) =>
                             handleChange(order?.id, e.target.value)
@@ -131,18 +131,20 @@ export default function EmployeeLocalRoute() {
                     </div>
                   </div>
                   <div className="my-1 w-full border border-gray-700" />
-                  <div className="flex flex-col">
+                  <div className="flex flex-col px-4">
                     <p className="mx-auto text-sm font-semibold text-gray-700">
                       Date: {dayjs(order.createdAt).format("DD.MM.YYYY HH:mm")}
                     </p>
                     <p className="mx-auto mt-4 text-sm font-bold text-gray-700">
                       Ordered items:
                     </p>
-                    <ul className="ml-4 mt-1 list-disc text-sm font-bold">
+                    <ul className="ml-4 mt-1 list-disc text-xs font-bold sm:text-sm">
                       {order?.orderedItems.map((item: any) => (
                         <li key={item.id} className="flex flex-wrap">
                           {item.quantity} {item.name}
-                          <span className="text-gray-500">{` (${item.ingredients})`}</span>
+                          {item.ingredients !== null && (
+                            <span className="w-full break-all text-gray-500">{` (${item.ingredients})`}</span>
+                          )}
                         </li>
                       ))}
                     </ul>
