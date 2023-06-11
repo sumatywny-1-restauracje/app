@@ -7,7 +7,18 @@ export async function getEmployees() {
     throw new Error("Error while fetching employees");
   }
 
-  const employeesData = res.data;
+  const employeesData = res.data?.employees;
+  return employeesData;
+}
+
+export async function getManagers() {
+  const res = await api.get(`/manager`);
+
+  if (res.status !== 200) {
+    throw new Error("Error while fetching managers");
+  }
+
+  const employeesData = res.data?.managers;
   return employeesData;
 }
 

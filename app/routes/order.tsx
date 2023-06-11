@@ -9,7 +9,7 @@ import type {
 import type { Location } from "~/types";
 import { json, redirect } from "@remix-run/node";
 import type { User } from "~/types";
-import { Form, useNavigation, Link } from "@remix-run/react";
+import { Form, useNavigation } from "@remix-run/react";
 import { useContext, useState, useEffect } from "react";
 import { BasketContext, UserContext } from "~/root";
 import {
@@ -109,8 +109,8 @@ export const action: ActionFunction = async ({ request }: ActionArgs) => {
     userEmail: userEmail,
     address: {
       street: street,
-      houseNumber: Number(houseNumber),
-      apartment: Number(apartment),
+      houseNumber: houseNumber,
+      apartment: apartment,
       city: city,
       country: country,
     },
@@ -140,7 +140,6 @@ export default function OrderRoute() {
   const [showCart, setShowCart] = useState(true);
   const [showClientInfo, setShowClientInfo] = useState(true);
   const [deliveryMethod, setDeliveryMethod] = useState("");
-  const [restaurantChoice, setRestaurantChoice] = useState("");
   const [showDeliveryMethod, setShowDeliveryMethod] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [showPaymentMethod, setShowPaymentMethod] = useState(true);
@@ -214,29 +213,42 @@ export default function OrderRoute() {
   }, [userGeoLocation]);
 
   const handleDiscountCode = async () => {
-    const res = await api.get(`/coupon/validate?code=${discountCode}`);
-
-    if (res.status !== 200) {
-      throw new Error("Error while validating coupon");
+    if (!discountCode) {
+      return;
     }
 
-    const coupon = res.data.coupon;
+    try {
+      const res = await api.get(`/coupon/validate/${discountCode}`);
 
-    if (coupon?.categoryName === null) {
-      const totalPrice = basketData?.basket?.reduce((acc, item) => {
-        return acc + item.price * item.quantity;
-      }, 0);
-      setDiscount(totalPrice * (1 - coupon.discount));
-    } else {
-      const items = basketData?.basket?.filter((item) => {
-        return item.categoryName === coupon.categoryName;
-      });
+      if (res.status !== 200) {
+        throw new Error("Error while validating coupon");
+      }
 
-      const itemsPrice = items?.reduce((acc, item) => {
-        return acc + item.price * item.quantity;
-      }, 0);
+      if (res.data.couponValid === false) {
+        setDiscountCode("Invalid code");
+      }
 
-      setDiscount(itemsPrice * (1 - coupon.discount));
+      const coupon = res.data.coupon;
+      if (coupon?.categoryName === null) {
+        const totalPrice = basketData?.basket?.reduce((acc, item) => {
+          return acc + item.price * item.quantity;
+        }, 0);
+        const value = totalPrice * (1 - coupon?.discount);
+        setDiscount(value);
+      } else {
+        const items = basketData?.basket?.filter((item) => {
+          return item.category === coupon.categoryName;
+        });
+
+        const itemsPrice = items?.reduce((acc, item) => {
+          return acc + item.price * item.quantity;
+        }, 0);
+
+        const value = itemsPrice * (1 - coupon.discount);
+        setDiscount(value);
+      }
+    } catch (e) {
+      return;
     }
   };
 
@@ -444,7 +456,7 @@ export default function OrderRoute() {
                         ) : null}
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         min={0}
                         name="houseNumber"
                         id="houseNumber"
@@ -463,7 +475,7 @@ export default function OrderRoute() {
                         <span className="text-gray-400">(Optional)</span>
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         min={0}
                         name="apartment"
                         id="apartment"
@@ -552,7 +564,7 @@ export default function OrderRoute() {
                             name="deliveryMethod"
                             value="SELF_PICKUP"
                             checked={deliveryMethod === "restaurant"}
-                            onClick={() => setDeliveryMethod("restaurant")}
+                            onChange={() => setDeliveryMethod("restaurant")}
                           />
                           <label
                             htmlFor="deliveryMethodChoice1"
@@ -568,7 +580,7 @@ export default function OrderRoute() {
                             name="deliveryMethod"
                             value="COURIER"
                             checked={deliveryMethod === "courier"}
-                            onClick={() => setDeliveryMethod("courier")}
+                            onChange={() => setDeliveryMethod("courier")}
                           />
                           <label
                             htmlFor="deliveryMethodChoice2"
@@ -586,12 +598,8 @@ export default function OrderRoute() {
                       <select
                         className="mx-auto w-max rounded-lg border border-gray-700 bg-orange-100 p-2"
                         name="restaurantId"
-                        value={restaurantChoice}
-                        onChange={(e) => setRestaurantChoice(e.target.value)}
                       >
-                        <option value="" disabled selected>
-                          Select a Restaurant
-                        </option>
+                        <option value="">Select a Restaurant</option>
                         {data.restaurants.map((restaurant) => (
                           <option
                             key={restaurant.restaurantId}
@@ -621,14 +629,8 @@ export default function OrderRoute() {
                           <select
                             className="mx-auto w-max rounded-lg border border-gray-700 bg-orange-100 p-2"
                             name="restaurantId"
-                            value={restaurantChoice}
-                            onChange={(e) =>
-                              setRestaurantChoice(e.target.value)
-                            }
                           >
-                            <option value="" disabled selected>
-                              Select a Restaurant
-                            </option>
+                            <option value="">Select a Restaurant</option>
                             {restaurantsInRange.map((res) => (
                               <option
                                 key={res?.restaurant?.restaurantId}
@@ -684,7 +686,7 @@ export default function OrderRoute() {
                             name="paymentMethod"
                             value="CASH"
                             checked={paymentMethod === "CASH"}
-                            onClick={() => setPaymentMethod("CASH")}
+                            onChange={() => setPaymentMethod("CASH")}
                           />
                           <label
                             htmlFor="paymentMethodChoice1"
@@ -703,7 +705,7 @@ export default function OrderRoute() {
                             name="paymentMethod"
                             value="CARD"
                             checked={paymentMethod === "CARD"}
-                            onClick={() => setPaymentMethod("CARD")}
+                            onChange={() => setPaymentMethod("CARD")}
                           />
                           <label
                             htmlFor="paymentMethodChoice2"

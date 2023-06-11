@@ -188,7 +188,7 @@ export default function HistoryOrderRoute() {
                   <div className="flex h-full w-full items-center justify-center rounded-lg border border-gray-700 bg-orange-100 p-2 text-center text-gray-700">
                     {data?.order?.deliveryMethod === "SELF_PICKUP" &&
                       "Self Pickup"}
-                    {data?.order?.deliveryMethod === "DELIVERY" && "Delivery"}
+                    {data?.order?.deliveryMethod === "COURIER" && "Delivery"}
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center">
@@ -207,7 +207,7 @@ export default function HistoryOrderRoute() {
                 <div className="flex w-full flex-col items-center justify-center sm:col-span-3">
                   <p className="text-gray-500">Total Price:</p>
                   <div className="w-full rounded-lg border border-gray-700 bg-orange-100 p-2 text-center text-gray-700">
-                    ${data?.order?.totalPrice}
+                    ${data?.order?.totalPrice?.toFixed(2)}
                   </div>
                 </div>
               </div>

@@ -102,7 +102,7 @@ const MapComponent = ({
               src={popupInfo.photoUrl}
               alt={`Local in ${popupInfo.address.city}`}
             />
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 text-[8px]">
               <p>
                 {popupInfo.address.street} {popupInfo.address.streetNo},{" "}
                 {popupInfo.address.city}
@@ -113,11 +113,11 @@ const MapComponent = ({
                   {popupInfo.openingHoursPretty
                     .split(",")
                     .map((element, index) => (
-                      <li key={index}>{element}</li>
+                      <li key={index}>{element} (UTC)</li>
                     ))}
                 </ul>
               ) : (
-                <p>{popupInfo.openingHoursPretty}</p>
+                <p>{popupInfo.openingHoursPretty} (UTC)</p>
               )}
               <p>{popupInfo.phoneNumber}</p>
             </div>

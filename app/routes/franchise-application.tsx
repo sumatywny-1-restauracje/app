@@ -282,8 +282,6 @@ export default function FranchiseApplicationRoute() {
                   </label>
                   <input
                     type="number"
-                    min={-180}
-                    max={180}
                     name="longitude"
                     className="w-full rounded-xl border-rose-400 bg-orange-50 text-center [appearance:textfield] focus:border-rose-500 focus:ring-rose-500 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     value={selectedLocation.longitude}
@@ -301,8 +299,6 @@ export default function FranchiseApplicationRoute() {
                   </label>
                   <input
                     type="number"
-                    min={-90}
-                    max={90}
                     name="latitude"
                     className="w-full rounded-xl border-rose-400 bg-orange-50 text-center [appearance:textfield] focus:border-rose-500 focus:ring-rose-500 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     value={selectedLocation.latitude}

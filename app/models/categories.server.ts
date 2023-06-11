@@ -1,6 +1,5 @@
 import { api } from "~/utils/api";
 import type { Category, SortBy, ApiCategoriesData } from "types";
-import { categoriesImages } from "~/images";
 
 const SORT_BY: Array<SortBy> = [
   { label: "Recently Added", value: "recentlyAdded" },

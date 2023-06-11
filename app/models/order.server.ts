@@ -23,6 +23,7 @@ export async function createOrder(order) {
     if (e.response.data.statusCode !== 405) {
       throw new Error(e);
     }
+    console.log(e.response.data.message);
     return {
       status: e.response.data.statusCode,
       data: e.response.data.message,

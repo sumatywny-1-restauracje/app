@@ -26,6 +26,7 @@ const FoodElement = ({ product, categories }: FoodElementProps) => {
     id: product.id,
     name: product.name,
     description: product.description,
+    category: product.category,
     price: product.price,
     ingredients: product.ingredients,
     image: {
